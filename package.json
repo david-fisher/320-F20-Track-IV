@@ -9,6 +9,8 @@
     "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
+    "express-session": "^1.17.1",
+    "passport": "^0.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3"
@@ -35,5 +37,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000/"
+  "proxy": "http://localhost:5000/",
+  "devDependencies": {
+    "mongoose": "^5.10.6",
+    "passport-local": "^1.0.0"
+  }
 }
