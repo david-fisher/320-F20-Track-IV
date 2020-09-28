@@ -9,10 +9,14 @@ body, html {
 .App {
   text-align: center;
 }
-.login-container {
+.login-container, .signup-container {
   width: 35vw;
   margin: auto;
   margin-top: 25vh;
+}
+
+.signup-container {
+  margin-top: 10vh;
 }
 
 .logo-wrapper {
@@ -78,7 +82,7 @@ body, html {
   margin:24px;
 }
 
-.login-container button {
+.login-container button, .signup-container button {
   width: 300px;
   background: #104159;
   border-radius: 5px;
@@ -91,21 +95,105 @@ body, html {
   border: none;
 }
 
-.login-container button:hover {
+.login-container button:hover, .signup-container button:hover {
   /* background: #082744 */
   transform: translateY(-3px);
   filter: drop-shadow(0px 9px 7px #03162066);
 }
 
-.login-container button:focus {
+.login-container button:focus, .signup-container button:focus {
   outline: none;
 }
 
-.login-container .copyright-footer {
+.login-container .copyright-footer, .signup-container .copyright-footer {
   margin-top: 50px;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: 0.02em;
 
   color: #ACACAC;
+}
+
+.signup-header {
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  margin-top: 17px;
+  margin-bottom: 17px;
+  color: #000000;
+}
+
+.signup-header ~ small {
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.02em;
+
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.signup-form-group label {
+  display: block;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+  color: #000000;
+  margin-bottom: 3px;
+}
+
+.signup-form-group {
+  margin-bottom: 16px;
+}
+
+.signup-form-group:nth-last-child(2) {
+  text-align: left;
+}
+
+.signup-form-group:nth-last-child(2) label {
+  display: inline-block;
+}
+
+.signup-form-group span {
+  display: inline-block;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: rgba(0, 0, 0, 0.21);
+}
+
+.signup-form-group:nth-of-type(1) {
+  margin-right: 20px;
+  float: left;
+}
+
+.signup-form-group:nth-of-type(2) {
+  /* margin-right: 20px; */
+  float: right;
+}
+
+.signup-form-group:nth-of-type(1), .signup-form-group:nth-of-type(2){
+  /* display: inline-block; */
+}
+
+.signup-form-group input {
+  height: 47px;
+  font-size: 16px;
+  padding-left: 12px;
+  width: 397px;
+}
+
+.signup-form {
+  margin: auto;
+  margin-top: 17px;
+  width: 400px;
+}
+
+#signup-name-first, #signup-name-last {
+  width: 98%;
 }

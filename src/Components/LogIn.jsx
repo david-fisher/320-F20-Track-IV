@@ -18,7 +18,7 @@ class LogIn extends React.Component {
   submitForm(e){
     e.preventDefault();
     // alert("foo");
-    alert(this.state.password)
+    // alert(this.state.password)
     axios.post('/login', {
       email: this.state.email,
       password: this.state.password
