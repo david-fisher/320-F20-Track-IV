@@ -1,38 +1,44 @@
+/* 
+The CSS file. Handles the placement of elements defined with className. 
+It looks like we can handle React Components individually with CSS, which is cool!
+Hopefully using CSS for components is more efficient, but for now I separated things into "divs"
+to orient them correctly.  
+*/
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color:#282c34;
+  height: 100vh;
   color: white;
+  text-align:left;
+}
+
+.Left-Button {
+  width: 50%;
+  /* Frankly, not the *proper* way of centering the buttons vertically.
+      Went searching through Stack Overflow, but didn't click yet.
+      Will be extremely useful to know for future sprints. 
+      TL;DR it literally squashes the div so the buttons naturally are lowered.
+  */
+
+  margin-top:325px;
+  float: left;
+  /*This basically sets this div to the left. Apparently you can also set up pages like a table? Not sure which is better.*/
+  background-color:inherit;
+  /*Divs have inheritance! This takes the background-color property from app-header*/
+}
+
+.Right-Button {
+  width: 50%;
+  float: left;
+  text-align:center;
+  margin-top: 325px;
+  background-color: inherit;
+
 }
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
