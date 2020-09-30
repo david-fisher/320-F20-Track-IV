@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Button} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 
 /*
@@ -18,30 +18,43 @@ function App() {
       <div className="App-header">
         <header>
           <h1>          
-            {/* Eventually will have to integrate with login to pull username */}
-            WELCOME (USER),
+            {/* Eventually will have to integrate with login to pull username 
+                Top bar will eventually be used everywhere; app-header content replaced*/}
+            Ethics-Simulator
           </h1>
         </header>
-        <div class = "Left-Button">
-          {/*Will have to customize button Component. Size, Colors at the least. 
-            Probably by making a sub-class?*/}
-          <Button lg 
-            variant="outline-secondary" 
-            href = "https://duckduckgo.com/?q=How+to+make+a+scenario&t=h_&ia=web"
-          >
-            'Create a New Scenario'
-          </Button>{' '}
-        </div>
+      </div>
 
-        <div class = "Right-Button">
-          <Button lg
-            variant="outline-secondary" href = 
-            "https://duckduckgo.com/?q=How+to+make+a+scenario&t=h_&ia=web"
-          >
-              Edit an Existing Scenario
-          </Button>{' '}
-        </div>
+      <div className="Welcome-text">
+        <header>
+          <h2>
+            Welcome, User! 
+          </h2>
+          <h5>
+            Select the action you would like to choose:
+          </h5>
+        </header>
+      </div>
 
+      <div class = "Left-Button"> 
+        {/*Question about above ^: Should we just change it to be a button and nest it inside a header
+          Will have to customize button Component. Size, Colors at the least. 
+          Probably by making a sub-class?*/}
+        <Button lg block
+          variant="outline-secondary" 
+          href = "https://duckduckgo.com/?q=How+to+make+a+scenario&t=h_&ia=web"
+        >
+          'Create a New Scenario'
+        </Button>{' '}
+      </div>
+
+      <div class = "Right-Button">
+        <Button lg block
+          variant="outline-secondary" href = 
+          "https://duckduckgo.com/?q=How+to+make+a+scenario&t=h_&ia=web"
+        >
+            Edit an Existing Scenario
+        </Button>{' '}
       </div>
 
     </div>
