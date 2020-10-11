@@ -1,7 +1,7 @@
 /* 
 The CSS file. Handles the placement of elements defined with className. 
 It looks like we can handle React Components individually with CSS, which is cool!
-Hopefully using CSS for components is more efficient, but for now I separated things into "divs"
+Hopefully using CSS for components is more efficient, but for now I separated things into divs
 to orient them correctly.  
 */
 .Welcome {

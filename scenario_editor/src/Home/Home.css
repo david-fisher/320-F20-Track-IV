@@ -1,0 +1,26 @@
+.Left-Button {
+    padding-left: 30px;
+    padding-right: 30px;
+    
+    width: 50%;
+    /* Frankly, not the *proper* way of centering the buttons vertically.
+        Went searching through Stack Overflow, but didn't click yet.
+        Will be extremely useful to know for future sprints. 
+        TL;DR it literally squashes the div so the buttons naturally are lowered.
+    */
+    margin-top: 10em; /*Originally 325 px*/
+    float: left;
+    /*This basically sets this div to the left. Apparently you can also set up pages like a table? Not sure which is better.*/
+    background-color: inherit; /*Removed since I made everything separate from the header*/
+    /*Divs have inheritance! This takes the background-color property from app-header*/
+  }
+  
+  .Right-Button {
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 50%;
+    float: left;
+    text-align:center;
+    margin-top: 10em; /*Originally 325px*/
+    background-color: inherit; 
+  }
