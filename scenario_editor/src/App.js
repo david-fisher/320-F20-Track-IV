@@ -1,63 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Button from 'react-bootstrap/Button';
+import Login from "./Login/Login"
+import Welcome from './Welcome/Welcome';
+import Nav from './Components/Nav';
+import Home from './Home/Home';
+import Introduction from './Introduction/Introduction';
+import Conversations from './Components/Conversations';
+import PlayerResponses from './PlayerResponses/PlayerResponses';
+import Build from './Build/Build';
+import Conclusions from './Components/Conclusions';
+import New_Scenario from './NewScenario/new_scenario';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 
-/*
-  TODO: Button Size & Color Scheme. This *works*, but the code's not great tbh.
-  We will also have to import multiple pages with react-router
-  React-router will force us to restructure some things, but we should go over that on Friday during team meeting.
-  Link here: https://reactrouter.com/
-*/
-
-
+//Currently contains links for everything. The welcome page will have to link to the UMass SSO
+//As it stands the login page is a placeholder, which is fine.
 function App() {
   return (
-    <div className="App">
-      <div className="App-header">
-        <header>
-          <h1>          
-            {/* Eventually will have to integrate with login to pull username 
-                Top bar will eventually be used everywhere; app-header content replaced*/}
-            Ethics-Simulator
-          </h1>
-        </header>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path = "/login" component = {Login} />
+          <Route path = "/" exact component = {Welcome} />
+          <Route path = "/home" component = {Home} />
+          <Route path = "/introduction" component = {Introduction} />
+          <Route path = "/player-responses" component = {PlayerResponses} />
+          <Route path = "/conversations" component = {Conversations} />
+          <Route path = "/conclusions" component = {Conclusions} />
+          <Route path = "/build" component = {Build} />
+          <Route path = "/new_scenario" component = {New_Scenario}/>
+        </Switch>
       </div>
-
-      <div className="Welcome-text">
-        <header>
-          <h2>
-            Welcome, User! 
-          </h2>
-          <h5>
-            Select the action you would like to choose:
-          </h5>
-        </header>
-      </div>
-
-      <div class = "Left-Button"> 
-        {/*Question about above ^: Should we just change it to be a button and nest it inside a header
-          Will have to customize button Component. Size, Colors at the least. 
-          Probably by making a sub-class?*/}
-        <Button lg block
-          variant="outline-secondary" 
-          href = "https://duckduckgo.com/?q=How+to+make+a+scenario&t=h_&ia=web"
-        >
-          'Create a New Scenario'
-        </Button>{' '}
-      </div>
-
-      <div class = "Right-Button">
-        <Button lg block
-          variant="outline-secondary" href = 
-          "https://duckduckgo.com/?q=How+to+make+a+scenario&t=h_&ia=web"
-        >
-            Edit an Existing Scenario
-        </Button>{' '}
-      </div>
-
-    </div>
+    </Router>
   );
 }
 
