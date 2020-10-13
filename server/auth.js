@@ -48,4 +48,9 @@ module.exports = {
     if (!req.isAuthenticated()) return next();
     res.redirect('/');
   },
+  validateToken: (token) => {
+    //this function validates the given token
+    //TODO: implement validation    
+    return true;
+  }
 };
