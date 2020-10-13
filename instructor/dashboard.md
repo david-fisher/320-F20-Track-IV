@@ -35,7 +35,7 @@
 <span class="token punctuation">}</span>
 </code></pre>
 <hr>
-<h4 id="font-colorfaa61agetfont-apiv1instructordashboard"><font color="#faa61a">GET</font> /api/v1/instructor/dashboard</h4>
+<h4 id="codefont-colorfaa61agetfont-apiv1instructordashboardcode"><code><font color="#faa61a">GET</font> /api/v1/instructor/dashboard</code></h4>
 <p>Query and return the information for the instructor’s dashboard</p>
 <p><strong>JSON Params:</strong></p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
@@ -50,7 +50,7 @@
 <span class="token punctuation">}</span>
 </code></pre>
 <hr>
-<h4 id="font-colorfa3a02a61adeletefont-apiv1instructordashboardsimulationfont-colorcccsimulation.idfontdashboard"><font color="#fa3a02a61a">DELETE</font> /api/v1/instructor/dashboard/simulation/{<font color="#ccc">simulation.id</font>}dashboard</h4>
+<h4 id="codefont-colorfa3a02a61adeletefont-apiv1instructordashboardsimulationfont-colorcccsimulation.idfontdashboardcode"><code><font color="#fa3a02a61a">DELETE</font> /api/v1/instructor/dashboard/simulation/{<font color="#ccc">simulation.id</font>}dashboard</code></h4>
 <p>Query and return the information for the instructor’s dashboard</p>
 <p><strong>Headers:</strong></p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
