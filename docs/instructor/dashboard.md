@@ -29,7 +29,7 @@
 <span class="token punctuation">}</span>
 </code></pre>
 <hr>
-<h4 id="codefont-colorfa3a02a61adeletefont-apiv1instructordashboardsimulationfont-colorcccsimulation.idfontdashboardcode"><code><font color="#fa3a02a61a">DELETE</font> /api/v1/instructor/dashboard/simulation/{<font color="#ccc">simulation.id</font>}dashboard</code></h4>
+<h4 id="codefont-colorfa3a02a61adeletefont-apiv1instructordashboardsimulationfont-colorcccsimulation.idfontdashboardcode"><code><font color="#fa3a02a61a">DELETE</font> /api/v1/instructor/dashboard/simulation/{<font color="#ccc">simulation.id</font>}/dashboard</code></h4>
 <p>Query and return the information for the instructor’s dashboard</p>
 <p><strong>Headers:</strong></p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
