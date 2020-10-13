@@ -1,9 +1,30 @@
----
+<!DOCTYPE html>
+<html>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dashboard.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
 
----
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li>
+<ul>
+<li><a href="#dashboard">Dashboard</a></li>
+</ul>
+</li>
+</ul>
 
-<h2 id="dashboard">Dashboard</h2>
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h2 id="dashboard">Dashboard</h2>
 <h3 id="instructor">Instructor</h3>
 <h5 id="note-if-not-specified-default-headers-are-font-colorfaetfont-apiv1">Note: If not specified, default headers are <font color="#fa">ET</font> /api/v1/</h5>
 <p>Query and return the information for the instructor’s dashboard</p>
@@ -55,3 +76,8 @@
 <span class="token punctuation">}</span>
 </code></pre>
 
+    </div>
+  </div>
+</body>
+
+</html>
