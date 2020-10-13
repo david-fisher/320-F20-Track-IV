@@ -7,9 +7,21 @@ info:
 servers:
   - url: 'http://localhost:3000'
 
-# API Authentication (applies to all endpoints).
-# <https://swagger.io/docs/specification/authentication/bearer-authentication/>
 components:
+  # Object schemas.
+  schemas:
+    Simulation:
+      type: integer
+      format: int64
+    Error:
+      type: object
+      required:
+        - explanation
+      properties:
+        explanation:
+          type: string
+  # API Authentication (applies to all endpoints).
+  # <https://swagger.io/docs/specification/authentication/bearer-authentication/>
   securitySchemes:
     bearerAuth:
       type: http
@@ -56,27 +68,3 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-# Object schemas.
-components:
-  schemas:
-    User:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        tag:
-          type: string
-    Error:
-      type: object
-      required:
-        - explanation
-      properties:
-        explanation:
-          type: string
