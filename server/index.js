@@ -4,7 +4,9 @@ const passport = require('passport');
 const auth = require('./auth');
 const router = require('./route');
 const session = require('express-session');
-const CONSTANTS = require('./const.js');
+const Helper = require('./helper.js');
+const db = require('./db');
+const BB_ERROR_CODES = require('./constants.js')
 require('dotenv').config(); //env vars
 
 const __VERSION = process.env.__VERSION || 1;
@@ -31,35 +33,25 @@ app.use(router);
 */
 
 app.get(`/api/v${__VERSION}/instructor/dashboard`, (req, res, next) => {
-    const ERROR_CODE = 50100                      //ERROR CODE FOR DASHBOARD
-    let error_description = "Authorization error."    //Default error description
-    let prefix, token;
-    let auth_header = req.header("Authorization") || req.header("authorization")
-
-    // check and parse authorization
-
-    if(auth_header){ //authorization header is present?
-      if( ([prefix, token] = auth_header.split(" ")).length != 2){ //format is "Bearer {token}"?
-        if(!(prefix.toLowerCase() == "bearer")){ //authorization is malformed?
-          error_description = "Invalid authorization format. Method requires Bearer token."
-          return res.json(CONSTANTS.INVALID_RESPONSE(ERROR_CODE, error_description));
-        }
-      }else{ //if not, return and provide error description
-        error_description = "Invalid authorization format. Method requires Bearer token."
-        return res.json(CONSTANTS.INVALID_RESPONSE(ERROR_CODE, error_description));
-      }
-    }else{
-      error_description = "No authorization header. Please check documentation if error persists."
-      return res.json(CONSTANTS.INVALID_RESPONSE(ERROR_CODE, error_description));
+    const ERROR_CODE = BB_ERROR_CODES.ERROR_CODE_INSTRUCTOR_DASHBOARD; //ERROR CODE FOR DASHBOARD
+    if( (header_validation = Helper.VALIDATE_HEADERS(req.headers, ERROR_CODE)).status != 202){
+      return res.json(header_validation);
+    }
+    //validate token
+    if(!auth.validateToken(header_validation.token)){
+      error_description = "Invalid authorization token."
+      return res.json(Helper.INVALID_RESPONSE(ERROR_CODE, error_description));
     }
 
-    //validate token
+    let token = header_validation.token;
+    let response = {
+      drafts: db.getDraftedSimulations(token),
+      closed: db.getClosedSimulations(token),
+      open: db.getOpenSimulations(token),
+      status: 202
+    }
 
-
-    let drafts = [];
-    let open = [];
-    let closed = [];
-    console.log(CONSTANTS.INVALID_RESPONSE(50100, "Invalid auth token."))
+    return res.json(response);
 
 });
 
