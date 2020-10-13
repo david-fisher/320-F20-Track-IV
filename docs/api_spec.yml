@@ -1,42 +1,63 @@
 openapi: 3.0.0
+
 info:
   version: 1.0.0
-  title: Dashboard
+  title: Scenario Editor
+
 servers:
   - url: 'http://localhost:3000'
+
+# API Authentication (applies to all endpoints).
+# <https://swagger.io/docs/specification/authentication/bearer-authentication/>
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+
+# Endpoints.
 paths:
-  /user:
+  /api/v1/dashboard:
     get:
-      summary: 'Sample endpoint: Returns details about a particular user'
-      operationId: listUser
+      summary: 'Instructor dashboard summary'
+      operationId: dashboard
       tags:
-        - user
-      parameters:
-        - name: id
-          in: query
-          description: ID of the user
-          required: true
-          schema:
-            type: integer
-            format: int32
+        - dashboard
       responses:
         '200':
           description: 'Sample response: Details about a user by ID'
-          headers:
-            x-next:
-              description: A link to the next page of responses
-              schema:
-                type: string
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                required:
+                  - drafts
+                  - open
+                  - closed
+                properties:
+                  drafts:
+                    type: integer
+                    items:
+                      $ref: '#/components/schemas/Simulation'
+                  open:
+                    type: integer
+                    items:
+                      $ref: '#/components/schemas/Simulation'
+                  closed:
+                    type: integer
+                    items:
+                      $ref: '#/components/schemas/Simulation'
         default:
           description: Unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+# Object schemas.
 components:
   schemas:
     User:
@@ -55,11 +76,7 @@ components:
     Error:
       type: object
       required:
-        - code
-        - message
+        - explanation
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        explanation:
           type: string
