@@ -5,9 +5,7 @@
 
 <h2 id="dashboard">Dashboard</h2>
 <h3 id="instructor">Instructor</h3>
-<h5 id="note-if-not-specified-default-headers-are-font-colorfaetfont-apiv1">Note: If not specified, default headers are <font color="#fa">ET</font> /api/v1/</h5>
-<p>Query and return the information for the instructor’s dashboard</p>
-<p><strong>Headers are:</strong></p>
+<h5 id="note-if-not-specified-default-headers-are">Note: If not specified, default headers are</h5>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 	<span class="token string">"Authorization"</span><span class="token punctuation">:</span>	<span class="token string">"Bearer {Token}"</span><span class="token punctuation">,</span>
 	<span class="token string">"Content-Type"</span><span class="token punctuation">:</span> 	<span class="token string">"application/json"</span><span class="token punctuation">,</span>
@@ -49,7 +47,7 @@
 </code></pre>
 <p><strong>Return</strong>:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
-	<span class="token string">"status_codedrafts"</span><span class="token punctuation">:</span> 	Array <span class="token operator">&lt;</span>Simulation<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+	<span class="token string">"drafts"</span><span class="token punctuation">:</span> 	Array <span class="token operator">&lt;</span>Simulation<span class="token operator">&gt;</span><span class="token punctuation">,</span>
 	<span class="token string">"open"</span><span class="token punctuation">:</span> 	Array <span class="token operator">&lt;</span>Simulation<span class="token operator">&gt;</span><span class="token punctuation">,</span>
 	<span class="token string">"closed"</span> 	Array <span class="token operator">&lt;</span>Simulation<span class="token operator">&gt;</span>
 <span class="token punctuation">}</span>
