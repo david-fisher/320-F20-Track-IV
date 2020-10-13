@@ -12,7 +12,7 @@
 	<span class="token string">"Connection"</span><span class="token punctuation">:</span>		<span class="token string">"keep-alive"</span><span class="token punctuation">,</span>
 	<span class="token string">"Authorization"</span><span class="token punctuation">:</span>	<span class="token string">"Bearer {Token}"</span><span class="token punctuation">,</span>
 	<span class="token string">"Content-Type"</span><span class="token punctuation">:</span> 	<span class="token string">"application/json"</span><span class="token punctuation">,</span>
-	<span class="token string">"Accept"</span><span class="token punctuation">:</span> 			<span class="token string">"application/json"</span><span class="token punctuation">,</span>
+	<span class="token string">"Accept"</span><span class="token punctuation">:</span> 		<span class="token string">"application/json"</span><span class="token punctuation">,</span>
 	<span class="token string">"Accept-Encoding"</span><span class="token punctuation">:</span> 	<span class="token string">"gzip, deflate, br"</span>
 <span class="token punctuation">}</span>
 </code></pre>
