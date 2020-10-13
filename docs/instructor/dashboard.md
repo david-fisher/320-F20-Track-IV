@@ -9,7 +9,6 @@
 <p>Query and return the information for the instructor’s dashboard</p>
 <p><strong>Headers are:</strong></p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
-	<span class="token string">"Connection"</span><span class="token punctuation">:</span>		<span class="token string">"keep-alive"</span><span class="token punctuation">,</span>
 	<span class="token string">"Authorization"</span><span class="token punctuation">:</span>	<span class="token string">"Bearer {Token}"</span><span class="token punctuation">,</span>
 	<span class="token string">"Content-Type"</span><span class="token punctuation">:</span> 	<span class="token string">"application/json"</span><span class="token punctuation">,</span>
 	<span class="token string">"Accept"</span><span class="token punctuation">:</span> 		<span class="token string">"application/json"</span><span class="token punctuation">,</span>
