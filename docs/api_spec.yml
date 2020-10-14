@@ -83,3 +83,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /api/v1/simulation/{simulation_id}/start:
+    post:
+      summary: 'Start a saved simulation'
+      operationId: startSimulation
+      tags:
+        - simulation
+      requestBody:
+        description: 'Student IDs to which this simulation will be available to'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - available_to
+              properties:
+                available_to:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
