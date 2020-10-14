@@ -5,7 +5,7 @@ info:
   title: Scenario Editor
 
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:3000/api/v1'
 
 components:
   # Object schemas.
@@ -32,7 +32,7 @@ security:
 
 # Endpoints.
 paths:
-  /api/v1/dashboard:
+  /dashboard:
     get:
       summary: 'Instructor dashboard summary'
       operationId: dashboard
@@ -68,7 +68,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}:
+  /simulation/{simulation_id}:
     delete:
       summary: 'Remove a saved simulation'
       operationId: removeSimulation
@@ -83,7 +83,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}/start:
+  /simulation/{simulation_id}/start:
     post:
       summary: 'Start a saved simulation'
       operationId: startSimulation
@@ -112,7 +112,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}/close:
+  /simulation/{simulation_id}/close:
     post:
       summary: 'Close a started simulation'
       operationId: closeSimulation
@@ -128,7 +128,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/componentsf/schemas/Error'
-  /api/v1/simulation/{simulation_id}/introduction:
+  /simulation/{simulation_id}/introduction:
     post:
       summary: 'Add an introduction to the simulation'
       operationId: addSimulationIntroduction
@@ -155,7 +155,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}/initial-reflection:
+  /simulation/{simulation_id}/initial-reflection:
     post:
       summary: "Add a prompt for the simulation's initial reflection"
       operationId: addSimulationInitialReflection
@@ -195,7 +195,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}/initial-action:
+  /simulation/{simulation_id}/initial-action:
     post:
       summary: "Add a prompt for the student's choice of initial action"
       operationId: addSimulationInitialAction
@@ -227,7 +227,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}/stakeholders/description:
+  /simulation/{simulation_id}/stakeholders/description:
     post:
       summary: "Add a summary for all of the stakeholders"
       operationId: addSimulationStakeholdersSummary
@@ -254,7 +254,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}/stakeholders:
+  /simulation/{simulation_id}/stakeholders:
     put:
       summary: "Create a new stakeholder"
       operationId: addSimulationStakeholder
@@ -287,7 +287,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/simulation/{simulation_id}/final-decision:
+  /simulation/{simulation_id}/final-decision:
     put:
       summary: "Add options for student's final decision"
       operationId: addSimulationStakeholder
