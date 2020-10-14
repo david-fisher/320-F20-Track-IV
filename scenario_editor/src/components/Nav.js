@@ -4,11 +4,17 @@ import {Link} from 'react-router-dom';
 import HomeIcon from "./Images/home-icon.png"
 
 //The navigation bar component seen in every page. Could shift the list to the left, maybe?
+
+// 10/13 TRY: 
+// linked HomeIcon to Home page
+// adjusted navbar distribution -- did it in the lazy way
+
+
 function Nav() {
   return (
     <nav>
         <h3> 
-          <Link to= "/">
+          <Link to= "/home">
             <img src={HomeIcon} alt="Return to home page"/>
           </Link>  
         </h3>

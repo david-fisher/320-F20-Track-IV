@@ -1,26 +1,55 @@
+/* 10/13 TRY: 
+adjusted values for butttons 
+added jumbotron and .btn-custom-button-size
+*/
+
 .Left-Button {
-    padding-left: 30px;
-    padding-right: 30px;
-    
-    width: 50%;
     /* Frankly, not the *proper* way of centering the buttons vertically.
         Went searching through Stack Overflow, but didn't click yet.
         Will be extremely useful to know for future sprints. 
         TL;DR it literally squashes the div so the buttons naturally are lowered.
     */
-    margin-top: 10em; /*Originally 325 px*/
-    float: left;
-    /*This basically sets this div to the left. Apparently you can also set up pages like a table? Not sure which is better.*/
-    background-color: inherit; /*Removed since I made everything separate from the header*/
-    /*Divs have inheritance! This takes the background-color property from app-header*/
+    /* padding-left: 10px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px; */
+    margin-top: 10px; 
+    background-color: inherit; 
+    text-align:center;
   }
   
   .Right-Button {
-    padding-left: 30px;
-    padding-right: 30px;
-    width: 50%;
-    float: left;
-    text-align:center;
-    margin-top: 10em; /*Originally 325px*/
+    /* padding-left: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px; 
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px; */
+    margin-top: 10px;
     background-color: inherit; 
+    outline-color: #881c1c;
+    color: #881c1c;
+    text-align:center;
+   
   }
+
+
+  .jumbotron{
+    background-color: white;
+    color: black;
+    font-weight: 500;
+  }
+
+  .btn-custom-button-size {
+    padding: 5rem;
+    color: white;
+    font-weight: 500;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+   font-size: 20px;
+   background-color: #881c1c;
+  }
+
+  

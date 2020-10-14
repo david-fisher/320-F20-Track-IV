@@ -1,6 +1,7 @@
 import React from 'react';
 import './Welcome.css';
 import Nav from '../Components/Nav'
+import {Link} from 'react-router-dom';
 
 //Maybe we could use this page in order to test out new components?
 function Welcome() {

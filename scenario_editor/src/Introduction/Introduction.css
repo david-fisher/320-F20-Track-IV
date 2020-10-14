@@ -1,0 +1,19 @@
+.custom-textbox-size{
+    padding: 10rem 20rem;
+    color: black;
+    font-weight: 400;
+    font-size: 20px;
+    background-color: white;
+    margin-top: 50px;
+    
+  }
+
+.btn-custom-submit-button{
+    padding: 10px 10px;
+    color: inherit;
+    margin-bottom: 600px;
+    margin-right: 200px;
+    float: right;
+    background-color: #881c1c;
+    color: white;
+}
