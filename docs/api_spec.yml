@@ -111,3 +111,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /api/v1/simulation/{simulation_id}/close:
+    post:
+      summary: 'Close a started simulation'
+      operationId: closeSimulation
+      tags:
+        - simulation
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
