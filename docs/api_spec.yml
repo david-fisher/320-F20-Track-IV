@@ -40,7 +40,7 @@ paths:
         - dashboard
       responses:
         '200':
-          description: 'Sample response: Details about a user by ID'
+          description: "Sample response: Summary of an instructor's simulations"
           content:
             application/json:
               schema:
@@ -51,15 +51,15 @@ paths:
                   - closed
                 properties:
                   drafts:
-                    type: integer
+                    type: array
                     items:
                       $ref: '#/components/schemas/Simulation'
                   open:
-                    type: integer
+                    type: array
                     items:
                       $ref: '#/components/schemas/Simulation'
                   closed:
-                    type: integer
+                    type: array
                     items:
                       $ref: '#/components/schemas/Simulation'
         default:
