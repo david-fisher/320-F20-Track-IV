@@ -89,6 +89,7 @@ paths:
       operationId: startSimulation
       tags:
         - simulation
+        - status
       requestBody:
         description: 'Student IDs to which this simulation will be available to'
         content:
@@ -117,6 +118,7 @@ paths:
       operationId: closeSimulation
       tags:
         - simulation
+        - status
       responses:
         '200':
           description: 'Sample response: No associated response'
