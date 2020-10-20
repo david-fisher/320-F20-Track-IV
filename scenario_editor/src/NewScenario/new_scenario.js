@@ -1,6 +1,8 @@
 import React from 'react';
 import './new_scenario.css';
 import Nav from '../Components/Nav'
+import {Link} from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 
 //Essentially the NewScenario page from the Wireframe.
@@ -17,7 +19,18 @@ function New_Scenario() {
           <form>
               <h1>Scenario Description:</h1>
               <textarea rows = '15' cols = '75'/>
-              <input type='submit' value = 'submit'/>
+              <div class="Introduction-submit-button">   
+                {/* <div> */}
+                <Link to = "/introduction">
+                  <Button
+                  size = "custom-submit-button"
+                  variant="outline-secondary"
+                  value = "Submit"
+                  >
+                  Submit
+                  </Button>{' '}
+                </Link>
+              </div>
           </form>
           </div>
       </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Login from "./Login/Login"
-import Welcome from './Welcome/Welcome';
 import Nav from './Components/Nav';
 import Home from './Home/Home';
 import Introduction from './Introduction/Introduction';
@@ -21,7 +20,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route path = "/login" component = {Login} />
-          <Route path = "/" exact component = {Welcome} />
+          <Route path = "/" exact component = {Login} />
           <Route path = "/home" component = {Home} />
           <Route path = "/introduction" component = {Introduction} />
           <Route path = "/player-responses" component = {PlayerResponses} />

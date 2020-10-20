@@ -66,7 +66,7 @@ const App = () => {
 
           <div class="Introduction-submit-button">   
           {/* <div> */}
-            <Link to = "/home">
+            <Link to = "/player-responses">
               <Button
               size = "custom-submit-button"
               variant="outline-secondary"

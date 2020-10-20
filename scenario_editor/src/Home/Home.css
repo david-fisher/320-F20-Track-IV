@@ -14,9 +14,11 @@ added jumbotron and .btn-custom-button-size
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px; */
+    display: inline;
     margin-top: 10px; 
     background-color: inherit; 
     text-align:center;
+    
   }
   
   .Right-Button {
@@ -26,6 +28,7 @@ added jumbotron and .btn-custom-button-size
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px; */
+    display: inline;
     margin-top: 10px;
     background-color: inherit; 
     outline-color: #881c1c;
@@ -42,7 +45,8 @@ added jumbotron and .btn-custom-button-size
   }
 
   .btn-custom-button-size {
-    padding: 5rem;
+    padding: 3rem;
+    margin: 1%;
     color: white;
     font-weight: 500;
     border-style: solid;
