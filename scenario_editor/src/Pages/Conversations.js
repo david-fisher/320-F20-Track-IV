@@ -1,6 +1,7 @@
 import React from 'react';
-import './Components.css';
-import Nav from './Nav'
+// import './Components/Components.css';
+import '../Components/Components.css'
+import Nav from '../Components/Nav'
 
 function Conversations() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import './new_scenario.css';
+import './New_Scenario.css';
 import Nav from '../Components/Nav'
 import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';

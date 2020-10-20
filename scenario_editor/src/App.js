@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import Login from "./Login/Login"
+import Login from "./Pages/Login"
 import Nav from './Components/Nav';
-import Home from './Home/Home';
-import Introduction from './Introduction/Introduction';
-import Conversations from './Components/Conversations';
-import PlayerResponses from './PlayerResponses/PlayerResponses';
-import Build from './Build/Build';
-import Conclusions from './Components/Conclusions';
-import New_Scenario from './NewScenario/new_scenario';
+import Home from './Pages/Home';
+import Introduction from './Pages/Introduction';
+import Conversations from './Pages/Conversations';
+import PlayerResponses from './Pages/PlayerResponses';
+import Build from './Pages/Build';
+import Conclusions from './Pages/Conclusions';
+import New_Scenario from './Pages/New_Scenario';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 
