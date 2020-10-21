@@ -38,6 +38,9 @@ function Nav() {
             <Link to= "/build">
               <li>Build</li>
             </Link>
+            <Link to= "/matrix">
+              <li>Matrix</li>
+            </Link>
             
         </u1>
     </nav>
