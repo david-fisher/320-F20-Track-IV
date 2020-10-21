@@ -1,0 +1,321 @@
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: Scenario Editor
+
+servers:
+  - url: 'http://localhost:3000/api/v1'
+
+components:
+  # Object schemas.
+  schemas:
+    Simulation:
+      type: integer
+      format: int64
+    Error:
+      type: object
+      required:
+        - explanation
+      properties:
+        explanation:
+          type: string
+  # API Authentication (applies to all endpoints).
+  # <https://swagger.io/docs/specification/authentication/bearer-authentication/>
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+
+# Endpoints.
+paths:
+  /dashboard:
+    get:
+      summary: 'Instructor dashboard summary'
+      operationId: dashboard
+      tags:
+        - dashboard
+      responses:
+        '200':
+          description: "Sample response: Summary of an instructor's simulations"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - drafts
+                  - open
+                  - closed
+                properties:
+                  drafts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Simulation'
+                  open:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Simulation'
+                  closed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Simulation'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}:
+    delete:
+      summary: 'Remove a saved simulation'
+      operationId: removeSimulation
+      tags:
+        - simulation
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}/start:
+    post:
+      summary: 'Start a saved simulation'
+      operationId: startSimulation
+      tags:
+        - simulation
+        - status
+      requestBody:
+        description: 'Student IDs to which this simulation will be available to'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - available_to
+              properties:
+                available_to:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}/close:
+    post:
+      summary: 'Close a started simulation'
+      operationId: closeSimulation
+      tags:
+        - simulation
+        - status
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/componentsf/schemas/Error'
+  /simulation/{simulation_id}/introduction:
+    post:
+      summary: 'Add an introduction to the simulation'
+      operationId: addSimulationIntroduction
+      tags:
+        - simulation
+        - editing
+      requestBody:
+        description: 'Textual summary of the simulation'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - summary
+              properties:
+                summary:
+                  type: string
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}/initial-reflection:
+    post:
+      summary: "Add a prompt for the simulation's initial reflection"
+      operationId: addSimulationInitialReflection
+      tags:
+        - simulation
+        - editing
+      requestBody:
+        description: 'Specification of the prompt'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - summary
+                - questions
+              properties:
+                summary:
+                  type: string
+                questions:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - question
+                      - answer
+                    properties:
+                      question:
+                        type: string
+                      answer:
+                        type: string
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}/initial-action:
+    post:
+      summary: "Add a prompt for the student's choice of initial action"
+      operationId: addSimulationInitialAction
+      tags:
+        - simulation
+        - editing
+      requestBody:
+        description: 'Specification of the options'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - summary
+                - options
+              properties:
+                summary:
+                  type: string
+                questions:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}/stakeholders/description:
+    post:
+      summary: "Add a summary for all of the stakeholders"
+      operationId: addSimulationStakeholdersSummary
+      tags:
+        - simulation
+        - editing
+      requestBody:
+        description: 'Textual summary of the available stakeholders'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - summary
+              properties:
+                summary:
+                  type: string
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}/stakeholders:
+    put:
+      summary: "Create a new stakeholder"
+      operationId: addSimulationStakeholder
+      tags:
+        - simulation
+        - editing
+      requestBody:
+        description: 'Stakeholder description'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - conversation_text
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                conversation_text:
+                  type: string
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /simulation/{simulation_id}/final-decision:
+    put:
+      summary: "Add options for student's final decision"
+      operationId: addSimulationStakeholder
+      tags:
+        - simulation
+        - editing
+      requestBody:
+        description: 'Specification of the prompt'
+        content:
+          'application/json':
+            schema:
+              type: object
+              required:
+                - summary
+                - options
+              properties:
+                summary:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: 'Sample response: No associated response'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
