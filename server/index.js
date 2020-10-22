@@ -44,6 +44,7 @@ app.get(`/api/v${__VERSION}/instructor/dashboard`, (req, res, next) => {
     }
 
     let token = header_validation.token;
+
     let response = {
       drafts: db.getDraftedSimulations(token),
       closed: db.getClosedSimulations(token),
