@@ -32,6 +32,7 @@ app.use(router);
 ==============================================
 */
 
+//stub generation
 app.get(`/api/v${__VERSION}/instructor/dashboard`, (req, res, next) => {
     const ERROR_CODE = BB_ERROR_CODES.ERROR_CODE_INSTRUCTOR_DASHBOARD; //ERROR CODE FOR DASHBOARD
     if( (header_validation = Helper.VALIDATE_HEADERS(req.headers, ERROR_CODE)).status != 202){
@@ -53,7 +54,6 @@ app.get(`/api/v${__VERSION}/instructor/dashboard`, (req, res, next) => {
     }
 
     return res.json(response);
-
 });
 
 app.use((req, res, next) => {
