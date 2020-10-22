@@ -1,5 +1,4 @@
 import React from 'react';
-// import './Components/Components.css';
 import '../Components/Components.css'
 import Nav from '../Components/Nav'
 
