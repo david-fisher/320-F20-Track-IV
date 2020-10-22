@@ -13,6 +13,13 @@ const DEFAULT_HEADERS = {
 };
 const DEFAULT_HEADERS_ENTRIES = Object.entries(DEFAULT_HEADERS);
 
+const DEFAULT_HEADERS_FORM = {
+  "accept": 		"application/json",
+  "accept-encoding": 	"gzip, deflate, br"
+}
+
+const DEFAULT_HEADERS_FORM_ENTRIES = Object.entries(DEFAULT_HEADERS_FORM);
+
 
 /*
   =========================================================================
@@ -29,14 +36,14 @@ module.exports.INVALID_RESPONSE = (code, description) => {
   }
 }
 
-module.exports.INVALID_HEADERS = (headers) => {
-  return DEFAULT_HEADERS_ENTRIES.filter(header => {
+module.exports.INVALID_HEADERS = (headers, form) => {
+  return (form ? DEFAULT_HEADERS_FORM_ENTRIES : DEFAULT_HEADERS_ENTRIES).filter(header => {
     // filter through default headers and identify missing or malformed headers
     return !(header[0].toLowerCase() in headers) || headers[header[0].toLowerCase()] != header[1].toLowerCase();
   }).map(header => header[0])
 }
 
-module.exports.VALIDATE_HEADERS = (headers, ERROR_CODE) => {
+module.exports.VALIDATE_HEADERS = (headers, ERROR_CODE, form) => {
   let error_description = "Authorization error."    //Default error description
   let prefix, token;
   let auth_header = headers["Authorization"] || headers["authorization"];
@@ -58,7 +65,7 @@ module.exports.VALIDATE_HEADERS = (headers, ERROR_CODE) => {
     return module.exports.INVALID_RESPONSE(ERROR_CODE, error_description);
   }
 
-  if( (missingHeaders = module.exports.INVALID_HEADERS(headers)).length){
+  if( (missingHeaders = module.exports.INVALID_HEADERS(headers, form)).length){
     error_description = `Invalid header(s): ${missingHeaders.join(", ")}`
     return module.exports.INVALID_RESPONSE(ERROR_CODE, error_description);
   }
