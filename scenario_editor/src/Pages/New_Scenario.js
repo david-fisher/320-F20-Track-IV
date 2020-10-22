@@ -11,43 +11,42 @@ import ScenarioContext from '../Context/scenario_context';
 //The textboxes need to be fixed, and might have to be recoded in order to hold state properly
 class New_Scenario extends Component {
 
-  static contextType = ScenarioContext;
-  componentDidMount() {
-    console.log(this.context);
-  }
+
 
   render() {
     return (
-      <div>
-        <Nav />
-        <form>
-          <h1>Scenario Title:</h1>
-          <input type='text' id='title' size="element.value.length + 1" />
-        </form>
-        <div id='Description'>
+      <ScenarioContext.Consumer>
+        {context => (
+          <div>
+            <Nav />
+            <form>
+              <h1>Scenario Title:</h1>
+              <input type='text' id='title' size="element.value.length + 1" />
+            </form>
+            <div id='Description'>
 
-          <form>
-            <h1>Scenario Description:</h1>
-            <textarea rows='15' cols='75' value={this.context.scenario.scenario_desc} />
-            <div class="Introduction-submit-button">
-              {/* <div> */}
-              <Link to="/introduction">
-                <Button
-                  size="custom-submit-button"
-                  variant="outline-secondary"
-                  value="Submit"
-                >
-                  Submit
+              <form>
+                <h1>Scenario Description:</h1>
+                <textarea rows='15' cols='75' value={this.context} />
+                <div class="Introduction-submit-button">
+                  {}
+                  <Link to="/introduction">
+                    <Button
+                      size="custom-submit-button"
+                      variant="outline-secondary"
+                      value="Submit"
+                    >
+                      Submit
                     </Button>{' '}
-              </Link>
+                  </Link>
+                </div>
+              </form>
+
             </div>
-          </form>
+          </div>
 
-        </div>
-      </div>
-
-
-
+        )}
+      </ScenarioContext.Consumer>
     );
 
   }

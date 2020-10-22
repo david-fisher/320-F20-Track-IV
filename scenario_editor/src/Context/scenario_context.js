@@ -1,19 +1,14 @@
-import React from 'react';
+import React, { useState, createContext } from 'react';
 
+// If we want to access our data (in the Scenario Provider), we can import ScenarioContext in our 
+// other components to have access to the data in the Provider.
 export default React.createContext({
-    // scenario: [
-    //     {scenario_id: 0},
-    //     {scenario_title: ""},
-    //     {scenario_desc: ""},
-    //     {introduction: ""}    
-    // ],
+    scenario: 
+      { id: 0, title: 'title', description: 'desc' }
 
-    scenario: {
-        scenario_id: 0,
-        scenario_title: "",
-        scenario_desc: "",
-        introduction: ""    
-    },
+    
+    // addScenario: scenario => {},
+    // removeScenario: scenarioID => {}
+  });
 
-    updateTextInScenario: (textSubmit) => {}
-});
+

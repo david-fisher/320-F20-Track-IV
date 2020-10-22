@@ -11,7 +11,6 @@ import Conclusions from './Pages/Conclusions';
 import New_Scenario from './Pages/New_Scenario';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import ScenarioContext from './Context/scenario_context';
 
 
 //Currently contains links for everything. The welcome page will have to link to the UMass SSO
@@ -22,45 +21,23 @@ import ScenarioContext from './Context/scenario_context';
 
 class App extends Component {
 
-  state = {
-    scenario: {
-      scenario_id: 0,
-      scenario_title: "no title",
-      scenario_desc: "no desc",
-      introduction: "no intro"
-    }
-
-  };
-
-  updateTextInScenario = textSubmit => {
-
-    console.log('Updating textSubmit ', textSubmit);
-  };
-
   render() {
     return (
-      <ScenarioContext.Provider value={{
-        scenario: this.state.scenario,
-        // Do not include '()' after this.updateTextInScenario, as you do not want to run the method
-        updateTextInScenario: this.updateTextInScenario
-
-      }}>
-        <Router>
-          <div className="App">
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/" exact component={Login} />
-              <Route path="/home" component={Home} />
-              <Route path="/introduction" component={Introduction} />
-              <Route path="/player-responses" component={PlayerResponses} />
-              <Route path="/conversations" component={Conversations} />
-              <Route path="/conclusions" component={Conclusions} />
-              <Route path="/build" component={Build} />
-              <Route path="/new_scenario" component={New_Scenario} />
-            </Switch>
-          </div>
-        </Router>
-      </ScenarioContext.Provider>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/" exact component={Login} />
+            <Route path="/home" component={Home} />
+            <Route path="/introduction" component={Introduction} />
+            <Route path="/player-responses" component={PlayerResponses} />
+            <Route path="/conversations" component={Conversations} />
+            <Route path="/conclusions" component={Conclusions} />
+            <Route path="/build" component={Build} />
+            <Route path="/new_scenario" component={New_Scenario} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 
