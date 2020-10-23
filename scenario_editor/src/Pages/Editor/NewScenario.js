@@ -1,5 +1,10 @@
+// ********************************************
+// NOT UPDATED. 
+// You can follow Dashboard.js if you want to make this page though :)
+// Recommend looking into 
+// ********************************************
 import React, { Component } from 'react';
-import './New_Scenario.css';
+import './NewScenario.css';
 import Nav from '../../Components/Nav'
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
@@ -8,10 +13,7 @@ import Button from 'react-bootstrap/Button';
 
 //Essentially the NewScenario page from the Wireframe.
 //The textboxes need to be fixed, and might have to be recoded in order to hold state properly
-class New_Scenario extends Component {
-
-
-
+class NewScenario extends Component {
   render() {
     return (
 
@@ -25,7 +27,7 @@ class New_Scenario extends Component {
 
           <form>
             <h1>Scenario Description:</h1>
-            <textarea rows='15' cols='75' value={this.context} />
+            <textarea rows='15' cols='75' />
             <div class="Introduction-submit-button">
               {}
               <Link to="/introduction">
@@ -52,4 +54,4 @@ class New_Scenario extends Component {
 
 
 
-export default New_Scenario;
+export default NewScenario;

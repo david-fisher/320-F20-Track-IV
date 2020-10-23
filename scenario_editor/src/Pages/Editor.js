@@ -1,3 +1,9 @@
+// ********************************************
+// NOT DONE.
+// This is the same code as the NewScenario class, except it's a function instead of a component.
+// This needs a LOT of work, still structuring.
+// ********************************************
+
 import React, { Component } from 'react';
 import Nav from '../Components/Nav'
 import { Link } from 'react-router-dom';
@@ -16,7 +22,7 @@ function Editor() {
 
                 <form>
                     <h1>Scenario Description:</h1>
-                    <textarea rows='15' cols='75' value={this.context} />
+                    <textarea rows='15' cols='75' />
                     <div class="Introduction-submit-button">
                         {}
                         <Link to="/introduction">

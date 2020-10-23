@@ -1,6 +1,10 @@
+// ********************************************
+// NOT UPDATED. 
+// You can follow Dashboard.js if you want to make this page better though :)
+// ********************************************
 import React from 'react';
 import '../Components/Components.css'
-import Nav from '../Components/Nav'
+import Nav from '../../Components/Nav'
 
 function Conclusions() {
   return (

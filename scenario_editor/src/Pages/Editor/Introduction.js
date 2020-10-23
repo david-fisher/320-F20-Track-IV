@@ -1,3 +1,9 @@
+// ********************************************
+// NOT UPDATED. 
+// This was last updated by Tara.
+// We will try to make this work with a ScenarioContext.js context file,
+// after which we should have most of the files / file structures needed to work through everything :)
+// ********************************************
 import React from 'react';
 import './Introduction.css';
 import Nav from '../../Components/Nav'

@@ -1,6 +1,9 @@
+// ********************************************
+// UPDATED. Could be structured better but NOT NEEDED at the moment
+// ********************************************
 import React, { Component } from 'react';
 import './Home.css';
-import Nav from '../Components/Nav'
+import Nav from '../Components/NavHome'
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
