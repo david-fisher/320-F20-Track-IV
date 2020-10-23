@@ -1,6 +1,6 @@
 import React from 'react';
 import './PlayerResponses.css';
-import Nav from '../Components/Nav'
+import Nav from '../../Components/Nav'
 
 function PlayerResponses() {
   return (

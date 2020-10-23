@@ -20,9 +20,7 @@ export default function App() {
         <Route path="/home" component={Home} />
 
         {/* This routes to the EDITOR portion of our application. */}
-        <Route path="/editor/:id" render={(props) => (
-          <Editor {...props} />
-        )} />
+        <Route path="/editor" component={Editor} />
       </Switch>
     </Router>
   );

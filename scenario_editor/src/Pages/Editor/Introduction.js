@@ -1,6 +1,6 @@
 import React from 'react';
 import './Introduction.css';
-import Nav from '../Components/Nav'
+import Nav from '../../Components/Nav'
 // import React, { Component } from 'react';
 //import './Home.css';
 import Button from 'react-bootstrap/Button';

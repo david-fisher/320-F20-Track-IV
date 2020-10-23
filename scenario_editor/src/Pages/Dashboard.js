@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Container,
+    Box,
     Typography,
     Grid,
 } from '@material-ui/core';
@@ -8,19 +8,31 @@ import ScenarioCard from '../Components/ScenarioCard'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    container: {
+    box: {
         marginTop: theme.spacing(1),
         display: 'flex',
+
         flexDirection: 'column',
-        alignItems: '',
+
     },
+    grid: {
+        justify: 'flex-start',
+        flexGrow: 0,
+        flexWrap: 'nowrap'
+    }
 
 }));
 
+//Hardcoded data
 const sampleScenarios = [
     { scenarioTitle: "Draft 1", className: "CS311", id: '1', draft: false, open: false },
-    { scenarioTitle: "Open 2", className: "CS320", id: '2', draft: true, open: true },
-    { scenarioTitle: "Closed 3", className: "CS589", id: '3', draft: true, open: false },
+    { scenarioTitle: "Draft 2", className: "CS311", id: '2', draft: false, open: false },
+    { scenarioTitle: "Draft 3", className: "CS311", id: '3', draft: false, open: false },
+    { scenarioTitle: "Draft 4", className: "CS311", id: '4', draft: false, open: false },
+    { scenarioTitle: "Open 1", className: "CS320", id: '5', draft: true, open: true },
+    { scenarioTitle: "Open 2", className: "CS320", id: '6', draft: true, open: true },
+    { scenarioTitle: "Open 3", className: "CS320", id: '8', draft: true, open: true },
+    { scenarioTitle: "Closed 1", className: "CS589", id: '7', draft: true, open: false },
 
 ];
 
@@ -42,11 +54,11 @@ function Dashboard() {
     );
 
     const classes = useStyles();
-    //Hardcoded data
+
 
     return (
-        <Container
-            className={classes.container}
+        <Box
+            className={classes.box}
             component="main"
             maxWidth="lg"
         >
@@ -54,11 +66,10 @@ function Dashboard() {
                 Draft Scenarios:
             </Typography>
             <Grid
+                className={classes.container}
                 container
                 spacing={2}
                 direction="row"
-                justify="flex-start"
-                alignItems="stretch"
             >
                 {draftScenarios}
             </Grid>
@@ -69,8 +80,9 @@ function Dashboard() {
                 container
                 spacing={2}
                 direction="row"
-                justify="flex-start"
-                alignItems="stretch"
+                className={classes.container}
+
+
             >
                 {openScenarios}
             </Grid>
@@ -81,12 +93,11 @@ function Dashboard() {
                 container
                 spacing={2}
                 direction="row"
-                justify="flex-start"
-                alignItems="stretch"
+
             >
                 {closedScenarios}
             </Grid>
-        </Container>
+        </Box>
     );
 
 }

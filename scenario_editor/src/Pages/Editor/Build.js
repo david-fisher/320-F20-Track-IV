@@ -1,6 +1,6 @@
 import React from 'react';
 import './Build.css';
-import Nav from '../Components/Nav'
+import Nav from '../../Components/Nav'
 
 function Build() {
   return (
