@@ -2,14 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from "./Pages/Login"
 import Home from './Pages/Home';
-import Introduction from './Pages/Introduction';
-import Conversations from './Pages/Conversations';
-import PlayerResponses from './Pages/PlayerResponses';
-import Build from './Pages/Build';
-import Conclusions from './Pages/Conclusions';
-import New_Scenario from './Pages/New_Scenario';
-import Dashboard from './Pages/Dashboard'
-import Nav from '../Components/Nav'
+import Editor from './Pages/Editor';
+import Dashboard from './Pages/Dashboard';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
@@ -17,21 +11,22 @@ function App() {
 
   return (
     <Router>
-      <Nav data={navbarDashboard}>
+      <Switch>
+        {/* This is a default load-in into the application. */}
+        <Route path="/login" exact component={Login} />
+        <Route path="/" component={Login} />
 
+        {/* The DASHBOARD with be the location of the Drafts, Open, and Closed scenarios for this user */}
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/home" component={Home} />
 
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/" exact component={Dashboard} />
-          <Route path="/home" component={Home} />
-          <Route path="/introduction" component={Introduction} />
-          <Route path="/player-responses" component={PlayerResponses} />
-          <Route path="/conversations" component={Conversations} />
-          <Route path="/conclusions" component={Conclusions} />
-          <Route path="/build" component={Build} />
-          <Route path="/new_scenario" component={New_Scenario} />
-        </Switch>
-      </Nav >
+        {/* This routes to the EDITOR portion of our application. */}
+        <Route path="/editor/:id" render={(props) => (
+          <Editor {...props} />
+        )} />
+
+      </Switch>
+
     </Router>
 
   );

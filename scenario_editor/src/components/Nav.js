@@ -1,7 +1,7 @@
 import React from 'react';
 import './Nav.css';
 import {Link} from 'react-router-dom';
-import HomeIcon from "./Images/home-icon.png"
+import HomeIcon from "../Images/home-icon.png"
 
 //The navigation bar component seen in every page. Could shift the list to the left, maybe?
 
