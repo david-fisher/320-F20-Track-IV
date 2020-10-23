@@ -7,14 +7,13 @@ import Dashboard from './Pages/Dashboard';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
-function App() {
-
+export default function App() {
   return (
     <Router>
       <Switch>
         {/* This is a default load-in into the application. */}
-        <Route path="/login" exact component={Login} />
-        <Route path="/" component={Login} />
+        <Route exact path="/login" exact component={Login} />
+        <Route path="/" component={Dashboard} />
 
         {/* The DASHBOARD with be the location of the Drafts, Open, and Closed scenarios for this user */}
         <Route path="/dashboard" component={Dashboard} />
@@ -24,13 +23,8 @@ function App() {
         <Route path="/editor/:id" render={(props) => (
           <Editor {...props} />
         )} />
-
       </Switch>
-
     </Router>
-
   );
 }
 
-
-export default App;

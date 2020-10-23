@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import {
     Container,
-    Box,
     Typography,
     Grid,
 } from '@material-ui/core';
 import ScenarioCard from '../Components/ScenarioCard'
-import Nav from '../Components/Nav'
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

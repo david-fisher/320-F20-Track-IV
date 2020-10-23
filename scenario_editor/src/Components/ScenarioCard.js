@@ -51,6 +51,7 @@ export default function ScenarioCard(props) {
           <Button size="small" color="primary">
             Delete
           </Button>
+
           <Button size="small" color="primary" component={Link} to={{
             pathname: "/data/" + data.id,
             scenarioData: data
