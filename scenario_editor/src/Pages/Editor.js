@@ -9,8 +9,7 @@ import Nav from '../Components/Nav'
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
-function Editor() {
-
+export default function Editor() {
     return (
         <div>
             <Nav />
@@ -36,12 +35,8 @@ function Editor() {
                         </Link>
                     </div>
                 </form>
-
             </div>
         </div>
-
     )
-
 }
 
-export default Editor;

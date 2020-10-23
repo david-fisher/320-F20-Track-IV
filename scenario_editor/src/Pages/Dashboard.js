@@ -152,8 +152,6 @@ export default function Dashboard() {
             {/* Uncomment the line below to see what happens when you call it again */}
             {/* <ScenarioGrid /> */}
 
-
-
         </div>
     );
 }
