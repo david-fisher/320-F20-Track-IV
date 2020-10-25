@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345
+    maxWidth: 345,
   }
 }));
 
@@ -27,7 +27,7 @@ export default function ScenarioCard(props) {
       item
       xs
     >
-      <Card className={classes.root}>
+      <Card raised='true' className={classes.root}>
         <CardActionArea component={Link} to={{
           pathname: "/editor/" + data.id,
           scenarioData: data
