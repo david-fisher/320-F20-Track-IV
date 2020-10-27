@@ -55,7 +55,7 @@ export default function App() {
       {/* This Route will be how we are able to edit individual scenarios in the future
       Have not gotten to implementing the functionality fully yet, but, in essence,
       when the user clicks on a scenario to "Edit", the user will be routed to "/editor/:id", where :id will
-      be the ID of the scenario that was clicked. The use of "props" here will allow for the ID to be accessed.
+      be the ID of the scenario that was clicked. 
       */}
       <Route path="/editor/:id" render={(props) => (
         <Editor {...props} />

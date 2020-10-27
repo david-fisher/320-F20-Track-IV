@@ -29,7 +29,6 @@ import {Link} from 'react-router-dom';
 
 // export default Introduction;
 
-
 const useStateWithLocalStorage = localStorageKey => {
   const [value, setValue] = React.useState(
     localStorage.getItem(localStorageKey) || ''

@@ -24,13 +24,18 @@ const useStyles = makeStyles((theme) => ({
     container: {
         marginTop: theme.spacing(1),
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
 
     },
     grid: {
         justify: 'flex-start',
         flexGrow: 0,
-        flexWrap: 'nowrap'
+        flexWrap: 'nowrap',
+        flexDirection: 'column'
+    },
+    div: {
+        // display:'inline-block'
+        margin: 10
     }
 
 }));
@@ -85,47 +90,53 @@ function ScenarioGrid() {
             component="main"
             maxWidth="lg"
         >
-            <Typography variant="h4">
-                Draft Scenarios:
+            <div className={classes.div}>
+                <Typography variant="h4">
+                    Draft Scenarios:
             </Typography>
-            <Grid
-                className={classes.grid}
-                container
-                spacing={2}
-                direction="row"
-            >
-                {/* "draftScenarios", below in brackets, acts like a component 
+                <Grid
+                    className={classes.grid}
+                    container
+                    spacing={2}
+                    direction="row"
+                >
+                    {/* "draftScenarios", below in brackets, acts like a component 
                 (not sure if it is or isn't one, beyond my level of understanding).
                 But since it is currently comprised of a bunch of ScenarioCards that were 
                 assigned to it in our above code, it displays all the ScenarioCards inside "draftScenarios"
                 and uses the styles found in the ScenarioCard.js file                
                 */}
-                {draftScenarios}
-            </Grid>
-            <Typography variant="h4">
-                Open Scenarios:
+                    {draftScenarios}
+                </Grid>
+            </div>
+            <div className={classes.div}>
+                <Typography variant="h4">
+                    Open Scenarios:
             </Typography>
-            <Grid
-                container
-                spacing={2}
-                direction="row"
-                className={classes.grid}
-            >
-                {/* Same as draftScenarios above */}
-                {openScenarios}
-            </Grid>
-            <Typography variant="h4">
-                Closed Scenarios:
+                <Grid
+                    container
+                    spacing={2}
+                    direction="row"
+                    className={classes.grid}
+                >
+                    {/* Same as draftScenarios above */}
+                    {openScenarios}
+                </Grid>
+            </div>
+            <div className={classes.div}>
+                <Typography variant="h4">
+                    Closed Scenarios:
             </Typography>
-            <Grid
-                className={classes.grid}
-                container
-                spacing={2}
-                direction="row"
-            >
-                {/* Same as draftScenarios above */}
-                {closedScenarios}
-            </Grid>
+                <Grid
+                    className={classes.grid}
+                    container
+                    spacing={2}
+                    direction="row"
+                >
+                    {/* Same as draftScenarios above */}
+                    {closedScenarios}
+                </Grid>
+            </div>
         </Container>
     );
 }
