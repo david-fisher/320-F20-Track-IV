@@ -4,7 +4,7 @@
 // We will try to make this work with a ScenarioContext.js context file,
 // after which we should have most of the files / file structures needed to work through everything :)
 // ********************************************
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './Introduction.css';
 import Nav from '../../Components/Nav'
 // import React, { Component } from 'react';
@@ -30,11 +30,11 @@ import {Link} from 'react-router-dom';
 // export default Introduction;
 
 const useStateWithLocalStorage = localStorageKey => {
-  const [value, setValue] = React.useState(
+  const [value, setValue] = useState(
     localStorage.getItem(localStorageKey) || ''
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(localStorageKey, value);
   }, [value]);
 

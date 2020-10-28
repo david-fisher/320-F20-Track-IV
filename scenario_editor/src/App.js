@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from "./Pages/Login"
 import Home from './Pages/Home';
+import Matrix from './Pages/Editor/Matrix';
 import Editor from './Pages/Editor';
 import Dashboard from './Pages/Dashboard';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -47,7 +48,7 @@ export default function App() {
     <Router>
       <Route path="/" to exact component={Login} />
       <Route path="/home" component={Home} />
-      <Route path="/login" component={Login} />
+      <Route path="/matrix" component={Matrix} />
 
       {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
       <Route path="/dashboard" component={Dashboard} />
@@ -57,10 +58,7 @@ export default function App() {
       when the user clicks on a scenario to "Edit", the user will be routed to "/editor/:id", where :id will
       be the ID of the scenario that was clicked. 
       */}
-      <Route path="/editor/:id" render={(props) => (
-        <Editor {...props} />
-      )} />
-
+      <Route path="/editor/:id" component={Editor} />
     </Router>
   </ThemeProvider>
   );

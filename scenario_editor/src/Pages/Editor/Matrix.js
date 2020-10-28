@@ -1,4 +1,4 @@
-import Nav from '../Components/Nav'
+// import Nav from '../Components/Nav'
 import React from 'react';
 import FirstPage from '@material-ui/icons/FirstPage';
 import Search from '@material-ui/icons/Search';
@@ -9,7 +9,8 @@ import LastPage from '@material-ui/icons/LastPage';
 
 import MaterialTable, { MTableBodyRow } from "material-table";
 
-export default function CellEditable() {
+
+export default function Matrix() {
   const { useState } = React;
 
   const tableIcons = {

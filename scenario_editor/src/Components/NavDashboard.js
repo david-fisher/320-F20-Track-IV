@@ -49,6 +49,9 @@ export default function NavDashboard() {
                         <Link to="/build">
                             <li>Build</li>
                         </Link>
+                        <Link to="/matrix">
+                            <li>Matrix</li>
+                        </Link>
 
                     </u1>
                 </Toolbar>

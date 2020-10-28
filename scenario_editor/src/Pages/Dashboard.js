@@ -83,7 +83,8 @@ function ScenarioGrid() {
     );
 
     // This return statement creates and organizes the UI and data above, all inside the ScenarioGrid function
-    // This, however, is not actually rendered. That happens at the bottom of this class 
+    // This, however, is not actually rendered. That happens at the bottom of this class when 
+    // <ScenarioGrid> is called.
     return (
         <Container
             className={classes.container}
