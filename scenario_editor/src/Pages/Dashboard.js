@@ -42,14 +42,14 @@ const useStyles = makeStyles((theme) => ({
 
 //Hardcoded data
 const sampleScenarios = [
-    { scenarioTitle: "Draft 1", className: "CS311", id: '1', draft: false, open: false },
-    { scenarioTitle: "Draft 2", className: "CS311", id: '2', draft: false, open: false },
-    { scenarioTitle: "Draft 3", className: "CS311", id: '3', draft: false, open: false },
-    { scenarioTitle: "What if this draft title is super duper long? How long can it get? Idk we'll see ", className: "CS311", id: '4', draft: false, open: false },
-    { scenarioTitle: "Open 1", className: "CS320", id: '5', draft: true, open: true },
+    { scenarioTitle: "Draft 1", className: "CS311", simulation_id: '1', draft: false, open: false },
+    { scenarioTitle: "Draft 2", className: "CS311", simulation_id: '2', draft: false, open: false },
+    { scenarioTitle: "Draft 3", className: "CS311", simulation_id: '3', draft: false, open: false },
+    { scenarioTitle: "What if this draft title is super duper long? How long can it get? Idk we'll see ", className: "CS311", simulation_id: '4', draft: false, open: false },
+    { scenarioTitle: "Open 1", className: "CS320", simulation_id: '5', draft: true, open: true },
     { scenarioTitle: "This is just a sample mid length title", className: "CS320", id: '6', draft: true, open: true },
-    { scenarioTitle: "Open 3", className: "CS320", id: '8', draft: true, open: true },
-    { scenarioTitle: "Closed 1", className: "CS589", id: '7', draft: true, open: false },
+    { scenarioTitle: "Open 3", className: "CS320", simulation_id: '8', draft: true, open: true },
+    { scenarioTitle: "Closed 1", className: "CS589", simulation_id: '7', draft: true, open: false },
 
 ];
 
@@ -73,13 +73,13 @@ function ScenarioGrid() {
     // What this finally does is takes each scenario's data and creates a ScenarioCard component using that data.
 
     draftScenarios = draftScenarios.map(data =>
-        <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} open={data.closed} />
+        <ScenarioCard data={data} key={data.simulation_id} draft={data.draft} open={data.open} open={data.closed} />
     );
     openScenarios = openScenarios.map(data =>
-        <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} open={data.closed} />
+        <ScenarioCard data={data} key={data.simulation_id} draft={data.draft} open={data.open} open={data.closed} />
     );
     closedScenarios = closedScenarios.map(data =>
-        <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} open={data.closed} />
+        <ScenarioCard data={data} key={data.simulation_id} draft={data.draft} open={data.open} open={data.closed} />
     );
 
     // This return statement creates and organizes the UI and data above, all inside the ScenarioGrid function

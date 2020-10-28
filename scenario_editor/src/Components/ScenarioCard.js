@@ -19,17 +19,17 @@ const useStyles = makeStyles((theme) => ({
 export default function ScenarioCard(props) {
   const classes = useStyles();
   const { data } = props;
-  const { id, scenarioTitle, className, draft, open, closed } = data;
+  const { simulation_id, scenarioTitle, className, draft, open, closed } = data;
 
   return (
     <Grid
-      key={id}
+      key={simulation_id}
       item
       xs
     >
       <Card raised='true' className={classes.root}>
         <CardActionArea component={Link} to={{
-          pathname: "/editor/" + data.id,
+          pathname: "/editor/" + data.simulation_id,
           scenarioData: data
         }}>
           <CardContent>
@@ -43,7 +43,7 @@ export default function ScenarioCard(props) {
         </CardActionArea>
         <CardActions>
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/editor/" + data.id,
+            pathname: "/editor/" + data.simulation_id,
             scenarioData: data
           }}>
             Edit
@@ -51,9 +51,8 @@ export default function ScenarioCard(props) {
           <Button size="small" color="primary">
             Delete
           </Button>
-
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/data/" + data.id,
+            pathname: "/data/" + data.simulation_id,
             scenarioData: data
           }}>
             Data

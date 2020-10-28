@@ -58,7 +58,7 @@ export default function App() {
       when the user clicks on a scenario to "Edit", the user will be routed to "/editor/:id", where :id will
       be the ID of the scenario that was clicked. 
       */}
-      <Route path="/editor/:id" component={Editor} />
+      <Route path="/editor/:simulation_id" component={Editor} />
     </Router>
   </ThemeProvider>
   );

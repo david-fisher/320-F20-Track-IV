@@ -6,6 +6,7 @@ import Nav from '../Components/NavHome'
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
+
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   optionButton: {
-    display: 'inline',
     marginTop: '10px',
     color: '#881c1c',
     textAlign: 'center',
@@ -33,11 +33,18 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: '3px',
     fontSize: '20px',
     backgroundColor: '#881c1c',
-    maxWidth: '300px'
+    maxWidth: '345px',
+    maxHeight: '8em',
   },
+  link: {
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 }));
 
 function Home() {
+
 
   const classes = useStyles();
   return (
@@ -56,19 +63,17 @@ function Home() {
         <div>
           <Button
             className={classes.optionButton}
+            component={Link} to={{ pathname: "/new_scenario" }}
           >
-            <Link to="/new_scenario">
-              Create a New Scenario
-            </Link>
+            Create a New Scenario
           </Button>{' '}
         </div>
         <div>
           <Button
             className={classes.optionButton}
+            component={Link} to={{ pathname: "/dashboard" }}
           >
-            <Link to="/dashboard">
-              View/Edit Existing Scenarios
-            </Link>
+            View/Edit Existing Scenarios
           </Button>
         </div>
       </div>
