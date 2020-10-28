@@ -62,9 +62,9 @@ function ScenarioGrid() {
 
     // Currently, this creates datas trucutres that filter out the hardcoded data above into the 3 different
     // types of scenarios based on the parameters in .filter()
-    let draftScenarios = sampleScenarios.filter(data => (data.draft == false));
-    let openScenarios = sampleScenarios.filter(data => (data.draft == true && data.open == true));
-    let closedScenarios = sampleScenarios.filter(data => (data.draft == true && data.open == false));
+    let draftScenarios = sampleScenarios.filter(data => (data.draft === false));
+    let openScenarios = sampleScenarios.filter(data => (data.draft === true && data.open === true));
+    let closedScenarios = sampleScenarios.filter(data => (data.draft === true && data.open === false));
 
     // Since the 3 scenario variables above currently hold the information of the scenarios assigned to them,
     // the 3 snippets of code below act, in a way, like a loop through each scenario group's scenario data
