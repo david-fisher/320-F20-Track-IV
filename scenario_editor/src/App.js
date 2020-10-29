@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from "./Pages/Login"
 import Home from './Pages/Home';
-import Matrix from './Pages/Editor/Matrix';
+// import Matrix from './Pages/Editor/Matrix';
 import Editor from './Pages/Editor';
 import Dashboard from './Pages/Dashboard';
-import ReduxPage from './Pages/ReduxPage';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+
 
 // TODO: 
 // - Create a Scenario context that can be used to store all of a scenarios data. Will discuss on Sunday best
@@ -49,7 +50,7 @@ export default function App() {
     <Router>
       <Route path="/" to exact component={Login} />
       <Route path="/home" component={Home} />
-      <Route path="/redux" component={ReduxPage} />
+      <Route path="/redux" component={Home} />
 
       {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
       <Route path="/dashboard" component={Dashboard} />
