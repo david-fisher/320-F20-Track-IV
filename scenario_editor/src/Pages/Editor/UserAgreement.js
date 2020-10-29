@@ -1,37 +1,11 @@
-// ********************************************
-// NOT UPDATED. 
-// This was last updated by Tara.
-// We will try to make this work with a ScenarioContext.js context file,
-// after which we should have most of the files / file structures needed to work through everything :)
-// ********************************************
 import React from 'react';
 import './Introduction.css';
 import Nav from '../../Components/Nav'
-// import React, { Component } from 'react';
-//import './Home.css';
-//import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-// 10/13 TRY: commented out original Introduction page components. 
-// feel free to revert back if it makes more sense
-
-// function Introduction() {
-//   return (
-//     <div> 
-//       <Nav/>
-//       <h1>Introduction Page</h1>
-//       <b1 className = "introduction-part">
-//         Add/Edit Your Choice Below:
-//       </b1>  
-//     </div>
-    
-//   );
-// }
-
-// export default Introduction;
 
 const useStateWithLocalStorage = localStorageKey => {
   const [value, setValue] = React.useState(
@@ -45,7 +19,7 @@ const useStateWithLocalStorage = localStorageKey => {
   return [value, setValue];
 };
 
-const Introduction = () => {
+const UserAgreement = () => {
   const [value, setValue] = useStateWithLocalStorage(
     'myValueInLocalStorage'
   );
@@ -68,16 +42,16 @@ const Introduction = () => {
       <div> 
          <Nav/>
          <form className={classes.root} noValidate autoComplete="off">
-         <h1>  Introduction </h1>
+         <h1>  User Agreement </h1>
          {/* <b1>  Scenario Title:</b1> */}
          
              <TextField 
               multiline
               fullWidth
-              id="introduction" 
-              label="Introduction" 
+              id="userAgreement" 
+              label="User Agreement" 
               variant="outlined" 
-              placeholder='Enter introduction here'
+              placeholder='Enter user agreement here'
               value={value}
               onChange={onChange}
               style={{ 
@@ -93,7 +67,7 @@ const Introduction = () => {
             <div className={classes.root}>   
             <div>
             <Button  
-            component={ Link } to="/player-responses"
+            component={ Link } to="/introduction"
             variant="contained" 
             color="primary" 
             href="#contained-buttons"
@@ -109,31 +83,12 @@ const Introduction = () => {
             >
             Submit
           </Button>
-          </div>
-              {/* <Link to = "/user-agreement">
-                <Button
-                size = "custom-submit-button"
-                variant="outline-secondary"
-                value = "Submit"
-                >
-                  Submit
-                </Button>{' '}
-              </Link> */}
+             
             </div>
-  
-  
-         {/* <input 
-         className="TRY-type"
-         value={value} 
-         type="text" 
-         onChange={onChange}
-         size = "element.value.length + 1"
-        //  size="TRY-custom-size" */}
-         {/* /> */}
-         {/* <input value={value} type="text" onChange={onChange}/> */}
-       
+
+       </div>
        </div>
       
     );
   };
-  export default Introduction;
+  export default UserAgreement;

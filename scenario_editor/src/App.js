@@ -6,6 +6,12 @@ import Editor from './Pages/Editor';
 import Dashboard from './Pages/Dashboard';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import NewScenario from './Pages/Editor/NewScenario';
+import Introduction from './Pages/Editor/Introduction';
+import PlayerResponses from './Pages/Editor/PlayerResponses';
+import UserAgreement from './Pages/Editor/UserAgreement';
+import Conversations from './Pages/Editor/Conversations';
+import Matrix from './Pages/Editor/Matrix';
 
 // TODO: 
 // - Create a Scenario context that can be used to store all of a scenarios data. Will discuss on Sunday best
@@ -48,7 +54,12 @@ export default function App() {
       <Route path="/" to exact component={Login} />
       <Route path="/home" component={Home} />
       <Route path="/login" component={Login} />
-
+      <Route path="/new_scenario" component={NewScenario} />
+      <Route path="/introduction" component={Introduction} />
+      <Route path="/player-responses" component={PlayerResponses} />
+      <Route path="/user-agreement" component={UserAgreement} />
+      <Route path="/conversations" component={Conversations} />
+      <Route path="/matrix" component={Matrix} />
       {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
       <Route path="/dashboard" component={Dashboard} />
 
