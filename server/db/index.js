@@ -91,7 +91,7 @@ exports.getIntialReflectionQuestions = function (token) {
   return [];
 }
 
-// have to work on this 
+// have to work on this
 exports.getStudentName = function (token) {
   /**
    * /simulation/:simulation_id/initial-reflection/answers
@@ -162,7 +162,7 @@ exports.getStudentExplanation = function (token) {
 
 exports.getStakeHolderSummary = function (token) {
   /**
-   * /simulation/:simulation_id/stakeholders/description 
+   * /simulation/:simulation_id/stakeholders/description
   */
   return "";
 }
@@ -170,7 +170,7 @@ exports.getStakeHolderSummary = function (token) {
 exports.getStakeHolder_ids = function (token) {
   // an list of ids
   /**
-  
+
   /simulation/:simulation_id/stakeholders/answers
   */
   return []
