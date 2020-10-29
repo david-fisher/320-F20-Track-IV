@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import Matrix from './Pages/Editor/Matrix';
 import Editor from './Pages/Editor';
 import Dashboard from './Pages/Dashboard';
+import ReduxPage from './Pages/ReduxPage';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
@@ -48,7 +49,7 @@ export default function App() {
     <Router>
       <Route path="/" to exact component={Login} />
       <Route path="/home" component={Home} />
-      <Route path="/matrix" component={Matrix} />
+      <Route path="/redux" component={ReduxPage} />
 
       {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
       <Route path="/dashboard" component={Dashboard} />
