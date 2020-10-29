@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from "./Pages/Login"
 import Home from './Pages/Home';
-// import Matrix from './Pages/Editor/Matrix';
+import Matrix from './Pages/Editor/Matrix';
 import Editor from './Pages/Editor';
 import Dashboard from './Pages/Dashboard';
+import Introduction from './Pages/Editor/Introduction';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+
+import { Provider } from 'react-redux'
+import store from './Store'
 
 
 // TODO: 
@@ -37,32 +41,37 @@ const theme = createMuiTheme({
       main: "#881c1c" //The red color that UMass uses
     },
     secondary: {
-      main: "#881c1c" 
+      main: "#881c1c"
     }
   },
 });
 
+window.store = store;
+
 export default function App() {
   return (
-  // The ThemeProvider is wrapped around our Router below, and thus will be able to affect everything between
-  // the ThemeProvider's tags
-  <ThemeProvider theme={theme}>
-    <Router>
-      <Route path="/" to exact component={Login} />
-      <Route path="/home" component={Home} />
-      <Route path="/redux" component={Home} />
+    // The ThemeProvider is wrapped around our Router below, and thus will be able to affect everything between
+    // the ThemeProvider's tags
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Router>
+          <Route path="/" to exact component={Login} />
+          <Route path="/home" component={Home} />
+          <Route path="/introduction" component={Introduction} />
+          <Route path="/matrix" component={Matrix} />
 
-      {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
-      <Route path="/dashboard" component={Dashboard} />
+          {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
+          <Route path="/dashboard" component={Dashboard} />
 
-      {/* This Route will be how we are able to edit individual scenarios in the future
+          {/* This Route will be how we are able to edit individual scenarios in the future
       Have not gotten to implementing the functionality fully yet, but, in essence,
       when the user clicks on a scenario to "Edit", the user will be routed to "/editor/:id", where :id will
       be the ID of the scenario that was clicked. 
       */}
-      <Route path="/editor/:simulation_id" component={Editor} />
-    </Router>
-  </ThemeProvider>
+          <Route path="/editor/:simulation_id" component={Editor} />
+        </Router>
+      </Provider>
+    </ThemeProvider>
   );
 }
 

@@ -29,7 +29,7 @@ export default function ScenarioCard(props) {
     >
       <Card raised='true' className={classes.root}>
         <CardActionArea component={Link} to={{
-          pathname: "/editor/" + data.simulation_id,
+          pathname: "/introduction/" + data.simulation_id,
           scenarioData: data
         }}>
           <CardContent>
@@ -43,7 +43,7 @@ export default function ScenarioCard(props) {
         </CardActionArea>
         <CardActions>
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/editor/" + data.simulation_id,
+            pathname: "/introduction/" + data.simulation_id,
             scenarioData: data
           }}>
             Edit
@@ -52,7 +52,7 @@ export default function ScenarioCard(props) {
             Delete
           </Button>
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/data/" + data.simulation_id,
+            pathname: "/introduction/" + data.simulation_id,
             scenarioData: data
           }}>
             Data

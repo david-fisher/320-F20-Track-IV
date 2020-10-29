@@ -4,96 +4,106 @@
 // We will try to make this work with a ScenarioContext.js context file,
 // after which we should have most of the files / file structures needed to work through everything :)
 // ********************************************
-import React, {useState, useEffect} from 'react';
+
+
+import React, { Component, useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import './Introduction.css';
-import Nav from '../../Components/Nav'
+import NavDashboard from '../../Components/NavDashboard'
 // import React, { Component } from 'react';
 //import './Home.css';
-import Button from 'react-bootstrap/Button';
-import {Link} from 'react-router-dom';
-// 10/13 TRY: commented out original Introduction page components. 
-// feel free to revert back if it makes more sense
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// function Introduction() {
-//   return (
-//     <div> 
-//       <Nav/>
-//       <h1>Introduction Page</h1>
-//       <b1 className = "introduction-part">
-//         Add/Edit Your Choice Below:
-//       </b1>  
-//     </div>
+
+const useStyles = makeStyles((theme) => ({
+  multiText: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
+
+
+
+
+class Introduction extends Component {
+
+  // const classes = useStyles();
+  constructor() {
+    super()
+    this.state = {
+      value: '',
+      postId: 2
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value })
+  }
+
+
+  // If you'd like your changes to persist (stay in place after page refresh), 
+  // you'd want to add your new posts to a database within your reducer function's action handlers.
+  handleSubmit(event) {
+    alert('Content submitted: ' + this.state.value)
+    event.preventDefault()
+    this.props.dispatch({
+      type: 'ADD_POST',
+      payload: { id: this.state.postId, title: this.state.value }
+    })
     
-//   );
-// }
+    this.setState({ postId: this.state.postId + 1 })
+  }
 
-// export default Introduction;
 
-const useStateWithLocalStorage = localStorageKey => {
-  const [value, setValue] = useState(
-    localStorage.getItem(localStorageKey) || ''
-  );
-
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, value);
-  }, [value]);
-
-  return [value, setValue];
-};
-
-const App = () => {
-  const [value, setValue] = useStateWithLocalStorage(
-    'myValueInLocalStorage'
-  );
-
-  const onChange = event => setValue(event.target.value);
-
-  return (
-    <div> 
-       <Nav/>
-       <h1>Introduction Page</h1>
-       <b1 className = "introduction-part">
-         
+  render() {
+    return (
+      <div>
+        <NavDashboard />
+        <h1>Introduction Page</h1>
+        <b1 className="introduction-part">
           Add/Edit Your Introduction Below:
-       </b1>  
+        </b1>
 
-       <form>
-              <textarea 
-              // rows = '15' 
-              // cols = '75' 
-              className="custom-textbox-size"
-              value={value} 
-              type="text" 
-              onChange={onChange} 
-              size="custom-textbox-size" />
-              {/* <input type='submit' value = 'submit'/> */}
-          </form>
-
-          <div class="Introduction-submit-button">   
-          {/* <div> */}
-            <Link to = "/player-responses">
-              <Button
-              size = "custom-submit-button"
-              variant="outline-secondary"
-              value = "Submit"
-              >
-                Submit
-              </Button>{' '}
-            </Link>
+        <div>
+          <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+            <textarea rows='15' cols='75' value={this.state.value} onChange={this.handleChange} />
+          </form >
+          <div>
+            <Button type="submit" onClick={this.handleSubmit}>SAVE</Button>
           </div>
+          <h4>
+            {this.state.value}
+          </h4>
+          <h4>
+            {this.props.posts[0].title}
+          </h4>
+        </div>
+      </div>
 
+    )
+  }
 
-       {/* <input 
-       className="TRY-type"
-       value={value} 
-       type="text" 
-       onChange={onChange}
-       size = "element.value.length + 1"
-      //  size="TRY-custom-size" */}
-       {/* /> */}
-       {/* <input value={value} type="text" onChange={onChange}/> */}
-     </div>
-    
-  );
-};
-export default App;
+}
+
+const mapStateToProps = state => {
+  return { posts: state.posts }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+// The connect function takes another function as an argument: mapStateToProps. 
+// mapStateToProps determines what state from our store we want to pull into our component. 
+// In this case, we're specifying to only pull our state's posts property.
+
+export default connect(mapStateToProps, mapDispatchToProps)(Introduction);
