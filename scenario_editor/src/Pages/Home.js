@@ -5,10 +5,15 @@ import React, { Component } from 'react';
 import Nav from '../Components/NavHome'
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(4),
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    width: '100ch',
+},
   header: {
     marginTop: theme.spacing(1),
     textAlign: 'center',
@@ -29,11 +34,12 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     fontWeight: '500',
     borderStyle: 'solid',
-    borderColor: 'black',
     borderWidth: '3px',
     fontSize: '20px',
     backgroundColor: '#881c1c',
-    maxWidth: '300px'
+    //maxWidth: '800px'
+    width: '500px',
+    height: '200px'
   },
 }));
 
@@ -47,9 +53,9 @@ function Home() {
 
         <div >
           <h1>Welcome, User!</h1>
-          <h2>
+          <b1>
             Please select an action below:
-      </h2>
+      </b1>
         </div>
       </div>
       <div className={classes.buttonContainer} >
@@ -57,7 +63,7 @@ function Home() {
           <Button
             className={classes.optionButton}
           >
-            <Link to="/new_scenario">
+            <Link to="/new-scenario">
               Create a New Scenario
             </Link>
           </Button>{' '}

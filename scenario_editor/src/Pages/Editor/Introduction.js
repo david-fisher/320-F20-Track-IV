@@ -47,7 +47,7 @@ const useStateWithLocalStorage = localStorageKey => {
 
 const Introduction = () => {
   const [value, setValue] = useStateWithLocalStorage(
-    'myValueInLocalStorage'
+    'myValue4InLocalStorage'
   );
 
   const onChange = event => setValue(event.target.value);
@@ -91,25 +91,23 @@ const Introduction = () => {
            
   
             <div className={classes.root}>   
-            <div>
             <Button  
             component={ Link } to="/player-responses"
             variant="contained" 
             color="primary" 
             href="#contained-buttons"
             size='medium'
-            alignItems='right'
             style={{ 
+              //display: 'right'
               //marginTop: 10,
               //marginRight: 100,
-              marginLeft: 1100,
+              marginLeft: 1100
               //marginBottom: 100
             }}
             
             >
             Submit
           </Button>
-          </div>
               {/* <Link to = "/user-agreement">
                 <Button
                 size = "custom-submit-button"

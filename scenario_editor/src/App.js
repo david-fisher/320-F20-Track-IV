@@ -54,7 +54,7 @@ export default function App() {
       <Route path="/" to exact component={Login} />
       <Route path="/home" component={Home} />
       <Route path="/login" component={Login} />
-      <Route path="/new_scenario" component={NewScenario} />
+      <Route path="/new-scenario" component={NewScenario} />
       <Route path="/introduction" component={Introduction} />
       <Route path="/player-responses" component={PlayerResponses} />
       <Route path="/user-agreement" component={UserAgreement} />
