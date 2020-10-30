@@ -1,5 +1,8 @@
 git# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+#For some reason node_modules got into the root directory??
+.node_modules
+
 .DS_Store
 # dependencies
 scenario_editor/node_modules
