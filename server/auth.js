@@ -1,7 +1,8 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
-const db = require('./db');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
+const db = require("./db");
+require("dotenv").config();
 
 module.exports = {
   config: () => {
@@ -16,8 +17,8 @@ module.exports = {
     passport.use(
       new LocalStrategy(
         {
-          usernameField: 'username',
-          passwordField: 'password',
+          usernameField: "username",
+          passwordField: "password",
           session: true, // 세션에 저장 여부
         },
         (username, password, cb) => {
@@ -27,10 +28,10 @@ module.exports = {
               return cb(err);
             }
             if (!user) {
-              return cb(null, null, { message: 'Cannot find username' });
+              return cb(null, null, { message: "Cannot find username" });
             }
             if (password !== user.passwordHash) {
-              return cb(null, null, { message: 'Password does not match' });
+              return cb(null, null, { message: "Password does not match" });
             }
             return cb(null, user);
           });
@@ -40,17 +41,19 @@ module.exports = {
   },
 
   isAuthenticated: (req, res, next) => {
+    if (process.env.NODE_ENV === "dev") return next();
     if (req.isAuthenticated()) return next();
-    res.redirect('/login');
+    res.redirect("/login");
   },
 
   isNotAuthenticated: (req, res, next) => {
+    if (process.env.NODE_ENV === "dev") return next();
     if (!req.isAuthenticated()) return next();
-    res.redirect('/');
+    res.redirect("/");
   },
   validateToken: (token) => {
     //this function validates the given token
-    //TODO: implement validation    
+    //TODO: implement validation
     return true;
-  }
+  },
 };
