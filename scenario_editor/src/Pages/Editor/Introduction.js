@@ -10,7 +10,7 @@ import Nav from '../../Components/Nav'
 // import React, { Component } from 'react';
 //import './Home.css';
 //import Button from 'react-bootstrap/Button';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -27,7 +27,7 @@ import Button from '@material-ui/core/Button';
 //         Add/Edit Your Choice Below:
 //       </b1>  
 //     </div>
-    
+
 //   );
 // }
 
@@ -54,61 +54,63 @@ const Introduction = () => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-        margin: theme.spacing(1),
-        marginTop: theme.spacing(4),
-        marginLeft: theme.spacing(4),
-        width: '100ch',
+      margin: theme.spacing(1),
+      marginTop: theme.spacing(4),
+      marginLeft: theme.spacing(4),
+      width: '100ch',
     },
   }));
-  
-    const classes = useStyles();
-  
-    return (
-      
-      <div> 
-         <Nav/>
-         <form className={classes.root} noValidate autoComplete="off">
-         <h1>  Introduction </h1>
-         {/* <b1>  Scenario Title:</b1> */}
-         
-             <TextField 
-              multiline
-              fullWidth
-              id="introduction" 
-              label="Introduction" 
-              variant="outlined" 
-              placeholder='Enter introduction here'
-              value={value}
-              onChange={onChange}
-              style={{ 
-                marginTop: 50}}
-              rows={20}
-              margin="normal"
-                  InputLabelProps={{
-                    shrink: true }}
-              />
-           </form>
-           
-  
-            <div className={classes.root}>   
-            <Button  
-            component={ Link } to="/player-responses"
-            variant="contained" 
-            color="primary" 
-            href="#contained-buttons"
-            size='medium'
-            style={{ 
-              //display: 'right'
-              //marginTop: 10,
-              //marginRight: 100,
-              marginLeft: 1100
-              //marginBottom: 100
-            }}
-            
-            >
-            Submit
+
+  const classes = useStyles();
+
+  return (
+
+    <div>
+      <Nav />
+      <form className={classes.root} noValidate autoComplete="off">
+        <h1>  Introduction </h1>
+        {/* <b1>  Scenario Title:</b1> */}
+
+        <TextField
+          multiline
+          fullWidth
+          id="introduction"
+          label="Introduction"
+          variant="outlined"
+          placeholder='Enter introduction here'
+          value={value}
+          onChange={onChange}
+          style={{
+            marginTop: 50
+          }}
+          rows={20}
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+      </form>
+
+
+      <div className={classes.root}>
+        <Button
+          component={Link} to="/player-responses"
+          variant="contained"
+          color="primary"
+          href="#contained-buttons"
+          size='medium'
+          style={{
+            //display: 'right'
+            //marginTop: 10,
+            //marginRight: 100,
+            marginLeft: 1100
+            //marginBottom: 100
+          }}
+
+        >
+          Submit
           </Button>
-              {/* <Link to = "/user-agreement">
+        {/* <Link to = "/user-agreement">
                 <Button
                 size = "custom-submit-button"
                 variant="outline-secondary"
@@ -117,21 +119,21 @@ const Introduction = () => {
                   Submit
                 </Button>{' '}
               </Link> */}
-            </div>
-  
-  
-         {/* <input 
+      </div>
+
+
+      {/* <input 
          className="TRY-type"
          value={value} 
          type="text" 
          onChange={onChange}
          size = "element.value.length + 1"
         //  size="TRY-custom-size" */}
-         {/* /> */}
-         {/* <input value={value} type="text" onChange={onChange}/> */}
-       
-       </div>
-      
-    );
-  };
-  export default Introduction;
+      {/* /> */}
+      {/* <input value={value} type="text" onChange={onChange}/> */}
+
+    </div>
+
+  );
+};
+export default Introduction;
