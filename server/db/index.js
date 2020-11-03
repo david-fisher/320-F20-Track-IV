@@ -50,7 +50,8 @@ exports.getDraftedSimulations = function (instructor_token) {
 };
 
 exports.getSimulationIntroductionByID = function (token, simulation_id) {
-  if ((simulation = simulations.find((ele) => ele.simulation_id === simulation_id))) {
+  const simulation = simulations.find((ele) => ele.simulation_id === simulation_id);
+  if (simulation) {
     return simulation.introduction;
   } else {
     return 404;
@@ -58,7 +59,8 @@ exports.getSimulationIntroductionByID = function (token, simulation_id) {
 };
 
 exports.setSimulationIntroductionByID = function (token, simulation_id, summary) {
-  if ((simulation = simulations.find((ele) => ele.simulation_id === simulation_id))) {
+  const simulation = simulations.find((ele) => ele.simulation_id === simulation_id);
+  if (simulation) {
     simulation.introduction = summary;
     return 202;
   } else {
