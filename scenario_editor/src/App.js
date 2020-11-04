@@ -12,6 +12,8 @@ import PlayerResponses from './Pages/Editor/PlayerResponses';
 import UserAgreement from './Pages/Editor/UserAgreement';
 import Conversations from './Pages/Editor/Conversations';
 import Matrix from './Pages/Editor/Matrix';
+import MultipleChoice from './Pages/Editor/MultipleChoice';
+import OpenResponse from './Pages/Editor/OpenResponse';
 
 // TODO: 
 // - Create a Scenario context that can be used to store all of a scenarios data. Will discuss on Sunday best
@@ -60,6 +62,8 @@ export default function App() {
       <Route path="/user-agreement" component={UserAgreement} />
       <Route path="/conversations" component={Conversations} />
       <Route path="/matrix" component={Matrix} />
+      <Route path="/multiple-choice" component={MultipleChoice} />
+      <Route path="/open-response" component={OpenResponse} />
       {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
       <Route path="/dashboard" component={Dashboard} />
 
