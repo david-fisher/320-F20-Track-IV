@@ -178,7 +178,7 @@ exports.getStakeHolderSummary = function (token) {
 exports.getStakeHolder_ids = function (token) {
   // an list of ids
   /**
-  
+
   /simulation/:simulation_id/stakeholders/answers
   */
   return [];
