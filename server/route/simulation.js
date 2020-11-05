@@ -21,6 +21,52 @@ router.post("/create", isAuthenticated, (req, res) => {
   });
 });
 
+router.delete("/:simulation_id", isAuthenticated, (req, res) => {
+  const { simulation_id } = req.params;
+  /*
+    TODO: remove saved simulation
+
+    - path parameter
+    * simulation_id: UID of simulation to be removed.
+  */
+  res.status(202);
+  res.json({
+    success: true,
+  });
+});
+
+router.post("/:simulation_id/start", isAuthenticated, (req, res) => {
+  const { simulation_id } = req.params;
+  const { available_to } = req.body;
+  /*
+    TODO: start and open a simulation
+
+    - path parameter
+    * simulation_id: UID of simulation to be opened.
+
+    - request body
+    * available_to: UID of students who can access the simulation.
+  */
+  res.status(202);
+  res.json({
+    success: true,
+  });
+});
+
+router.post("/:simulation_id/close", isAuthenticated, (req, res) => {
+  const { simulation_id } = req.params;
+  /*
+    TODO: close a simulation
+
+    - path parameter
+    * simulation_id: UID of simulation to be closed.
+  */
+  res.status(202);
+  res.json({
+    success: true,
+  });
+});
+
 router.get("/:simulation_id/introduction", isAuthenticated, (req, res) => {
   const ERROR_CODE = BB_ERROR_CODES.ERROR_CODE_SIMULATION_INTRODUCTION; //ERROR CODE FOR DASHBOARD
 
