@@ -68,20 +68,6 @@ exports.setSimulationIntroductionByID = function (token, simulation_id, summary)
   }
 };
 
-exports.getClosedSimulations = function (instructor_token) {
-  /**
-   * http://localhost:3000/api/v1/dashboard
-   */
-  return [];
-};
-
-exports.getDraftedSimulations = function (instructor_token) {
-  /**
-   * http://localhost:3000/api/v1/dashboard
-   */
-  return [];
-};
-
 exports.getSimulationSummary = function (instructor_token) {
   /**
    * /simulation/:simulation_id/introduction
