@@ -25,6 +25,7 @@
     "start-full": "react-scripts build && (cd server && node index.js)",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-server": "mocha server/test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,6 +45,7 @@
   },
   "proxy": "http://localhost:5000/",
   "devDependencies": {
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.6"
   }
 }
