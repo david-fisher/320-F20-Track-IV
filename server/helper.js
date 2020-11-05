@@ -32,7 +32,7 @@ const DEFAULT_HEADERS_FORM_ENTRIES = Object.entries(DEFAULT_HEADERS_FORM);
 module.exports.INVALID_RESPONSE = (code, description) => {
   return {
     "status": code,
-    "error_msg": description
+    "explanation": description
   }
 }
 
