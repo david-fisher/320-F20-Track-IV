@@ -150,29 +150,6 @@ router.put("/:simulation_id/introduction", isAuthenticated, (req, res) => {
   }
 
   //db interface
-  const status = db.setSimulationIntroductionByID(token, req.params.simulation_id, req.body.summary);
-  if (status != 404) {
-    res.send(202);
-  } else {
-    const error_description = `No simulation found with id ${req.params.simulation_id}.`;
-    const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
-    res.json(helper.INVALID_RESPONSE(error_code, error_description));
-  }
-});
-
-router.put("/:simulation_id/introduction", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
-
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  //db interface
   const introduction = db.getSimulationIntroductionByID(token, req.params.simulation_id);
   if (introduction != 404) {
     res.status(202);
