@@ -163,37 +163,6 @@ router.put("/:simulation_id/introduction", isAuthenticated, (req, res) => {
   }
 });
 
-router.put("/:simulation_id/project-task-assignment", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
-
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  const { simulation_id } = req.params;
-  const { description } = req.body;
-
-  /*
-    TODO: Add or update `project-task-assignment` part of simulation
-
-    - path variable:
-    * simulation_id: UID of simuluation whose `project-task-assignment` is updated.
-
-    - request body:
-    * description: content of `project-task-assignment`
-  */
-
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
 router.put("/:simulation_id/initial-reflection", isAuthenticated, (req, res) => {
   const header_validation = helper.VALIDATE_HEADERS(req.headers);
   if (header_validation.status != 202) {
