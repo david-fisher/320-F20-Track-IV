@@ -1,3 +1,4 @@
+const { isAuthenticated, validateToken } = require("./auth");
 const constants = require("./constants.js");
 
 /*
@@ -76,4 +77,13 @@ module.exports.VALIDATE_HEADERS = (headers, form) => {
     return module.exports.INVALID_RESPONSE(error_code, error_description);
   }
   return {"status": 202, "token": token}
+}
+
+module.exports.VALIDATE_AUTHORIZATION = (token) => {
+  if (!validateToken(token)) {
+    const error_code = constants.ERROR_CODE_INVALID_AUTHORIZATION;
+    const error_description = "Invalid authorization token.";
+    return helper.INVALID_RESPONSE(error_code, error_description);
+  }
+  return {"status": 202};
 }
