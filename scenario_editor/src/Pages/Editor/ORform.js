@@ -11,12 +11,11 @@ import { TextField } from "@material-ui/core";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from "material-ui/RaisedButton";
 import Button from '@material-ui/core/Button';
-
+import Grid from '@material-ui/core/Grid';
 
 export default class Form extends React.Component {
   state = {
-    question: "",
-    response: "",
+    ORquestion: "",
   };
 
   change = e => {
@@ -30,35 +29,38 @@ export default class Form extends React.Component {
     e.preventDefault();
     this.props.onSubmit(this.state);
     this.setState({
-      question:"",
-      response: "",
+      ORquestion:"",
     });
   };
   render() {
     return (
        <MuiThemeProvider>
       <form>
+          {/* <Grid item 
+          //xs={10}
+          justify='center'> */}
       <TextField 
-          name="question"
+          name="ORquestion"
           multiline
           fullWidth
-          id="MCquestion" 
-          label="Multiple Choice Question" 
+          id="ORquestion" 
+          label="Open Response Question" 
           variant="outlined" 
-          placeholder='Enter multiple choice question here'
-          value={this.state.question}
+          placeholder='Enter open response question here'
+          value={this.state.ORquestion}
           onChange={e => this.change(e)}
           style={{
-              width: 1000,
-              //margin: 20,
+              width: 1000
+              //alignItems:'center'
             }}
-          rows={15}
-          margin="normal"
+          rows={18}
+          //margin="normal"
               InputLabelProps={{
               shrink: true }}
           />
+          {/* </Grid> */}
           < br />
-        <TextField
+        {/* <TextField
           name="response"
           id="responses"
           label="Question Responses"
@@ -66,7 +68,7 @@ export default class Form extends React.Component {
           placeholder="Enter response here"
           margin="normal"
           style={{
-            // margin: 20,
+            //margin: 8,
             width: 1000
           }}
           value={this.state.response}
@@ -76,10 +78,10 @@ export default class Form extends React.Component {
             //readOnly: true,
             shrink: true
           }}
-          />
+          /> */}
           <br />
           <p> </p>
-          <center>
+        <center>
         <Button
         variant="outlined"
         style={{ 
@@ -87,10 +89,10 @@ export default class Form extends React.Component {
         color: 'white',
         marginRight: 100
         }}
-        
         onClick={e => this.onSubmit(e)}>
           Add Response
           </Button>
+
           <Button  
             variant="contained" 
             color="primary" 
