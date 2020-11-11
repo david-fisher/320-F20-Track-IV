@@ -63,14 +63,18 @@ function PlayerResponses() {
           <Button
             className={classes.optionButton}
           >
+            <Link to="/multiple-choice">
             Create Multiple Choice Response
+            </Link>
           </Button>{' '}
         </div>
         <div>
           <Button
             className={classes.optionButton}
           >
+            <Link to="/open-response">
             Create Open-Ended Response
+            </Link>
           </Button>
         </div>
       </div>
