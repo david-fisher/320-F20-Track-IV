@@ -21,7 +21,7 @@ const useStateWithLocalStorage = localStorageKey => {
 
 const UserAgreement = () => {
   const [value, setValue] = useStateWithLocalStorage(
-    'myValueInLocalStorage'
+    'RS_SCENARIO__user_agreement'
   );
 
   const onChange = event => setValue(event.target.value);
@@ -34,27 +34,27 @@ const UserAgreement = () => {
         width: '100ch',
     },
   }));
-  
+
     const classes = useStyles();
-  
+
     return (
-      
-      <div> 
+
+      <div>
          <Nav/>
          <form className={classes.root} noValidate autoComplete="off">
          <h1>  User Agreement </h1>
          {/* <b1>  Scenario Title:</b1> */}
-         
-             <TextField 
+
+             <TextField
               multiline
               fullWidth
-              id="userAgreement" 
-              label="User Agreement" 
-              variant="outlined" 
+              id="userAgreement"
+              label="User Agreement"
+              variant="outlined"
               placeholder='Enter user agreement here'
               value={value}
               onChange={onChange}
-              style={{ 
+              style={{
                 marginTop: 50}}
               rows={20}
               margin="normal"
@@ -62,33 +62,33 @@ const UserAgreement = () => {
                     shrink: true }}
               />
            </form>
-           
-  
-            <div className={classes.root}>   
+
+
+            <div className={classes.root}>
             <div>
-            <Button  
+            <Button
             component={ Link } to="/introduction"
-            variant="contained" 
-            color="primary" 
+            variant="contained"
+            color="primary"
             href="#contained-buttons"
             size='medium'
             alignItems='right'
-            style={{ 
+            style={{
               //marginTop: 10,
               //marginRight: 100,
               marginLeft: 1100,
               //marginBottom: 100
             }}
-            
+
             >
             Submit
           </Button>
-             
+
             </div>
 
        </div>
        </div>
-      
+
     );
   };
   export default UserAgreement;

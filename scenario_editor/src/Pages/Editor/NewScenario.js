@@ -1,12 +1,12 @@
 // ********************************************
-// NOT UPDATED. 
+// NOT UPDATED.
 // You can follow Dashboard.js if you want to make this page though :)
-// Recommend looking into 
+// Recommend looking into
 // ********************************************
 import React, { Component } from 'react';
 import './NewScenario.css';
 import Nav from '../../Components/Nav'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 //import Button from 'react-bootstrap/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,11 +36,13 @@ const useStateWithLocalStorage3 = localStorageKey => {
 };
 
 const NewScenario = () => {
-  const [value2, setValue2] = useStateWithLocalStorage('myValueInLocalStorage');
-  const [value3, setValue3] = useStateWithLocalStorage('myValueInLocalStorage');
+  // const history = useHistory();
 
-  const onChange2 = event => setValue2(event.target.value2);
-  const onChange3 = event => setValue3(event.target.value3);
+  const [value2, setValue2] = useStateWithLocalStorage('RS_SCENARIO__title');
+  const [value3, setValue3] = useStateWithLocalStorage('RS_SCENARIO__description');
+
+  const onChange2 = event => setValue2(event.target.value);
+  const onChange3 = event => setValue3(event.target.value);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,21 +52,21 @@ const NewScenario = () => {
         width: '100ch',
     },
   }));
-  
+
     const classes = useStyles();
-  
+
   return (
-    <div> 
+    <div>
        <Nav/>
        <form className={classes.root} noValidate autoComplete="off">
        <h1>  Create New Scenario</h1>
        {/* <b1>  Scenario Title:</b1> */}
-       <TextField 
-       id="title" 
-       label="Scenario Title" 
-       variant="outlined" 
+       <TextField
+       id="title"
+       label="Scenario Title"
+       variant="outlined"
        placeholder='Enter scenario title here'
-       style={{ 
+       style={{
          width: '50ch'}}
        value={value2}
        onChange={onChange2}
@@ -72,52 +74,52 @@ const NewScenario = () => {
           InputLabelProps={{
             shrink: true }}
        />
-           <TextField 
+           <TextField
             multiline
             fullWidth
-            id="description" 
-            label="Scenario Description" 
-            variant="outlined" 
+            id="description"
+            label="Scenario Description"
+            variant="outlined"
             placeholder='Enter scenario description here'
             value={value3}
             onChange={onChange3}
-            style={{ 
+            style={{
               marginTop: 75}}
             rows={10}
             margin="normal"
                 InputLabelProps={{
                   shrink: true }}
             />
-           {/* <input 
-           type='text' 
-           id='title' 
-           size="element.value.length + 1" 
+           {/* <input
+           type='text'
+           id='title'
+           size="element.value.length + 1"
            value={value}
 
            onChange={onChange} /> */}
          </form>
-         <div className={classes.root}>   
+         <div className={classes.root}>
             <div>
-            <Button  
+            <Button
             component={ Link } to="/user-agreement"
-            variant="contained" 
-            color="primary" 
+            variant="contained"
+            color="primary"
             href="#contained-buttons"
             size='medium'
             alignItems='right'
-            style={{ 
+            style={{
               //marginTop: 10,
               //marginRight: 100,
               marginLeft: 1100,
               //marginBottom: 100
             }}
-            
+
             >
             Submit
           </Button>
           </div>
 
-          {/* <div class="Introduction-submit-button">   
+          {/* <div class="Introduction-submit-button">
           {/* <div> */}
             {/* <Link to = "/user-agreement">
               <Button
@@ -131,17 +133,17 @@ const NewScenario = () => {
           </div>
 
 
-       {/* <input 
+       {/* <input
        className="TRY-type"
-       value={value} 
-       type="text" 
+       value={value}
+       type="text"
        onChange={onChange}
        size = "element.value.length + 1"
       //  size="TRY-custom-size" */}
        {/* /> */}
        {/* <input value={value} type="text" onChange={onChange}/> */}
      </div>
-    
+
   );
 };
 export default NewScenario;

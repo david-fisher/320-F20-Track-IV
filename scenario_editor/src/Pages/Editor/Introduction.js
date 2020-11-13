@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Suneditor, {buttonList}from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -38,20 +39,23 @@ class Introduction extends Component {
     this.state = {
       value: '',
       scenarioID: 2,
-      contents: ''
+      contents: '',
+      scenario_title: localStorage.getItem("RS_SCENARIO__title"),
+      scenario_desc: localStorage.getItem("RS_SCENARIO__description"),
+      scenario_ua: localStorage.getItem("RS_SCENARIO__user_agreement"),
     }
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleEditorChange = this.handleEditorChange.bind(this)
-    this.handleEditorSubmit = this.handleEditorSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value })
   }
 
-  // If you'd like your changes to persist (stay in place after page refresh), 
+  // If you'd like your changes to persist (stay in place after page refresh),
   // you'd want to add your new posts to a database within your reducer function's action handlers.
   handleSubmit(event) {
     alert('Content submitted' /*+ this.state.value*/)
@@ -63,19 +67,33 @@ class Introduction extends Component {
 
     this.setState({ scenarioID: this.state.scenarioID + 1 })
   }
-  
+
   handleEditorChange(event) {
     this.setState({contents: event})
   }
 
   handleEditorSubmit(event) {
-    alert("Content has been submitted")
-    event.preventDefault()
-    this.props.dispatch({
-      type: 'ADD_SCENARIO',
-      payload: { id: this.state.scenarioID, title: this.state.contents }
-    })
-    this.setState({scenarioID: this.state.scenarioID + 1})
+    // alert("Content has been submitted")
+    const headers = {
+      'Authorization': `Bearer ${this.props.token}`,
+      'Accept': 'application/json'
+    }
+    event.preventDefault();
+    axios.post(`http://4acf3d2e295e.ngrok.io/api/v1/simulation/create`, {
+      simulation_title: this.state.scenario_title,
+      simulation_desc: this.state.scenario_desc,
+      simulation_introduction: this.state.contents,
+      simulation_ua: this.state.scenario_ua
+    }, {headers: headers}).then(res => {
+      // debugger;
+      alert(`Simulation ID: ${res.data.simulation_id}`)
+    });
+
+    // this.props.dispatch({
+    //   type: 'ADD_SCENARIO',
+    //   payload: { id: this.state.scenarioID, title: this.state.contents }
+    // })
+    // this.setState({scenarioID: this.state.scenarioID + 1})
   }
 
 
@@ -91,7 +109,7 @@ class Introduction extends Component {
         </b1>
         <div></div>
         <b2 className="text-editor">
-          
+
             <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions = {{
             height: 600,
             width: '100%',
@@ -100,9 +118,9 @@ class Introduction extends Component {
             placeholder: "Insert your introduction text here..."
 
           }}/>
-          
+
         </b2>
-        <b2 className="second-body">      
+        <b2 className="second-body">
         <div>
           <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
         </div>
@@ -114,12 +132,12 @@ class Introduction extends Component {
             <Button type="submit" onClick={this.handleSubmit}>SAVE</Button>
           </div>
           /*//*{/* className={classes.root} *//*}
-          
+
           <h4>
             This is the local state value before it gets "posted": {" "}
             {this.state.value}
           </h4>
-          
+
           <h4>
             This is a map of the "posts" in our redux store: {" "}
             {this.props.posts.map(post => (
@@ -128,7 +146,7 @@ class Introduction extends Component {
           </h4>
             */}
           <h4>
-            This is the local state value of suneditor before it gets "posted": 
+            This is the local state value of suneditor before it gets "posted":
             <SunEditor
               disable={true}
               setContents={this.state.contents}
@@ -159,7 +177,7 @@ class Introduction extends Component {
 }
 
 const mapStateToProps = state => {
-  return { scenarios: state.scenarios }
+  return { scenarios: state.scenarios, token: state.token }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -168,8 +186,8 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-// The connect function takes another function as an argument: mapStateToProps. 
-// mapStateToProps determines what state from our store we want to pull into our component. 
+// The connect function takes another function as an argument: mapStateToProps.
+// mapStateToProps determines what state from our store we want to pull into our component.
 // In this case, we're specifying to only pull our state's posts property.
 
 export default connect(mapStateToProps, mapDispatchToProps)(Introduction);

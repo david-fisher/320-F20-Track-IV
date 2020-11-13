@@ -5,7 +5,7 @@ const initialState = {
 
   // // Testing out a potential scenario structure. Going to try not to over think it.
   // // Notes:
-  // // I think this can create an initial one with empty values. 
+  // // I think this can create an initial one with empty values.
   // // Do we even need anything here? Maybe we can "add" values to the individual object?
   // // Lowkey might need to just preset the scenario data as empty at first. Then update from there.
   // scenarios: [{ id: 0, title: '', description: '' }],
@@ -33,6 +33,13 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         scenarios: state.scenarios.concat(action.payload)
       })
+    case 'SET_TOKEN':
+      return state = {
+        ...state,
+        token: action.token
+      }
+    default:
+      return state
 
   }
 
