@@ -1,3 +1,6 @@
+const { isAuthenticated, validateToken } = require("./auth");
+const constants = require("./constants.js");
+
 /*
   =========================================================================
   -------------------------------------------------------------------------
@@ -32,7 +35,7 @@ const DEFAULT_HEADERS_FORM_ENTRIES = Object.entries(DEFAULT_HEADERS_FORM);
 module.exports.INVALID_RESPONSE = (code, description) => {
   return {
     "status": code,
-    "error_msg": description
+    "explanation": description
   }
 }
 
@@ -43,7 +46,8 @@ module.exports.INVALID_HEADERS = (headers, form) => {
   }).map(header => header[0])
 }
 
-module.exports.VALIDATE_HEADERS = (headers, ERROR_CODE, form) => {
+module.exports.VALIDATE_HEADERS = (headers, form) => {
+  let error_code = constants.ERROR_CODE_MISSING_HEADER;
   let error_description = "Authorization error."    //Default error description
   let prefix, token;
   let auth_header = headers["Authorization"] || headers["authorization"];
@@ -54,20 +58,32 @@ module.exports.VALIDATE_HEADERS = (headers, ERROR_CODE, form) => {
     if( ([prefix, token] = auth_header.split(" ")).length == 2){ //format is "Bearer {token}"?
       if(!(prefix.toLowerCase() == "bearer")){ //authorization is malformed?
         error_description = "Invalid authorization format. Method requires Bearer token."
-        return module.exports.INVALID_RESPONSE(ERROR_CODE, error_description);
+        error_code = constants.ERROR_CODE_INVALID_AUTHORIZATION;
+        return module.exports.INVALID_RESPONSE(error_code, error_description);
       }
     }else{ //if not, return and provide error description
       error_description = "Invalid authorization format. Method requires Bearer token."
-      return module.exports.INVALID_RESPONSE(ERROR_CODE, error_description);
+      error_code = constants.ERROR_CODE_INVALID_AUTHORIZATION;
+      return module.exports.INVALID_RESPONSE(error_code, error_description);
     }
   }else{
     error_description = "No authorization header. Please check documentation if error persists."
-    return module.exports.INVALID_RESPONSE(ERROR_CODE, error_description);
+    error_code = constants.ERROR_CODE_MISSING_AUTHORIZATION;
+    return module.exports.INVALID_RESPONSE(error_code, error_description);
   }
 
   if( (missingHeaders = module.exports.INVALID_HEADERS(headers, form)).length){
     error_description = `Invalid header(s): ${missingHeaders.join(", ")}`
-    return module.exports.INVALID_RESPONSE(ERROR_CODE, error_description);
+    return module.exports.INVALID_RESPONSE(error_code, error_description);
   }
   return {"status": 202, "token": token}
+}
+
+module.exports.VALIDATE_AUTHORIZATION = (token) => {
+  if (!validateToken(token)) {
+    const error_code = constants.ERROR_CODE_INVALID_AUTHORIZATION;
+    const error_description = "Invalid authorization token.";
+    return helper.INVALID_RESPONSE(error_code, error_description);
+  }
+  return {"status": 202};
 }
