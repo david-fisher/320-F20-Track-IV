@@ -111,6 +111,62 @@ router.post("/:simulation_id/close", isAuthenticated, (req, res) => {
   });
 });
 
+router.get("/:simulation_id/description", isAuthenticated, async (req, res) => {
+  const ERROR_CODE = 50650;
+  const header_validation = helper.VALIDATE_HEADERS(req.headers);
+  if (header_validation.status != 202) {
+    return res.json(header_validation);
+  }
+
+  const token = header_validation.token;
+  const authorization = helper.VALIDATE_AUTHORIZATION(token);
+  if (header_validation.status != 202) {
+    return res.json(authorization);
+  }
+
+  //db interface
+  const description = await db.getSimulationDescription(req.params.simulation_id);
+  console.log(description)
+  if (description != 404) {
+    res.status(202);
+    res.json({
+      description: description,
+    });
+  } else {
+    const error_description = `No simulation found with id ${req.params.simulation_id}.`;
+    const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
+    res.json(helper.INVALID_RESPONSE(ERROR_CODE, error_description));
+  }
+});
+
+router.put("/:simulation_id/description", isAuthenticated, async (req, res) => {
+  const ERROR_CODE = 50650;
+  const header_validation = helper.VALIDATE_HEADERS(req.headers);
+  if (header_validation.status != 202) {
+    return res.json(header_validation);
+  }
+
+  const token = header_validation.token;
+  const authorization = helper.VALIDATE_AUTHORIZATION(token);
+  if (header_validation.status != 202) {
+    return res.json(authorization);
+  }
+
+  //db interface
+  const description = req.body.description;
+  let response = await db.setSimulationDescription(req.params.simulation_id, description);
+  if (response != 404) {
+    res.status(202);
+    res.json({
+      description: description,
+    });
+  } else {
+    const error_description = `No simulation found with id ${req.params.simulation_id}.`;
+    const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
+    res.json(helper.INVALID_RESPONSE(ERROR_CODE, error_description));
+  }
+});
+
 router.get("/:simulation_id/introduction", isAuthenticated, (req, res) => {
   const header_validation = helper.VALIDATE_HEADERS(req.headers);
   if (header_validation.status != 202) {
@@ -124,7 +180,8 @@ router.get("/:simulation_id/introduction", isAuthenticated, (req, res) => {
   }
 
   //db interface
-  const introduction = db.getSimulationIntroductionByID(token, req.params.simulation_id);
+  const introduction = db.getSimulationIntroduction(req.params.simulation_id);
+  console.log(introduction)
   if (introduction != 404) {
     res.status(202);
     res.json({

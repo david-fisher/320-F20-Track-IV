@@ -1,3 +1,5 @@
+const db = require("../models");
+
 exports.users = require("./users");
 
 //hardcoded json data
@@ -48,6 +50,29 @@ exports.getClosedSimulations = function (instructor_token) {
 exports.getDraftedSimulations = function (instructor_token) {
   return simulations.filter((item) => item.status == 1);
 };
+
+exports.getSimulationIntroduction = (simulation_id) => {
+  let introduction = "";
+  db
+    .query('SELECT * FROM scenario WHERE id=$1', [simulation_id])
+    .then(res => {introduction = res.rows[0].introduction;})
+    .catch(err => console.error('Error executing query', err.stack));
+  if(!introduction){
+    return 404;
+  }else{
+    return introduction;
+  }
+}
+
+exports.getSimulationDescription = async (simulation_id) => {
+  const { rows } = await db.query('SELECT * FROM scenario WHERE id=$1', [simulation_id])
+  return rows[0].description;
+}
+
+exports.setSimulationDescription = async (simulation_id, description) => {
+  const { rows } = await db.query('UPDATE scenario SET description=$1 WHERE id=$2', [description, simulation_id])
+  return rows[0];
+}
 
 exports.getSimulationIntroductionByID = function (token, simulation_id) {
   const simulation = simulations.find((ele) => ele.simulation_id === simulation_id);

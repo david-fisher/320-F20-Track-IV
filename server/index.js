@@ -10,11 +10,7 @@ const bodyParser = require("body-parser");
 const __VERSION = process.env.__VERSION || 1;
 
 const app = express();
-<<<<<<< HEAD
 app.use(session({ secret: process.env.__secretSessionCode, resave: true, saveUninitialized: false }));
-=======
-app.use(session({ secret: "secret code", resave: true, saveUninitialized: false }));
->>>>>>> f906db24abce81445a8a47777c857e8501594285
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
