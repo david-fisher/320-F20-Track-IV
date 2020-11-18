@@ -125,6 +125,9 @@ class Introduction extends Component {
           <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
         </div>
         <div>
+            <Button type="submit"component={ Link } to="/player-responses">NEXT</Button>
+          </div>
+        <div>
           {/**<form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
             <textarea rows='15' cols='75' value={this.state.value} onChange={this.handleChange} />
           </form >

@@ -25,6 +25,47 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 class MultipleChoice extends Component {
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     value: '',
+  //     scenarioID: 2,
+  //     contents: '',
+  //     scenario_title: localStorage.getItem("RS_SCENARIO__title"),
+  //     scenario_desc: localStorage.getItem("RS_SCENARIO__description"),
+  //     scenario_ua: localStorage.getItem("RS_SCENARIO__user_agreement"),
+  //   }
+  //   this.handleEditorChange = this.handleEditorChange.bind(this);
+  //   this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
+  // }
+  // handleEditorChange(event) {
+  //   this.setState({contents: event})
+  // }
+
+  // handleEditorSubmit(event) {
+  //   // alert("Content has been submitted")
+  //   const headers = {
+  //     'Authorization': `Bearer ${this.props.token}`,
+  //     'Accept': 'application/json'
+  //   }
+  //   event.preventDefault();
+  //   axios.post(`http://4acf3d2e295e.ngrok.io/api/v1/simulation/create`, {
+  //     simulation_title: this.state.scenario_title,
+  //     simulation_desc: this.state.scenario_desc,
+  //     simulation_introduction: this.state.contents,
+  //     simulation_ua: this.state.scenario_ua
+  //   }, {headers: headers}).then(res => {
+  //     // debugger;
+  //     alert(`Simulation ID: ${res.data.simulation_id}`)
+  //   });
+
+  //   // this.props.dispatch({
+  //   //   type: 'ADD_SCENARIO',
+  //   //   payload: { id: this.state.scenarioID, title: this.state.contents }
+  //   // })
+  //   // this.setState({scenarioID: this.state.scenarioID + 1})
+  // }
+
   state = {
     // fields: {}
     data: [],
