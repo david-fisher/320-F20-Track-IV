@@ -30,9 +30,6 @@ import store from './Store'
 // - Figure out how to do a conversation matrix or find a workaround (finger's crossed)
 
 // TIPS:
-// - If you are confused on "functional" vs "class" files just look at Editor.js and NewScenario.js as they are
-//   the same thing except Editor.js is a function and NewScenario.js is a class. Notice how Editor.js can take
-//   in parameters if needed, while NewScenario.js cannot. 
 // - At the top of some of the pages I made a note if it will be used in the future AS IS or needs to be changed
 // - The best structures to follow (I think) are currently that of Dashboard.js and ScenarioCard.js, as it uses 
 //   most of what is needed, except for saving state.

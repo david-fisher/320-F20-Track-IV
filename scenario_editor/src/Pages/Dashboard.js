@@ -50,8 +50,10 @@ const sampleScenarios = [
     { scenarioTitle: "This is just a sample mid length title", className: "CS320", id: '6', draft: true, open: true },
     { scenarioTitle: "Open 3", className: "CS320", id: '8', draft: true, open: true },
     { scenarioTitle: "Closed 1", className: "CS589", id: '7', draft: true, open: false },
-
 ];
+
+// THIS IS WHERE WE GET OUR SCENARIO ARRAY 
+
 
 function ScenarioGrid() {
 
