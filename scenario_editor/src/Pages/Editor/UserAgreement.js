@@ -67,7 +67,7 @@ const UserAgreement = () => {
             <div className={classes.root}>   
             <div>
             <Button  
-            component={ Link } to="/introduction"
+            component={ Link } to="/introduction-hub"
             variant="contained" 
             color="primary" 
             href="#contained-buttons"
