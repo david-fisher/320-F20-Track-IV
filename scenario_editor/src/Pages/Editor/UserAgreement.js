@@ -66,7 +66,7 @@ const UserAgreement = () => {
 
             <div className={classes.root}>
             <div>
-// <<<<<<< rebel-scrum-introduction-expanded
+{/* // <<<<<<< rebel-scrum-introduction-expanded */}
             <Button  
             component={ Link } to="/introduction-hub"
             variant="contained" 
