@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import NewScenario from './Pages/Editor/NewScenario';
 import Introduction from './Pages/Editor/Introduction';
+import IntroductionHub from './Pages/Editor/IntroductionHub';
 import PlayerResponses from './Pages/Editor/PlayerResponses';
 import UserAgreement from './Pages/Editor/UserAgreement';
 import Conversations from './Pages/Editor/Conversations';
@@ -60,7 +61,8 @@ export default function App() {
       <Route path="/home" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/new-scenario" component={NewScenario} />
-      <Route path="/introduction" component={Introduction} />
+      <Route path="/introduction-hub" component={IntroductionHub} />
+      <Route path="/introduction-text" component = {Introduction} />
       <Route path="/player-responses" component={PlayerResponses} />
       <Route path="/user-agreement" component={UserAgreement} />
       <Route path="/conversations" component={Conversations} />

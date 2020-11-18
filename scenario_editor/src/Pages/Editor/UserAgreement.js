@@ -66,10 +66,17 @@ const UserAgreement = () => {
 
             <div className={classes.root}>
             <div>
-            <Button
-            component={ Link } to="/introduction"
-            variant="contained"
-            color="primary"
+// <<<<<<< rebel-scrum-introduction-expanded
+            <Button  
+            component={ Link } to="/introduction-hub"
+            variant="contained" 
+            color="primary" 
+// =======
+//             <Button
+//             component={ Link } to="/introduction"
+//             variant="contained"
+//             color="primary"
+// >>>>>>> rs-bb-int-scenarios
             href="#contained-buttons"
             size='medium'
             alignItems='right'
