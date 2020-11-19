@@ -43,7 +43,7 @@ export default function ScenarioCard(props) {
         </CardActionArea>
         <CardActions>
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/editor/" + data.id,
+            pathname: "/introduction-hub/" + data.id,
             scenarioData: data
           }}>
             Edit

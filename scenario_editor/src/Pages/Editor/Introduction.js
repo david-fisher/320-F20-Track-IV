@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import './Introduction.css';
-import NavDashboard from '../../Components/NavDashboard'
+import Nav from '../../Components/Nav';
 // import React, { Component } from 'react';
 //import './Home.css';
 import Button from '@material-ui/core/Button';
@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
       width: '25ch',
     },
   },
+  header: {
+    margin: theme.spacing(4)
+  }, 
   root: {
     margin: theme.spacing(1),
     marginTop: theme.spacing(4),
@@ -98,11 +101,13 @@ class Introduction extends Component {
 
 
   render() {
+    
     return (
       <div>
-        <NavDashboard />
-        <h1>Introduction Page</h1>
-
+        <Nav />
+        <div>
+          <h1>Introduction Page</h1>
+        </div>
 
         <b1 className="introduction-part">
           Add/Edit Your Introduction Below:
