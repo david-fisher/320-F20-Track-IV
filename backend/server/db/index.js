@@ -18,6 +18,7 @@ const submissions = require("./submissions");
 const response = require("./response");
 const stakeholderChoices = require("./stakeholder_choices");
 const mcqResponse = require("./mcq_response");
+const promptResponse = require("./prompt_response");
 
 exports = {
   ...scenario,
@@ -39,6 +40,7 @@ exports = {
   ...response,
   ...stakeholderChoices,
   ...mcqResponse,
+  ...promptResponse,
 };
 
 exports.getScenarioIntroduction = (scenario_id) => {
