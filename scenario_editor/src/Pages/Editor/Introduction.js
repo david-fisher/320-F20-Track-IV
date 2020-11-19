@@ -150,15 +150,15 @@ class Introduction extends Component {
             ))}
           </h4>
             */}
-          <h4>
+          {/* <h4>
             This is the local state value of suneditor before it gets "posted":
             <SunEditor
               disable={true}
               setContents={this.state.contents}
               showToolbar={false}
                />
-          </h4>
-          <h4>
+          </h4> */}
+          {/* <h4>
             This is a map of the "posts" in our redux store: {" "}
             {this.props.scenarios.map(scenario => (
               <li key={scenario.id}> <SunEditor
@@ -166,7 +166,7 @@ class Introduction extends Component {
                 showToolbar={false}
                 setContents ={scenario.title}/> </li>
             ))}
-          </h4>
+          </h4> */}
           {/* I want to be able to post something even if it's null at first, so when it changes it's there */}
           {/* <h4>
             This is the 3rd object stored in the store:: {" "}

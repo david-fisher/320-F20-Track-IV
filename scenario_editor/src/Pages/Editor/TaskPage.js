@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class ProjectTask extends Component {
+class ProjectTaskAssignment extends Component {
 
   // const classes = useStyles();
   constructor() {
@@ -150,23 +150,8 @@ class ProjectTask extends Component {
             ))}
           </h4>
             */}
-          <h4>
-            This is the local state value of suneditor before it gets "posted":
-            <SunEditor
-              disable={true}
-              setContents={this.state.contents}
-              showToolbar={false}
-               />
-          </h4>
-          <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.scenarios.map(scenario => (
-              <li key={scenario.id}> <SunEditor
-                disable={true}
-                showToolbar={false}
-                setContents ={scenario.title}/> </li>
-            ))}
-          </h4>
+          
+       
           {/* I want to be able to post something even if it's null at first, so when it changes it's there */}
           {/* <h4>
             This is the 3rd object stored in the store:: {" "}
@@ -195,4 +180,4 @@ const mapDispatchToProps = dispatch => {
 // mapStateToProps determines what state from our store we want to pull into our component.
 // In this case, we're specifying to only pull our state's posts property.
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectTask);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectTaskAssignment);
