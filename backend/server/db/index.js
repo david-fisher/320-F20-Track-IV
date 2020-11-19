@@ -16,6 +16,7 @@ const instructs = require("./instructs");
 const enrolled = require("./enrolled");
 const submissions = require("./submissions");
 const response = require("./response");
+const stakeholderChoices = require("./stakeholder_choices");
 
 exports = {
   ...scenario,
@@ -35,6 +36,7 @@ exports = {
   ...enrolled,
   ...submissions,
   ...response,
+  ...stakeholderChoices,
 };
 
 exports.getScenarioIntroduction = (scenario_id) => {
