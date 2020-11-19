@@ -4,6 +4,7 @@ const pages = require("./pages");
 const partof = require("./partof");
 const prompt = require("./prompt");
 const conversationTask = require("./conversation_task");
+const stakeholders = require("./stakeholders");
 
 exports = {
   ...scenario,
@@ -11,6 +12,7 @@ exports = {
   ...partof,
   ...prompt,
   ...conversationTask,
+  ...stakeholders,
 };
 
 exports.users = require("./users");
