@@ -16,8 +16,10 @@ router.post("/create", isAuthenticated, async (req, res) => {
     return res.json(authorization);
   }
 
-  const { simulation_title, simulation_desc } = req.body;
+  const { simulation_title, simulation_desc, simulation_introduction } = req.body;
   const simulation_id = await db.createScenario(simulation_title, simulation_desc);
+  const response = await db.createIntroPage(simulation_id, simulation_introduction);
+  db.addScenarioToCourse(simulation_id, 3)
 
   /*
     TODO: create a new simulation
