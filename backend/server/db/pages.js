@@ -45,7 +45,10 @@ exports.getPageBy = async function ({ order = null, type = null, scenarioID = nu
     value: scenarioID,
     pos: scenarioID ? argsPos++ : 0,
   });
-  const where = queryValues.reduce((acc, el) => (el.pos ? `${acc} ${el.name}=$${el.pos} ` : acc), "");
+  const where = queryValues
+    .filter((el) => el.pos)
+    .map((el) => `${el.name}=$${el.pos}`)
+    .join(" and ");
 
   const query = `SELECT * from pages WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
