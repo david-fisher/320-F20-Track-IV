@@ -153,21 +153,21 @@ CREATE TABLE "response" (
 );
 
 CREATE TABLE "prompt_response" (
-	"id" INT REFERENCES response,
+	"response_id" INT REFERENCES response,
 	"prompt_num" INT,
 	"response" VARCHAR,
-	PRIMARY KEY (id, prompt_num)
+	PRIMARY KEY (response_id, prompt_num)
 );
 
-CREATE TABLE "conversation_choices" (
-	"id" INT REFERENCES response,
-	"conversation_id" INT REFERENCES conversation,
-	PRIMARY KEY (id, conversation_id)
+CREATE TABLE "stakeholder_choices" (
+	"response_id" INT REFERENCES response,
+	"stakeholder_id" INT REFERENCES stakeholders,
+	PRIMARY KEY (response_id, stakeholder_id)
 );
 
 CREATE TABLE "mcq_response" (
-	"id" INT REFERENCES response,
+	"response_id" INT REFERENCES response,
 	"question_id" INT REFERENCES question,
-	PRIMARY KEY (id, question_id),
+	PRIMARY KEY (response_id, question_id),
 	"choice_id" INT REFERENCES mcq_option
 );
