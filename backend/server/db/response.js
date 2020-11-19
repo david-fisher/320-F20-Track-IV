@@ -64,17 +64,17 @@ exports.getResponsesBy = async function ({
   const { rows } = await db.query(query, values);
   return rows;
 };
-exports.createResponse = async function (submission_id, page_id) {
-  if (!(await submissions.getPage(submission_id))) {
+exports.createResponse = async function (submissionID, pageID) {
+  if (!(await submissions.getPage(submissionID))) {
     throw new Error("Cannot find a submission where response must belong");
   }
 
-  if (!(await pages.getPage(page_id))) {
+  if (!(await pages.getPage(pageID))) {
     throw new Error("Cannot find a page where response must belong");
   }
 
   const query = "INSERT INTO response VALUES($1, $2, DEFAULT)";
-  const { rows } = await db.query(query, [submission_id, page_id]);
+  const { rows } = await db.query(query, [submissionID, pageID]);
   return rows[0];
 };
 
