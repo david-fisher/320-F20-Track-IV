@@ -148,7 +148,7 @@ CREATE TABLE "submissions" (
 CREATE TABLE "response" (
 	"id" SERIAL PRIMARY KEY,
 	"submission_id" INT REFERENCES submissions,
-	"page_num" INT,
+	"page_id" INT REFERENCES pages,
 	"time" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
