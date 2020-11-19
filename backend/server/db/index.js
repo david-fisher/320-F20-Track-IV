@@ -13,6 +13,7 @@ const mcqOption = require("./mcq_option");
 const users = require("./users");
 const courses = require("./courses");
 const instructs = require("./instructs");
+const enrolled = require("./enrolled");
 
 exports = {
   ...scenario,
@@ -29,6 +30,7 @@ exports = {
   ...users,
   ...courses,
   ...instructs,
+  ...enrolled,
 };
 
 exports.getScenarioIntroduction = (scenario_id) => {
