@@ -12,27 +12,31 @@ router.post("/create", isAuthenticated, async (req, res) => {
 
   const token = header_validation.token;
   const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
+  if (header_validation.status !== 202) {
     return res.json(authorization);
   }
 
   const { simulation_title, simulation_desc, simulation_introduction } = req.body;
-  const simulation_id = await db.createScenario(simulation_title, simulation_desc);
-  const response = await db.createIntroPage(simulation_id, simulation_introduction);
-  db.addScenarioToCourse(simulation_id, 3)
 
-  /*
-    TODO: create a new simulation
+  try {
+    const simulation_id = await db.createScenario(simulation_title, simulation_desc);
+    const response = await db.createIntroPage(simulation_id, simulation_introduction);
+    if (200 <= response && response < 300) {
+      throw new Error(response);
+    }
+    db.addScenarioToCourse(simulation_id, 3); // TODO: 3 must be changed to real course id
 
-    - request body
-    * simulation_name: name for a new simulation
-  */
-
-  res.status(202);
-  res.json({
-    success: true,
-    simulation_id: simulation_id,
-  });
+    res.status(202);
+    res.json({
+      success: true,
+      simulation_id: simulation_id,
+    });
+  } catch (error) {
+    res.status(404);
+    res.json({
+      success: false,
+    });
+  }
 });
 
 router.delete("/:simulation_id", isAuthenticated, (req, res) => {
@@ -129,7 +133,7 @@ router.get("/:simulation_id/description", isAuthenticated, async (req, res) => {
 
   //db interface
   const description = await db.getScenarioDescription(req.params.simulation_id);
-  console.log(description)
+  console.log(description);
   if (description != 404) {
     res.status(202);
     res.json({
@@ -184,7 +188,7 @@ router.get("/:simulation_id/introduction", isAuthenticated, (req, res) => {
 
   //db interface
   const introduction = db.getSimulationIntroduction(req.params.simulation_id);
-  console.log(introduction)
+  console.log(introduction);
   if (introduction != 404) {
     res.status(202);
     res.json({
