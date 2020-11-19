@@ -11,3 +11,15 @@ exports.addScenarioToCourse = async function (scenarioID, courseID) {
     throw new Error(error);
   }
 };
+
+exports.removeScenarioFromCourses = async function (scenarioID) {
+  const query = "DELETE FROM partof WHERE scenario_id = $1";
+  const { rows } = await db.query(query, [scenarioID]);
+  return rows[0];
+};
+
+exports.removeScenariosFromCourse = async function (courseID) {
+  const query = "DELETE FROM partof WHERE course_id = $1";
+  const { rows } = await db.query(query, [courseID]);
+  return rows;
+};
