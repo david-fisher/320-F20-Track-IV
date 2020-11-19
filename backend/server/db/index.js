@@ -3,12 +3,14 @@ const scenario = require("./scenario");
 const pages = require("./pages");
 const partof = require("./partof");
 const prompt = require("./prompt");
+const conversationTask = require("./conversation_task");
 
 exports = {
   ...scenario,
   ...pages,
   ...partof,
   ...prompt,
+  ...conversationTask,
 };
 
 exports.users = require("./users");
