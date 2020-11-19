@@ -210,7 +210,7 @@ router.get("/:simulation_id/introduction", isAuthenticated, (req, res) => {
   } else {
     const error_description = `No simulation found with id ${req.params.simulation_id}.`;
     const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
-    res.json(helper.INVALID_RESPONSE(ERROR_CODE, error_description));
+    res.json(helper.INVALID_RESPONSE(error_code, error_description));
   }
 });
 

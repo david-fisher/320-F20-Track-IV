@@ -2,6 +2,14 @@ const db = require("../models");
 const scenario = require("./scenario");
 const users = require("./users");
 
+const operatorList = {
+  eq: "=",
+  ne: "<>",
+  gt: ">",
+  ge: ">=",
+  lt: "<",
+  le: "<=",
+};
 exports.getSubmission = async function (submissionID) {
   const query = "SELECT * FROM submissions WHERE id = $1";
   const { rows } = await db.query(query, [submissionID]);
@@ -34,14 +42,6 @@ exports.getSubmissionsBy = async function ({
 
   if (submissionTime.length !== 0) {
     const timeQueryValues = [];
-    const operatorList = {
-      eq: "=",
-      ne: "<>",
-      gt: ">",
-      ge: ">=",
-      lt: "<",
-      le: "<=",
-    };
 
     for (let st of submissionTime) {
       timeQueryValues.push({

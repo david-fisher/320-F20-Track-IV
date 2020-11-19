@@ -15,6 +15,7 @@ const courses = require("./courses");
 const instructs = require("./instructs");
 const enrolled = require("./enrolled");
 const submissions = require("./submissions");
+const response = require("./response");
 
 exports = {
   ...scenario,
@@ -33,6 +34,7 @@ exports = {
   ...instructs,
   ...enrolled,
   ...submissions,
+  ...response,
 };
 
 exports.getScenarioIntroduction = (scenario_id) => {
