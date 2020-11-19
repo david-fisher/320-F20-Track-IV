@@ -12,7 +12,19 @@ exports.addScenarioToCourse = async function (scenarioID, courseID) {
   }
 };
 
-exports.removeScenarioFromCourses = async function (scenarioID) {
+exports.getCourseOfScenario = async function (scenarioID) {
+  const query = "SELECT * FROM partof WHERE scenario_id = $1";
+  const { rows } = await db.query(query, [scenarioID]);
+  return rows[0];
+};
+
+exports.getScenariosInCourse = async function (courseID) {
+  const query = "SELECT * FROM partof WHERE course_id = $1";
+  const { rows } = await db.query(query, [courseID]);
+  return rows.map((el) => el.scenario_id);
+};
+
+exports.removeScenarioFromCourse = async function (scenarioID) {
   const query = "DELETE FROM partof WHERE scenario_id = $1";
   const { rows } = await db.query(query, [scenarioID]);
   return rows[0];
