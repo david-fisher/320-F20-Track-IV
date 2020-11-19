@@ -93,35 +93,24 @@ class ScenarioGrid extends Component {
       // let draftScenarios = this.scenarios.filter(data => (data.status === false));
       // let openScenarios = this.scenarios.filter(data => (data.draft === true && data.open === true));
       // let closedScenarios = this.scenarios.filter(data => (data.draft === true && data.open === false));
-      this.setState({draft: draftScenarios || [],
+      this.setState({draft: draftScenarios || [{"id": 1, "name": 'hello', "due_date":'12-12-2020', "description": 'desc', "additional_data": '', "status": 'DRAFT'}],
                   open: openScenarios || [],
                   closed: closedScenarios || []
                 });
     }
 
-    // This is just a variable created to access the styles made at the top of our page inside the
-    // ScenarioGrid() function
-    // const classes = useStyles();
 
 
-    // Currently, this creates datas trucutres that filter out the hardcoded data above into the 3 different
-    // types of scenarios based on the parameters in .filter()
-    // let scenarios = getScenariosFromServer();
-
-    // Since the 3 scenario variables above currently hold the information of the scenarios assigned to them,
-    // the 3 snippets of code below act, in a way, like a loop through each scenario group's scenario data
-    // (if that made sense...)
-    // If you hover over "data" you can see what values are referenced by "data" (each individual scenario's data)
-    // What this finally does is takes each scenario's data and creates a ScenarioCard component using that data.
+// Potentially don't need vars draft, open, and closed anymore
     render(){
       let draftScenarios = this.state.draft.map(data =>
-          <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} open={data.closed} />
+          <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} closed={data.closed} />
       );
       let openScenarios = this.state.open.map(data =>
-          <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} open={data.closed} />
+          <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} closed={data.closed} />
       );
       let closedScenarios = this.state.closed.map(data =>
-          <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} open={data.closed} />
+          <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} closed={data.closed} />
       );
 
       // This return statement creates and organizes the UI and data above, all inside the ScenarioGrid function
