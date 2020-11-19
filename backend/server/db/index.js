@@ -12,6 +12,7 @@ const question = require("./question");
 const mcqOption = require("./mcq_option");
 const users = require("./users");
 const courses = require("./courses");
+const instructs = require("./instructs");
 
 exports = {
   ...scenario,
@@ -27,6 +28,7 @@ exports = {
   ...mcqOption,
   ...users,
   ...courses,
+  ...instructs,
 };
 
 exports.getScenarioIntroduction = (scenario_id) => {
