@@ -6,7 +6,7 @@ exports.getPromptResponse = async function (responseID, promptNum) {
   const query =
     "SELECT * FROM prompt_response WHERE response_id = $1 and prompt_num = $2";
   const { rows } = await pool.query(query, [responseID, promptNum]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.createPromptResponse = async function (
@@ -30,7 +30,7 @@ exports.createPromptResponse = async function (
     promptNum,
     responseValue,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updatePromptResponse = async function (
@@ -55,12 +55,12 @@ exports.updatePromptResponse = async function (
     promptNum,
     responseValue,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deletePromptResponse = async function (responseID, promptNum) {
   const query =
     "DELETE FROM prompt_response WHERE response_id = $1 and prompt_num = $2";
   const { rows } = await pool.query(query, [responseID, promptNum]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

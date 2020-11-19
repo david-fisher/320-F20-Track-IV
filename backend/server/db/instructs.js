@@ -23,7 +23,7 @@ exports.instructCourseByInstructor = async function (
 
   const query = "INSERT INTO instructs VALUES($1, $2, $3)";
   const { rows } = await pool.query(query, [userID, webpage, courseID]); // watch out for order of values!
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getConnectedInstructorAndCourse = async function (userID, courseID) {
@@ -49,7 +49,7 @@ exports.disconnectInstructorAndCourse = async function (userID, courseID) {
   const query =
     "DELETE FROM instructs WHERE instructor_id = $1 and course_id = $2";
   const { rows } = await pool.query(query, [userID, courseID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.disconnectInstructorFromCourses = async function (userID) {

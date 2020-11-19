@@ -1,83 +1,120 @@
 const pool = require("./pool");
 
+const operatorList = {
+  eq: "=",
+  ne: "<>",
+  gt: ">",
+  ge: ">=",
+  lt: "<",
+  le: "<=",
+};
+
 exports.getScenario = async function (scenarioID) {
   const query = "SELECT * FROM scenario WHERE id = $1";
   const { rows } = await pool.query(query, [scenarioID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
-exports.createScenario = async function (name, description) {
-  let curDate = new Date();
-  let due_date = `${curDate.getFullYear()}-${
-    curDate.getMonth() + 1
-  }-${curDate.getDate()} ${curDate.toLocaleTimeString("en-GB")}`;
-  let status = "DRAFT";
-  let additional_data = "<additional_data>";
-  const {
-    rows2,
-  } = await pool.query(
-    "INSERT INTO SCENARIO VALUES (nextval('scenario_id_seq'::regclass), $1, $2, $3, $4, $5)",
-    [name, due_date, description, status, additional_data]
-  );
-  const { rows } = await pool.query("SELECT currval('scenario_id_seq')");
-  // console.log(parseInt(rows[0].currval));
-  return parseInt(rows[0].currval);
-};
+exports.getScenariosBy = async function ({
+  name = null,
+  status = null,
+  dueDate = [...{ time: null, operator: "eq" }],
+}) {
+  const queryValues = [];
+  let argsPos = 1;
 
-//In the database, we need an access point for retrieving open scenarios
-exports.getOpenScenarios = async function (instructor_token) {
-  // return scenarios.filter((item) => item.status == 2);
-  const { rows } = await pool.query(
-    "SELECT * FROM scenario WHERE status='PUBLISHED'"
-  );
-  return rows;
-};
+  queryValues.push({
+    name: "name",
+    value: name,
+    pos: name ? argsPos++ : 0,
+  });
+  queryValues.push({
+    name: "status",
+    value: status,
+    pos: status ? argsPos++ : 0,
+  });
+  let where = queryValues
+    .filter((el) => el.pos)
+    .map((el) => `${el.name}=$${el.pos}`)
+    .join(" and ");
+  let values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
 
-exports.getClosedScenarios = async function (instructor_token) {
-  const { rows } = await pool.query(
-    "SELECT * FROM scenario WHERE status='CLOSED'"
-  );
-  return rows;
-};
+  if (dueDate.length !== 0) {
+    const timeQueryValues = [];
 
-exports.getDraftedScenarios = async function (instructor_token) {
-  const { rows } = await pool.query(
-    "SELECT * FROM scenario WHERE status='DRAFT'"
-  );
-  // console.log(rows);
-  return rows;
-};
-
-exports.deleteScenario = async function (id) {};
-
-exports.scenarioPageExists = async function (order, type, scenarioID) {
-  if (await exports.getScenario(scenarioID)) {
-    let thisQuery =
-      "select pages.id from pages, scenario where pages.scenario_id = $1 and pages.order = $2 and pages.type = $3";
-    try {
-      const { rows } = await pool.query(thisQuery, [scenarioID, order, type]);
-      return rows[0] ? rows[0].id : null;
-    } catch (error) {
-      throw new Error(error);
+    for (let dd of dueDate) {
+      timeQueryValues.push({
+        name: "time",
+        operator: operatorList[dd.operator],
+        value: dd.time,
+        pos: argsPos++,
+      });
     }
-  } else {
-    return 404;
+
+    const whereTime = timeQueryValues
+      .map((el) => `${el.name}${el.operator}$${el.pos}`)
+      .join(" and ");
+    const valuesTime = timeQueryValues.map((el) => el.value);
+    where = where + " and " + whereTime;
+    values = values.concat(valuesTime);
   }
+
+  const query = `SELECT * from scenario WHERE ${where}`;
+  const { rows } = await pool.query(query, values);
+  return rows;
 };
 
-exports.getScenarioDescription = async (scenario_id) => {
-  const { rows } = await pool.query("SELECT * FROM scenario WHERE id=$1", [
-    scenario_id,
-  ]);
-  return rows[0].description;
-};
+exports.createScenario = async function (
+  name,
+  dueDate,
+  description,
+  status,
+  additionalData
+) {
+  if (!["DRAFT", "PUBLISHED", "CLOSED"].includes(status)) {
+    throw new Error("Invalid scenario status");
+  }
 
-exports.setScenarioDescription = async (scenario_id, description) => {
-  const {
-    rows,
-  } = await pool.query("UPDATE scenario SET description=$1 WHERE id=$2", [
+  if (dueDate < new Date()) {
+    throw new Error("Due date cannot be earlier than current time");
+  }
+
+  const query = "INSERT INTO scenario VALUES(DEFAULT, $1, $2, $3, $4, $5)";
+  const { rows } = await pool.query(query, [
+    name,
+    dueDate,
     description,
-    scenario_id,
+    status,
+    additionalData,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
+};
+
+exports.updateScenario = async function (
+  scenarioID,
+  name,
+  dueDate,
+  description,
+  status,
+  additionalData
+) {
+  const query =
+    "UPDATE scenario " +
+    "SET name = $2 and due_date = $3 and description = $4 and status = $5 and additional_data = $6 " +
+    "WHERE id = $1";
+  const { rows } = await pool.query(query, [
+    scenarioID,
+    name,
+    dueDate,
+    description,
+    status,
+    additionalData,
+  ]);
+  return rows.length > 0 ? rows[0] : null;
+};
+
+exports.deleteScenario = async function (scenarioID) {
+  const query = "DELETE FROM scenario WHERE id = $1";
+  const { rows } = await pool.query(query, [scenarioID]);
+  return rows.length > 0 ? rows[0] : null;
 };

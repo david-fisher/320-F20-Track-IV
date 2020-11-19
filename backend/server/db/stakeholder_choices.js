@@ -6,7 +6,7 @@ exports.getStakeholderChoice = async function (response_id, stakeholder_id) {
   const query =
     "SELECT * FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
   const { rows } = await pool.query(query, [response_id, stakeholder_id]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getStakeholderChoicesBy = async function ({
@@ -52,12 +52,12 @@ exports.createStakeholderChoice = async function (response_id, stakeholder_id) {
 
   const query = "insert into stakeholder_choices values($1, $2)";
   const { rows } = await pool.query(query, [response_id, stakeholder_id]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteStakeholderChoice = async function (response_id, stakeholder_id) {
   const query =
     "DELETE FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
   const { rows } = await pool.query(query, [response_id, stakeholder_id]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

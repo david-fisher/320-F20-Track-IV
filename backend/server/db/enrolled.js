@@ -19,7 +19,7 @@ exports.enrolledCourseByStudent = async function (userID, courseID, webpage) {
 
   const query = "INSERT INTO enrolled VALUES($1, $2, $3)";
   const { rows } = await pool.query(query, [userID, webpage, courseID]); // watch out for order of values!
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getConnectedStudentAndCourse = async function (userID, courseID) {
@@ -44,7 +44,7 @@ exports.getStudentsInCourse = async function (courseID) {
 exports.disconnectStudentAndCourse = async function (userID, courseID) {
   const query = "DELETE FROM enrolled WHERE student_id = $1 and course_id = $2";
   const { rows } = await pool.query(query, [userID, courseID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.disconnectStudentFromCourses = async function (userID) {

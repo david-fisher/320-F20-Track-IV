@@ -13,7 +13,7 @@ const operatorList = {
 exports.getSubmission = async function (submissionID) {
   const query = "SELECT * FROM submissions WHERE id = $1";
   const { rows } = await pool.query(query, [submissionID]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getSubmissionsBy = async function ({
@@ -81,13 +81,13 @@ exports.makeSubmissionOfScenarioByUser = async function (userID, scenarioID) {
 
   const query = "INSERT INTO submissions VALUES(DEFAULT, $1, $2, DEFAULT)";
   const { rows } = await pool.query(query, [userID, scenarioID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteSubmission = async function (submissionID) {
   const query = "DELETE FROM submissions WHERE id = $1";
   const { rows } = await pool.query(query, [submissionID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteSubmissionsByUser = async function (userID) {

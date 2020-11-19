@@ -4,7 +4,7 @@ const question = require("./question");
 exports.getMcqOption = async function (mcqOptionID) {
   const query = "SELECT * FROM mcq_option WHERE id = $1";
   const { rows } = await pool.query(query, [mcqOptionID]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getMcqOptionsBy = async function ({ questionID = null }) {
@@ -34,17 +34,17 @@ exports.createMcqOption = async function (questionID, option) {
 
   const query = "INSERT INTO mcq_option VALUES(DEFAULT, $1, $2)";
   const { rows } = await pool.query(query, [option, questionID]); // watch out for order of values!
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateMcqOption = async function (mcqOptionID, option) {
   const query = "UPDATE mcq_option SET option = $2 WHERE id = $1";
   const { rows } = await pool.query(query, [mcqOptionID, option]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteMcqOption = async function (mcqOptionID) {
   const query = "DELETE FROM mcq_option WHERE id = $1";
   const { rows } = await pool.query(query, [mcqOptionID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

@@ -5,7 +5,7 @@ const convTask = require("./conversation_task");
 exports.getStakeholder = async function (stakeholderID) {
   const query = "SELECT * FROM stakeholders WHERE id = $1";
   const { rows } = await pool.query(query, [stakeholderID]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getStakeholderBy = async function ({
@@ -78,7 +78,7 @@ exports.createStakeholder = async function (
     scenarioID,
     convTaskID,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateStakeholder = async function (
@@ -97,11 +97,11 @@ exports.updateStakeholder = async function (
     description,
     conversation,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteConversationTask = async function (stakeholderID) {
   const query = "DELETE FROM stakeholders WHERE id = $1";
   const { rows } = await pool.query(query, [stakeholderID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

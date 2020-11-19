@@ -3,7 +3,7 @@ const pool = require("./pool");
 exports.getUser = async function (userID) {
   const query = "SELECT * FROM users WHERE id = $1";
   const { rows } = await pool.query(query, [userID]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getUsersBy = async function ({
@@ -49,7 +49,7 @@ exports.createUser = async function (fullName, email, demographics) {
 
   const query = "INSERT INTO users VALUES(DEFAULT, $1, $2, $3)";
   const { rows } = await pool.query(query, [fullName, email, demographics]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateUser = async function (userID, fullName, email, demographics) {
@@ -61,11 +61,11 @@ exports.updateUser = async function (userID, fullName, email, demographics) {
     email,
     demographics,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteUser = async function (userID) {
   const query = "DELETE FROM users WHERE id = $1";
   const { rows } = await pool.query(query, [userID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

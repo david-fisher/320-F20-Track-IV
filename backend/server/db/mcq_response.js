@@ -7,7 +7,7 @@ exports.getMcqResponse = async function (response_id, question_id) {
   const query =
     "SELECT * FROM mcq_response WHERE response_id = $1 and question_id = $2";
   const { rows } = await pool.query(query, [response_id, question_id]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getMcqResponsesBy = async function ({
@@ -67,7 +67,7 @@ exports.createMcqResponse = async function (
     questionID,
     mcqOptionID,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateMcqResponse = async function (
@@ -94,12 +94,12 @@ exports.updateMcqResponse = async function (
     questionID,
     mcqOptionID,
   ]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteMcqResponse = async function (response_id, stakeholder_id) {
   const query =
     "DELETE FROM mcq_response WHERE response_id = $1 and stakeholder_id = $2";
   const { rows } = await pool.query(query, [response_id, stakeholder_id]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

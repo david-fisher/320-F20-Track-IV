@@ -13,7 +13,7 @@ const operatorList = {
 exports.getResponse = async function (responseID) {
   const query = "SELECT * FROM response WHERE id = $1";
   const { rows } = await pool.query(query, [responseID]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getResponsesBy = async function ({
@@ -75,11 +75,11 @@ exports.createResponse = async function (submissionID, pageID) {
 
   const query = "INSERT INTO response VALUES($1, $2, DEFAULT)";
   const { rows } = await pool.query(query, [submissionID, pageID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteResponse = async function (responseID) {
   const query = "DELETE FROM response WHERE id = $1";
   const { rows } = await pool.query(query, [responseID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

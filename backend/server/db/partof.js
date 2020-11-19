@@ -18,12 +18,9 @@ exports.connectScenarioAndCourse = async function (scenarioID, courseID) {
     );
   }
 
-  let thisQuery = "insert into partof values($1, $2)";
-  try {
-    const { rows } = await pool.query(thisQuery, [courseID, scenarioID]);
-  } catch (error) {
-    throw new Error(error);
-  }
+  const query = "insert into partof values($1, $2)";
+  const { rows } = await pool.query(query, [courseID, scenarioID]);
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getConnectedScenarioAndCourse = async function (scenarioID, courseID) {

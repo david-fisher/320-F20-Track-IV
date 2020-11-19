@@ -27,7 +27,7 @@ exports.pageType = {
 exports.getPage = async function (pageID) {
   const query = "SELECT * FROM pages WHERE id = $1";
   const { rows } = await pool.query(query, [pageID]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getPageBy = async function ({
@@ -84,31 +84,29 @@ exports.createPage = async function (order, type, body_text, scenarioID) {
   const pages = await exports.getPageBy({ order, type, scenarioID });
 
   if (pages.length > 1) {
-    throw new Error("Page already exists.");
+    throw new Error(
+      "Page specified with order, type, and scenario already exists."
+    );
   }
 
-  try {
-    const query = "insert into pages values(DEFAULT, $1, $2, $3, $4)";
-    const { rows } = await pool.query(query, [
-      order,
-      type,
-      body_text,
-      scenarioID,
-    ]);
-    return rows[0].id;
-  } catch (error) {
-    throw new Error(error);
-  }
+  const query = "insert into pages values(DEFAULT, $1, $2, $3, $4)";
+  const { rows } = await pool.query(query, [
+    order,
+    type,
+    body_text,
+    scenarioID,
+  ]);
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updatePage = async function (pageID, body_text) {
   const query = "UPDATE pages SET body_text = $2 WHERE id = $1";
   const { rows } = await pool.query(query, [pageID, body_text]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deletePage = async function (pageID) {
   const query = "DELETE FROM pages WHERE id = $1";
   const { rows } = await pool.query(query, [pageID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

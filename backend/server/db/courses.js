@@ -3,7 +3,7 @@ const pool = require("./pool");
 exports.getCourse = async function (courseID) {
   const query = "SELECT * FROM courses WHERE id = $1";
   const { rows } = await pool.query(query, [courseID]);
-  return rows.length !== 0 ? rows[0] : null;
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getCoursesBy = async function ({
@@ -51,18 +51,18 @@ exports.createCourse = async function (webpage, name, semester) {
 
   const query = "INSERT INTO courses VALUES(DEFAULT, $1, $2, $3)";
   const { rows } = await pool.query(query, [webpage, name, semester]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateCourse = async function (courseID, webpage, name, semester) {
   const query =
     "UPDATE courses SET webpage = $2 and name = $3 and semester = $4 WHERE id = $1";
   const { rows } = await pool.query(query, [courseID, webpage, name, semester]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteCourse = async function (courseID) {
   const query = "DELETE FROM courses WHERE id = $1";
   const { rows } = await pool.query(query, [courseID]);
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
