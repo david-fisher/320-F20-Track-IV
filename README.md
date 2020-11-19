@@ -1,38 +1,59 @@
+<center><h1>RS/BB/DT Integration V1</h1></center>
+
+<center style="margin-left: 2rem">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+There are 3 members of the stack. Front-end (Rebel Scrum), Back-end (Backend Babes), Database (Differential Team). We clone a shared repo with all the components, and then link them. In the future we aim to use Docker.</center>
+
 ---
+### Clone repo
+
+```
+git clone --single-branch --branch backend-babes https://github.com/david-fisher/320-F20-Track-IV.git
+```
 
 
----
+## Frontend
 
-<h1 id="backend-babes">Backend Babes</h1>
-<p>This is the documentation location for the backend babes. Here you will find the API endpoints, schema, cloning instructions, and deployment instructions, as well as an FAQ.</p>
-<h2 id="sign-up">Sign Up</h2>
-<h4 id="post-apiusersignup"><code>POST /api/user/signUp</code></h4>
-<p>Sign user up and return Auth token</p>
-<p><strong>Params:</strong></p>
 
-<table>
-<thead>
-<tr>
-<th>param</th>
-<th>type</th>
-<th>description</th>
-<th>long description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>email</td>
-<td>string  [required]</td>
-<td>Email address</td>
-<td><p align="center">UMass email address of user. Username is created from email.</p></td>
-</tr>
-</tbody>
-</table><p><strong>Return</strong>:</p>
-<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
-	<span class="token string">"email"</span><span class="token punctuation">:</span> <span class="token string">"foobar@umass.edu"</span><span class="token punctuation">,</span>
-	<span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>
-	<span class="token string">"api_token"</span><span class="token punctuation">:</span> <span class="token string">"hVF4CVDlbuUg18MmRZBA4pDkzuXZi9Rzm5wYvSPtxvF8qa8CK9GiJqMXdAMv"</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><strong>Note:</strong> This request uses <code>'Content-Type: application/json'</code>.</p>
+```bash
+$ cd frontend
+$ npm install
+...
+$ npm start #opens automatically at localhost:3000 (if not busy)
+```
 
+## Backend
+
+
+```bash
+$ cd backend
+$ npm install
+...
+$ cd server && node index.js
+server started on port 6060
+```
+
+## Database
+
+Please refer [here](https://github.com/david-fisher/320-F20-Track-II/blob/master/README.md) to install PostgreSQL and other dependencies. Then, run the following.
+
+```bash
+$ cd database
+$ psql -U postgres -f database_setup.sql
+...
+$ psql -U postgres -f insert_example_data.sql
+...
+$ psql postgres
+psql (13.0)
+
+Type "help" for help.
+
+postgres=# \dt;
+
+List of relations
+Schema | Name                 | Type  |  Owner
+-------+----------------------+-------+----------
+public | conversation         | table | postgres
+public | conversation_choices | table | postgres
+....
+```

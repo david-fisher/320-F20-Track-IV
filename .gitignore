@@ -1,10 +1,48 @@
-node_modules
-node_modules/
-node_modules/*
+.gitignore
 
-build
-build/
-build/*
+backend/node_modules
+backend/node_modules/
+backend/node_modules/*
+
+backend/server/node_modules
+backend/server/node_modules/
+backend/server/node_modules/*
+
+backend/.env
+backend/.env*
+
+backend/server/.env
+backend/server/.env*
+
+frontend/scenario_editor/build
+frontend/scenario_editor/build/
+frontend/scenario_editor/build/*
 
 **/.DS_Store
 **/.DS_Store?
+
+#For some reason node_modules got into the root directory??
+frontend/node_modules
+
+.DS_Store
+# dependencies
+frontend/scenario_editor/node_modules
+frontend/scenario_editor/.pnp
+frontend/scenario_editor/.pnp.js
+
+# testing
+frontend/scenario_editor/coverage
+
+# production
+frontend/scenario_editor/build
+
+# misc
+frontend/scenario_editor/.DS_Store
+frontend/scenario_editor/.env.local
+frontend/scenario_editor/.env.development.local
+frontend/scenario_editor/.env.test.local
+frontend/scenario_editor/.env.production.local
+
+frontend/scenario_editor/npm-debug.log*
+frontend/scenario_editor/yarn-debug.log*
+frontend/scenario_editor/yarn-error.log*
