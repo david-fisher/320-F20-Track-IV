@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ScenarioCard(props) {
   const classes = useStyles();
   const { data } = props;
-  const { id, scenarioTitle, className, draft, open, closed } = data;
+  const { id, name, due_date, description, additional_data, status } = data;
 
   return (
     <Grid
@@ -34,10 +34,10 @@ export default function ScenarioCard(props) {
         }}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {scenarioTitle}
+              {name}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {className}
+              {description}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -63,6 +63,3 @@ export default function ScenarioCard(props) {
     </Grid>
   );
 }
-
-
-

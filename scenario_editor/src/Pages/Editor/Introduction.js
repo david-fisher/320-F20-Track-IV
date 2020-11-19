@@ -79,7 +79,7 @@ class Introduction extends Component {
       'Accept': 'application/json'
     }
     event.preventDefault();
-    axios.post(`http://4acf3d2e295e.ngrok.io/api/v1/simulation/create`, {
+    axios.post(`/api/v1/simulation/create`, {
       simulation_title: this.state.scenario_title,
       simulation_desc: this.state.scenario_desc,
       simulation_introduction: this.state.contents,
@@ -89,11 +89,11 @@ class Introduction extends Component {
       alert(`Simulation ID: ${res.data.simulation_id}`)
     });
 
-    // this.props.dispatch({
-    //   type: 'ADD_SCENARIO',
-    //   payload: { id: this.state.scenarioID, title: this.state.contents }
-    // })
-    // this.setState({scenarioID: this.state.scenarioID + 1})
+    this.props.dispatch({
+      type: 'ADD_SCENARIO',
+      payload: { id: this.state.scenarioID, title: this.state.contents }
+    });
+    this.setState({scenarioID: this.state.scenarioID + 1})
   }
 
 
