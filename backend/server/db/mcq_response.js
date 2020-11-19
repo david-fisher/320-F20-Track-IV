@@ -1,4 +1,4 @@
-const db = require("../models");
+const pool = require("./pool");
 const response = require("./response");
 const question = require("./question");
 const mcqOption = require("./mcq_option");
@@ -6,7 +6,7 @@ const mcqOption = require("./mcq_option");
 exports.getMcqResponse = async function (response_id, question_id) {
   const query =
     "SELECT * FROM mcq_response WHERE response_id = $1 and question_id = $2";
-  const { rows } = await db.query(query, [response_id, question_id]);
+  const { rows } = await pool.query(query, [response_id, question_id]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
@@ -40,7 +40,7 @@ exports.getMcqResponsesBy = async function ({
 
   const query = `SELECT * from mcq_response WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows;
 };
 
@@ -62,7 +62,11 @@ exports.createMcqResponse = async function (
   }
 
   const query = "insert into mcq_response values($1, $2, $3)";
-  const { rows } = await db.query(query, [responseID, questionID, mcqOptionID]);
+  const { rows } = await pool.query(query, [
+    responseID,
+    questionID,
+    mcqOptionID,
+  ]);
   return rows[0];
 };
 
@@ -85,13 +89,17 @@ exports.updateMcqResponse = async function (
 
   const query =
     "UPDATE mcq_response SET choice_id = $3 WHERE response_id = $1 and question_id = $2";
-  const { rows } = await db.query(query, [responseID, questionID, mcqOptionID]);
+  const { rows } = await pool.query(query, [
+    responseID,
+    questionID,
+    mcqOptionID,
+  ]);
   return rows[0];
 };
 
 exports.deleteMcqResponse = async function (response_id, stakeholder_id) {
   const query =
     "DELETE FROM mcq_response WHERE response_id = $1 and stakeholder_id = $2";
-  const { rows } = await db.query(query, [response_id, stakeholder_id]);
+  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
   return rows[0];
 };

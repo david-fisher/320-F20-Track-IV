@@ -1,4 +1,4 @@
-const db = require("../models");
+const pool = require("./pool");
 const users = require("./users");
 const courses = require("./courses");
 
@@ -18,43 +18,43 @@ exports.enrolledCourseByStudent = async function (userID, courseID, webpage) {
   }
 
   const query = "INSERT INTO enrolled VALUES($1, $2, $3)";
-  const { rows } = await db.query(query, [userID, webpage, courseID]); // watch out for order of values!
+  const { rows } = await pool.query(query, [userID, webpage, courseID]); // watch out for order of values!
   return rows[0];
 };
 
 exports.getConnectedStudentAndCourse = async function (userID, courseID) {
   const query =
     "SELECT * FROM enrolled WHERE student_id = $1 and course_id = $2";
-  const { rows } = await db.query(query, [userID, courseID]);
+  const { rows } = await pool.query(query, [userID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getCoursesEnrolledByStudent = async function (userID) {
   const query = "SELECT * FROM enrolled WHERE student_id = $1";
-  const { rows } = await db.query(query, [userID]);
+  const { rows } = await pool.query(query, [userID]);
   return rows.map((el) => el.course_id);
 };
 
 exports.getStudentsInCourse = async function (courseID) {
   const query = "SELECT * FROM enrolled WHERE course_id = $1";
-  const { rows } = await db.query(query, [courseID]);
+  const { rows } = await pool.query(query, [courseID]);
   return rows.map((el) => el.student_id);
 };
 
 exports.disconnectStudentAndCourse = async function (userID, courseID) {
   const query = "DELETE FROM enrolled WHERE student_id = $1 and course_id = $2";
-  const { rows } = await db.query(query, [userID, courseID]);
+  const { rows } = await pool.query(query, [userID, courseID]);
   return rows[0];
 };
 
 exports.disconnectStudentFromCourses = async function (userID) {
   const query = "DELETE FROM enrolled WHERE student_id = $1";
-  const { rows } = await db.query(query, [userID]);
+  const { rows } = await pool.query(query, [userID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.disconnectCourseFromStudents = async function (courseID) {
   const query = "DELETE FROM enrolled WHERE course_id = $1";
-  const { rows } = await db.query(query, [courseID]);
+  const { rows } = await pool.query(query, [courseID]);
   return rows;
 };

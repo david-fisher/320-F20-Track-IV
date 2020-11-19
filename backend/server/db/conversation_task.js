@@ -1,9 +1,9 @@
-const db = require("../models");
+const pool = require("./pool");
 const pages = require("./pages");
 
 exports.getConversationTask = async function (pageID) {
   const query = "SELECT * FROM conversation_task WHERE page_id = $1";
-  const { rows } = await db.query(query, [pageID]);
+  const { rows } = await pool.query(query, [pageID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 exports.createConversationTask = async function (pageID, content) {
@@ -12,18 +12,19 @@ exports.createConversationTask = async function (pageID, content) {
   }
 
   const query = "insert into conversation_task values($1, $2)";
-  const { rows } = await db.query(query, [pageID, content]);
+  const { rows } = await pool.query(query, [pageID, content]);
   return rows[0];
 };
 
 exports.updateConversationTask = async function (pageID, text) {
-  const query = "UPDATE conversation_task SET body_text = $2 WHERE page_id = $1";
-  const { rows } = await db.query(query, [pageID, text]);
+  const query =
+    "UPDATE conversation_task SET body_text = $2 WHERE page_id = $1";
+  const { rows } = await pool.query(query, [pageID, text]);
   return rows[0];
 };
 
 exports.deleteConversationTask = async function (pageID) {
   const query = "DELETE FROM conversation_task WHERE page_id = $1";
-  const { rows } = await db.query(query, [pageID]);
+  const { rows } = await pool.query(query, [pageID]);
   return rows[0];
 };

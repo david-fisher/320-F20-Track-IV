@@ -1,4 +1,4 @@
-const db = require("../models");
+const pool = require("./pool");
 const scenario = require("./scenario");
 
 exports.pageOrder = {
@@ -26,7 +26,7 @@ exports.pageType = {
 
 exports.getPage = async function (pageID) {
   const query = "SELECT * FROM pages WHERE id = $1";
-  const { rows } = await db.query(query, [pageID]);
+  const { rows } = await pool.query(query, [pageID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
@@ -60,7 +60,7 @@ exports.getPageBy = async function ({
 
   const query = `SELECT * from pages WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows;
 };
 
@@ -69,7 +69,7 @@ exports.scenarioPageExists = async function (order, type, scenarioID) {
     let thisQuery =
       "select pages.id from pages, scenario where pages.scenario_id = $1 and pages.order = $2 and pages.type = $3";
     try {
-      const { rows } = await db.query(thisQuery, [scenarioID, order, type]);
+      const { rows } = await pool.query(thisQuery, [scenarioID, order, type]);
       return rows[0] ? rows[0].id : null;
     } catch (error) {
       throw new Error(error);
@@ -89,7 +89,7 @@ exports.createPage = async function (order, type, body_text, scenarioID) {
 
   try {
     const query = "insert into pages values(DEFAULT, $1, $2, $3, $4)";
-    const { rows } = await db.query(query, [
+    const { rows } = await pool.query(query, [
       order,
       type,
       body_text,
@@ -103,12 +103,12 @@ exports.createPage = async function (order, type, body_text, scenarioID) {
 
 exports.updatePage = async function (pageID, body_text) {
   const query = "UPDATE pages SET body_text = $2 WHERE id = $1";
-  const { rows } = await db.query(query, [pageID, body_text]);
+  const { rows } = await pool.query(query, [pageID, body_text]);
   return rows[0];
 };
 
 exports.deletePage = async function (pageID) {
   const query = "DELETE FROM pages WHERE id = $1";
-  const { rows } = await db.query(query, [pageID]);
+  const { rows } = await pool.query(query, [pageID]);
   return rows[0];
 };

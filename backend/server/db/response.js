@@ -1,4 +1,4 @@
-const db = require("../models");
+const pool = require("./pool");
 const submissions = require("./submissions");
 const pages = require("./pages");
 
@@ -12,7 +12,7 @@ const operatorList = {
 };
 exports.getResponse = async function (responseID) {
   const query = "SELECT * FROM response WHERE id = $1";
-  const { rows } = await db.query(query, [responseID]);
+  const { rows } = await pool.query(query, [responseID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
@@ -61,7 +61,7 @@ exports.getResponsesBy = async function ({
   }
 
   const query = `SELECT * from response WHERE ${where}`;
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows;
 };
 exports.createResponse = async function (submissionID, pageID) {
@@ -74,12 +74,12 @@ exports.createResponse = async function (submissionID, pageID) {
   }
 
   const query = "INSERT INTO response VALUES($1, $2, DEFAULT)";
-  const { rows } = await db.query(query, [submissionID, pageID]);
+  const { rows } = await pool.query(query, [submissionID, pageID]);
   return rows[0];
 };
 
 exports.deleteResponse = async function (responseID) {
   const query = "DELETE FROM response WHERE id = $1";
-  const { rows } = await db.query(query, [responseID]);
+  const { rows } = await pool.query(query, [responseID]);
   return rows[0];
 };

@@ -1,8 +1,8 @@
-const db = require("../models");
+const pool = require("./pool");
 
 exports.getCourse = async function (courseID) {
   const query = "SELECT * FROM courses WHERE id = $1";
-  const { rows } = await db.query(query, [courseID]);
+  const { rows } = await pool.query(query, [courseID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
@@ -37,7 +37,7 @@ exports.getCoursesBy = async function ({
 
   const query = `SELECT * from courses WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows;
 };
 
@@ -50,19 +50,19 @@ exports.createCourse = async function (webpage, name, semester) {
   }
 
   const query = "INSERT INTO courses VALUES(DEFAULT, $1, $2, $3)";
-  const { rows } = await db.query(query, [webpage, name, semester]);
+  const { rows } = await pool.query(query, [webpage, name, semester]);
   return rows[0];
 };
 
 exports.updateCourse = async function (courseID, webpage, name, semester) {
   const query =
     "UPDATE courses SET webpage = $2 and name = $3 and semester = $4 WHERE id = $1";
-  const { rows } = await db.query(query, [courseID, webpage, name, semester]);
+  const { rows } = await pool.query(query, [courseID, webpage, name, semester]);
   return rows[0];
 };
 
 exports.deleteCourse = async function (courseID) {
   const query = "DELETE FROM courses WHERE id = $1";
-  const { rows } = await db.query(query, [courseID]);
+  const { rows } = await pool.query(query, [courseID]);
   return rows[0];
 };

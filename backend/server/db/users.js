@@ -1,8 +1,8 @@
-const db = require("../models");
+const pool = require("./pool");
 
 exports.getUser = async function (userID) {
   const query = "SELECT * FROM users WHERE id = $1";
-  const { rows } = await db.query(query, [userID]);
+  const { rows } = await pool.query(query, [userID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
@@ -37,7 +37,7 @@ exports.getUsersBy = async function ({
 
   const query = `SELECT * from users WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows;
 };
 
@@ -48,14 +48,14 @@ exports.createUser = async function (fullName, email, demographics) {
   }
 
   const query = "INSERT INTO users VALUES(DEFAULT, $1, $2, $3)";
-  const { rows } = await db.query(query, [fullName, email, demographics]);
+  const { rows } = await pool.query(query, [fullName, email, demographics]);
   return rows[0];
 };
 
 exports.updateUser = async function (userID, fullName, email, demographics) {
   const query =
     "UPDATE users SET fullName = $2 and email = $3 and demographics = $4 WHERE id = $1";
-  const { rows } = await db.query(query, [
+  const { rows } = await pool.query(query, [
     userID,
     fullName,
     email,
@@ -66,6 +66,6 @@ exports.updateUser = async function (userID, fullName, email, demographics) {
 
 exports.deleteUser = async function (userID) {
   const query = "DELETE FROM users WHERE id = $1";
-  const { rows } = await db.query(query, [userID]);
+  const { rows } = await pool.query(query, [userID]);
   return rows[0];
 };

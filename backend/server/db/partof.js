@@ -1,4 +1,4 @@
-const db = require("../models");
+const pool = require("./pool");
 const scenario = require("./scenario");
 const courses = require("./courses");
 
@@ -20,7 +20,7 @@ exports.connectScenarioAndCourse = async function (scenarioID, courseID) {
 
   let thisQuery = "insert into partof values($1, $2)";
   try {
-    const { rows } = await db.query(thisQuery, [courseID, scenarioID]);
+    const { rows } = await pool.query(thisQuery, [courseID, scenarioID]);
   } catch (error) {
     throw new Error(error);
   }
@@ -29,36 +29,36 @@ exports.connectScenarioAndCourse = async function (scenarioID, courseID) {
 exports.getConnectedScenarioAndCourse = async function (scenarioID, courseID) {
   const query =
     "SELECT * FROM partof WHERE scenario_id = $1 and course_id = $2";
-  const { rows } = await db.query(query, [scenarioID, courseID]);
+  const { rows } = await pool.query(query, [scenarioID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getCourseOfScenario = async function (scenarioID) {
   const query = "SELECT * FROM partof WHERE scenario_id = $1";
-  const { rows } = await db.query(query, [scenarioID]);
+  const { rows } = await pool.query(query, [scenarioID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.getScenariosInCourse = async function (courseID) {
   const query = "SELECT * FROM partof WHERE course_id = $1";
-  const { rows } = await db.query(query, [courseID]);
+  const { rows } = await pool.query(query, [courseID]);
   return rows.map((el) => el.scenario_id);
 };
 
 exports.disconnectScenarioAndCourse = async function (scenarioID, courseID) {
   const query = "DELETE FROM partof WHERE scenario_id = $1 and course_id = $2";
-  const { rows } = await db.query(query, [scenarioID, courseID]);
+  const { rows } = await pool.query(query, [scenarioID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.disconnectScenarioFromCourse = async function (scenarioID) {
   const query = "DELETE FROM partof WHERE scenario_id = $1";
-  const { rows } = await db.query(query, [scenarioID]);
+  const { rows } = await pool.query(query, [scenarioID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.disconnectCourseFromScenarios = async function (courseID) {
   const query = "DELETE FROM partof WHERE course_id = $1";
-  const { rows } = await db.query(query, [courseID]);
+  const { rows } = await pool.query(query, [courseID]);
   return rows;
 };

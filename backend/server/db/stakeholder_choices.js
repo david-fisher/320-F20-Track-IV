@@ -1,11 +1,11 @@
-const db = require("../models");
+const pool = require("./pool");
 const response = require("./response");
 const stakeholders = require("./stakeholders");
 
 exports.getStakeholderChoice = async function (response_id, stakeholder_id) {
   const query =
     "SELECT * FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
-  const { rows } = await db.query(query, [response_id, stakeholder_id]);
+  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
@@ -33,7 +33,7 @@ exports.getStakeholderChoicesBy = async function ({
 
   const query = `SELECT * from stakeholder_chocies WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows;
 };
 
@@ -51,13 +51,13 @@ exports.createStakeholderChoice = async function (response_id, stakeholder_id) {
   }
 
   const query = "insert into stakeholder_choices values($1, $2)";
-  const { rows } = await db.query(query, [response_id, stakeholder_id]);
+  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
   return rows[0];
 };
 
 exports.deleteStakeholderChoice = async function (response_id, stakeholder_id) {
   const query =
     "DELETE FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
-  const { rows } = await db.query(query, [response_id, stakeholder_id]);
+  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
   return rows[0];
 };

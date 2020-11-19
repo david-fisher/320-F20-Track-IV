@@ -1,4 +1,4 @@
-const db = require("../models");
+const pool = require("./pool");
 const scenario = require("./scenario");
 const users = require("./users");
 
@@ -12,7 +12,7 @@ const operatorList = {
 };
 exports.getSubmission = async function (submissionID) {
   const query = "SELECT * FROM submissions WHERE id = $1";
-  const { rows } = await db.query(query, [submissionID]);
+  const { rows } = await pool.query(query, [submissionID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
@@ -61,7 +61,7 @@ exports.getSubmissionsBy = async function ({
   }
 
   const query = `SELECT * from submissions WHERE ${where}`;
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows;
 };
 exports.makeSubmissionOfScenarioByUser = async function (userID, scenarioID) {
@@ -80,24 +80,24 @@ exports.makeSubmissionOfScenarioByUser = async function (userID, scenarioID) {
   }
 
   const query = "INSERT INTO submissions VALUES(DEFAULT, $1, $2, DEFAULT)";
-  const { rows } = await db.query(query, [userID, scenarioID]);
+  const { rows } = await pool.query(query, [userID, scenarioID]);
   return rows[0];
 };
 
 exports.deleteSubmission = async function (submissionID) {
   const query = "DELETE FROM submissions WHERE id = $1";
-  const { rows } = await db.query(query, [submissionID]);
+  const { rows } = await pool.query(query, [submissionID]);
   return rows[0];
 };
 
 exports.deleteSubmissionsByUser = async function (userID) {
   const query = "DELETE FROM submissions WHERE user_id = $1";
-  const { rows } = await db.query(query, [userID]);
+  const { rows } = await pool.query(query, [userID]);
   return rows;
 };
 
 exports.deleteSubmissionsOfScenario = async function (scenarioID) {
   const query = "DELETE FROM submissions WHERE scenario_id = $1";
-  const { rows } = await db.query(query, [scenarioID]);
+  const { rows } = await pool.query(query, [scenarioID]);
   return rows;
 };
