@@ -9,6 +9,7 @@ const issues = require("./issues");
 const score = require("./score");
 const mcq = require("./mcq");
 const question = require("./question");
+const mcqOption = require("./mcq_option");
 
 exports = {
   ...scenario,
@@ -21,6 +22,7 @@ exports = {
   ...score,
   ...mcq,
   ...question,
+  ...mcqOption,
 };
 
 exports.users = require("./users");
