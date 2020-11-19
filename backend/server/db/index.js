@@ -2,11 +2,13 @@ const db = require("../models");
 const scenario = require("./scenario");
 const pages = require("./pages");
 const partof = require("./partof");
+const prompt = require("./prompt");
 
 exports = {
   ...scenario,
   ...pages,
   ...partof,
+  ...prompt,
 };
 
 exports.users = require("./users");
