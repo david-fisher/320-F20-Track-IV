@@ -1,24 +1,71 @@
-const myPlaintextPassword = 'i_love_cheese';
-const passwordHash = 'dousahdushk';
+const db = require("../models");
 
-const users = [
-  {
-    first_name: 'A.J.',
-    last_name: 'Uppal',
-    email: 'auppal@umass.edu',
-    password: myPlaintextPassword,
-    passwordHash: passwordHash,
-  },
-];
+exports.getUser = async function (userID) {
+  const query = "SELECT * FROM users WHERE id = $1";
+  const { rows } = await db.query(query, [userID]);
+  return rows.length !== 0 ? rows[0] : null;
+};
 
-exports.findByUsername = function (username, cb) {
-  process.nextTick(function () {
-    for (let i = 0; i < users.length; i++) {
-      console.log(users[i].email, username);
-      if (users[i].email === username) {
-        return cb(null, users[i]);
-      }
-    }
-    return cb(null, null);
+exports.getUsersBy = async function ({
+  fullName = null,
+  email = null,
+  demographics = null,
+}) {
+  const queryValues = [];
+  let argsPos = 1;
+
+  queryValues.push({
+    name: "full_name",
+    value: fullName,
+    pos: fullName ? argsPos++ : 0,
   });
+  queryValues.push({
+    name: "email",
+    value: email,
+    pos: email ? argsPos++ : 0,
+  });
+  queryValues.push({
+    name: "demographics",
+    value: demographics,
+    pos: demographics ? argsPos++ : 0,
+  });
+
+  const where = queryValues
+    .filter((el) => el.pos)
+    .map((el) => `${el.name}=$${el.pos}`)
+    .join(" and ");
+
+  const query = `SELECT * from users WHERE ${where}`;
+  const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
+  const { rows } = await db.query(query, values);
+  return rows;
+};
+
+exports.createUser = async function (fullName, email, demographics) {
+  const existing = await exports.getUsersBy({ email });
+  if (existing.length > 0) {
+    throw new Error("Cannot create new user with already registered email");
+  }
+
+  const query = "INSERT INTO users VALUES(DEFAULT, $1, $2, $3)";
+  const { rows } = await db.query(query, [fullName, email, demographics]);
+  return rows[0];
+};
+
+exports.updateUser = async function (userID, fullName, email, demographics) {
+  const query =
+    "UPDATE users SET fullName = $2 and email = $3 and demographics = $4 WHERE id = $1";
+  const { rows } = await db.query(query, [
+    userID,
+    fullName,
+    email,
+    demographics,
+  ]);
+  return rows[0];
+};
+
+exports.deleteUser = async function (userID) {
+  const query = "DELETE FROM users WHERE id = $1";
+  const { rows } = await db.query(query, [userID]);
+  return rows[0];
 };
