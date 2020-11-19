@@ -14,6 +14,7 @@ const users = require("./users");
 const courses = require("./courses");
 const instructs = require("./instructs");
 const enrolled = require("./enrolled");
+const submissions = require("./submissions");
 
 exports = {
   ...scenario,
@@ -31,6 +32,7 @@ exports = {
   ...courses,
   ...instructs,
   ...enrolled,
+  ...submissions,
 };
 
 exports.getScenarioIntroduction = (scenario_id) => {
