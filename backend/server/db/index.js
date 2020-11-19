@@ -1,4 +1,3 @@
-const db = require("../models");
 const scenario = require("./scenario");
 const pages = require("./pages");
 const partof = require("./partof");

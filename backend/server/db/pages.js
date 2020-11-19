@@ -1,24 +1,28 @@
 const db = require("../models");
 const scenario = require("./scenario");
 
-const INTROPAGE = 1;
-const TASKPAGE = 2;
-const INITIAL_REFLECTION = 3;
-const INIT_ACTION = 4;
-const INIT_ACTION_SUBSEQUENT = 5;
-const CONVERSATION = 6;
-const MIDDLE_REFLECTION = 7;
-const FINAL_ACTION = 8;
-const SUMMARY_PAGE = 9;
-const FEEDBACK_PAGE = 10;
-const FINAL_REFLECTION = 11;
-const CONCLUSIONPAGE = 12;
+exports.pageOrder = {
+  INTRO: 1,
+  TASK: 2,
+  INITIAL_REFLECTION: 3,
+  INIT_ACTION: 4,
+  INIT_ACTION_SUBSEQUENT: 5,
+  CONVERSATION: 6,
+  MIDDLE_REFLECTION: 7,
+  FINAL_ACTION: 8,
+  SUMMARY: 9,
+  FEEDBACK: 10,
+  FINAL_REFLECTION: 11,
+  CONCLUSION: 12,
+};
 
 // constants for page types
-const TYPE_PLAIN = "PLAIN";
-const TYPE_PROMPT = "PRMPT";
-const TYPE_MCQ = "MCQ";
-const TYPE_CONV = "CONV";
+exports.pageType = {
+  PLAIN: "PLAIN",
+  PROMPT: "PRMPT",
+  MCQ: "MCQ",
+  CONV: "CONV",
+};
 
 exports.getPage = async function (pageID) {
   const query = "SELECT * FROM pages WHERE id = $1";
@@ -26,7 +30,11 @@ exports.getPage = async function (pageID) {
   return rows.length !== 0 ? rows[0] : null;
 };
 
-exports.getPageBy = async function ({ order = null, type = null, scenarioID = null }) {
+exports.getPageBy = async function ({
+  order = null,
+  type = null,
+  scenarioID = null,
+}) {
   const queryValues = [];
   let argsPos = 1;
 
@@ -81,7 +89,12 @@ exports.createPage = async function (order, type, body_text, scenarioID) {
 
   try {
     const query = "insert into pages values(DEFAULT, $1, $2, $3, $4)";
-    const { rows } = await db.query(query, [order, type, body_text, scenarioID]);
+    const { rows } = await db.query(query, [
+      order,
+      type,
+      body_text,
+      scenarioID,
+    ]);
     return rows[0].id;
   } catch (error) {
     throw new Error(error);
@@ -98,38 +111,4 @@ exports.deletePage = async function (pageID) {
   const query = "DELETE FROM pages WHERE id = $1";
   const { rows } = await db.query(query, [pageID]);
   return rows[0];
-};
-
-exports.createIntroPage = async function (scenarioID, text) {
-  if (await scenario.getScenario(scenarioID)) {
-    // create page object - plain-page when no prompt linked
-    const pageID = await exports.createPage(INTROPAGE, TYPE_PLAIN, text, scenarioID);
-    return 202;
-  } else {
-    // TODO return InvalidScenarioError
-    return 404;
-  }
-};
-
-exports.getIntroPage = async function (scenarioID) {
-  const pages = await exports.getPageBy({ order: INTROPAGE, type: TYPE_PLAIN, scenarioID });
-  return pages.length !== 0 ? pages[0] : null;
-};
-
-exports.createTaskPage = async function (type, scenarioID, text) {
-  if (await scenario.getScenario(scenarioID)) {
-    return await exports.createPage(TASKPAGE, type, text, scenarioID);
-  } else {
-    throw new Error("Invalid Scenario ID");
-  }
-};
-
-exports.getTaskPage = async function (scenarioID) {
-  const pages = await exports.getPageBy({ order: INTROPAGE, scenarioID });
-  return {
-    plain: pages.filter((el) => el.type === TYPE_PLAIN),
-    prompt: pages.filter((el) => el.type === TYPE_PROMPT),
-    mcq: pages.filter((el) => el.type === TYPE_MCQ),
-    conv: pages.filter((el) => el.type === TYPE_CONV),
-  };
 };
