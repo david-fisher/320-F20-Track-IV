@@ -7,6 +7,7 @@ const conversationTask = require("./conversation_task");
 const stakeholders = require("./stakeholders");
 const issues = require("./issues");
 const score = require("./score");
+const mcq = require("./mcq");
 
 exports = {
   ...scenario,
@@ -17,6 +18,7 @@ exports = {
   ...stakeholders,
   ...issues,
   ...score,
+  ...mcq,
 };
 
 exports.users = require("./users");
