@@ -1,5 +1,4 @@
 const pool = require("./pool");
-const question = require("./question");
 
 exports.getMcqOption = async function (mcqOptionID) {
   const query = "SELECT * FROM mcq_option WHERE id = $1";
@@ -28,10 +27,6 @@ exports.getMcqOptionsBy = async function ({ questionID = null }) {
 };
 
 exports.createMcqOption = async function (questionID, option) {
-  if (!(await question.getQuestion(questionID))) {
-    throw new Error("Cannot find question where mcq_option must belong");
-  }
-
   const query = "INSERT INTO mcq_option VALUES(DEFAULT, $1, $2)";
   const { rows } = await pool.query(query, [option, questionID]); // watch out for order of values!
   return rows.length > 0 ? rows[0] : null;

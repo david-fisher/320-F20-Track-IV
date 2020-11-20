@@ -1,6 +1,4 @@
 const pool = require("./pool");
-const scenario = require("./scenario");
-const users = require("./users");
 
 const operatorList = {
   eq: "=",
@@ -65,20 +63,6 @@ exports.getSubmissionsBy = async function ({
   return rows;
 };
 exports.makeSubmissionOfScenarioByUser = async function (userID, scenarioID) {
-  if (!(await users.getUser(userID))) {
-    throw new Error("Cannot find user who makes submission of scenario");
-  }
-
-  if (!(await scenario.getScenario(scenarioID))) {
-    throw new Error("Cannot find scenario which user makes submission of");
-  }
-
-  if (await exports.getConnectedStudentAndCourse(userID, scenarioID)) {
-    throw new Error(
-      "Cannot make submission of scenario since user already did"
-    );
-  }
-
   const query = "INSERT INTO submissions VALUES(DEFAULT, $1, $2, DEFAULT)";
   const { rows } = await pool.query(query, [userID, scenarioID]);
   return rows.length > 0 ? rows[0] : null;

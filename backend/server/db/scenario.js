@@ -71,10 +71,6 @@ exports.createScenario = async function (
   status,
   additionalData
 ) {
-  if (!["DRAFT", "PUBLISHED", "CLOSED"].includes(status)) {
-    throw new Error("Invalid scenario status");
-  }
-
   if (dueDate < new Date()) {
     throw new Error("Due date cannot be earlier than current time");
   }
@@ -98,6 +94,10 @@ exports.updateScenario = async function (
   status,
   additionalData
 ) {
+  if (dueDate < new Date()) {
+    throw new Error("Due date cannot be earlier than current time");
+  }
+
   const query =
     "UPDATE scenario " +
     "SET name = $2 and due_date = $3 and description = $4 and status = $5 and additional_data = $6 " +

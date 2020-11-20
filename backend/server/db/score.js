@@ -1,6 +1,4 @@
 const pool = require("./pool");
-const stakeholders = require("./stakeholders");
-const issues = require("./issues");
 
 exports.getScore = async function (stakeholderID, issueID) {
   const query =
@@ -10,16 +8,6 @@ exports.getScore = async function (stakeholderID, issueID) {
 };
 
 exports.createScore = async function (stakeholderID, issueID, value) {
-  if (!(await stakeholders.getStakeholder(stakeholderID))) {
-    throw new Error("Cannot find a scenario where stakeholder must belong");
-  }
-
-  if (!(await issues.getIssue(issueID))) {
-    throw new Error(
-      "Cannot find a conversation task page where stakeholder must belong"
-    );
-  }
-
   const query = "insert into score values($1, $2, $3)";
   const { rows } = await pool.query(query, [stakeholderID, issueID, value]);
   return rows.length > 0 ? rows[0] : null;
