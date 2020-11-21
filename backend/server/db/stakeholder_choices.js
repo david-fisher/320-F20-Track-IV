@@ -1,11 +1,9 @@
 const pool = require("./pool");
-const response = require("./response");
-const stakeholders = require("./stakeholders");
 
-exports.getStakeholderChoice = async function (response_id, stakeholder_id) {
+exports.getStakeholderChoice = async function (responseID, stakeholderID) {
   const query =
     "SELECT * FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
-  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
+  const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
@@ -37,27 +35,15 @@ exports.getStakeholderChoicesBy = async function ({
   return rows;
 };
 
-exports.createStakeholderChoice = async function (response_id, stakeholder_id) {
-  if (!(await response.getResponse(response_id))) {
-    throw new Error(
-      "Cannot find a response where choice of stakeholder must belong"
-    );
-  }
-
-  if (!(await stakeholders.getStakeholder(stakeholder_id))) {
-    throw new Error(
-      "Cannot find a stakeholder where choice of stakeholder must belong"
-    );
-  }
-
+exports.createStakeholderChoice = async function (responseID, stakeholderID) {
   const query = "insert into stakeholder_choices values($1, $2)";
-  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
+  const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteStakeholderChoice = async function (response_id, stakeholder_id) {
+exports.deleteStakeholderChoice = async function (responseID, stakeholderID) {
   const query =
     "DELETE FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
-  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
+  const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };

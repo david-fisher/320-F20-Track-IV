@@ -1,6 +1,4 @@
 const pool = require("./pool");
-const scenario = require("./scenario");
-const convTask = require("./conversation_task");
 
 exports.getStakeholder = async function (stakeholderID) {
   const query = "SELECT * FROM stakeholders WHERE id = $1";
@@ -8,7 +6,7 @@ exports.getStakeholder = async function (stakeholderID) {
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getStakeholderBy = async function ({
+exports.getStakeholdersBy = async function ({
   scenarioID = null,
   convTaskID = null,
   name = null,
@@ -49,26 +47,6 @@ exports.createStakeholder = async function (
   description,
   conversation
 ) {
-  if (!(await scenario.getScenario(scenarioID))) {
-    throw new Error("Cannot find a scenario where stakeholder must belong");
-  }
-
-  if (!(await convTask.getConversationTask(convTaskID))) {
-    throw new Error(
-      "Cannot find a conversation task page where stakeholder must belong"
-    );
-  }
-
-  // Name must be unique in a conversation task page
-  const existing = await exports.getStakeholderBy({
-    scenarioID,
-    convTaskID,
-    name,
-  });
-  if (existing.length !== 0) {
-    throw new Error(`Name "${name}" already exists in the conversation page`);
-  }
-
   const query =
     "insert into stakeholders values(DEFAULT, $1, NULL, $2, $3, $4, $5)";
   const { rows } = await pool.query(query, [
@@ -100,7 +78,7 @@ exports.updateStakeholder = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteConversationTask = async function (stakeholderID) {
+exports.deleteStakeholder = async function (stakeholderID) {
   const query = "DELETE FROM stakeholders WHERE id = $1";
   const { rows } = await pool.query(query, [stakeholderID]);
   return rows.length > 0 ? rows[0] : null;

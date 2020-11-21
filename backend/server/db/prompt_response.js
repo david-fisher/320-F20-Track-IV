@@ -40,12 +40,12 @@ exports.updatePromptResponse = async function (
 ) {
   const responseObj = await response.getResponse(responseID);
   if (!responseObj) {
-    throw new Error("Cannot find a response where response of mcq must belong");
+    return null;
   }
 
   const pageID = responseObj.page_id;
   if (!(await prompt.getPrompt(pageID, promptNum))) {
-    throw new Error("Cannot find a question where response of mcq must belong");
+    return null;
   }
 
   const query =
