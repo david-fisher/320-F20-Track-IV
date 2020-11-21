@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +7,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
+
 
 function Login() {
   return (
@@ -41,7 +43,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function sendLogInToServer(event, history){
+  event.preventDefault();
+  axios.get(`/api/v1/auth/login`).then(res => {
+    let token = res.data.token;
+    history.push({
+      pathname: "/home",
+      state: {
+        token
+      }
+    });
+  });
+  // history.push({
+  //   pathname: "/home"
+  // });
+}
+
 export default function SignIn() {
+  const history = useHistory();
   const classes = useStyles();
 
   return (
@@ -51,7 +70,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Login
           </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={(event) => {sendLogInToServer(event, history)}}>
           <TextField
             //type="email"
             variant="outlined"
@@ -76,17 +95,15 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <Link to="/home">
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-              </Button>
-          </Link>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+            </Button>
         </form>
       </div>
       <Box mt={8}>

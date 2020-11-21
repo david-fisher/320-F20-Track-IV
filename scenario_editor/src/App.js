@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import NewScenario from './Pages/Editor/NewScenario';
 import Introduction from './Pages/Editor/Introduction';
+import IntroductionHub from './Pages/Editor/IntroductionHub';
 import PlayerResponses from './Pages/Editor/PlayerResponses';
 import UserAgreement from './Pages/Editor/UserAgreement';
 import Conversations from './Pages/Editor/Conversations';
@@ -29,9 +30,6 @@ import store from './Store'
 // - Figure out how to do a conversation matrix or find a workaround (finger's crossed)
 
 // TIPS:
-// - If you are confused on "functional" vs "class" files just look at Editor.js and NewScenario.js as they are
-//   the same thing except Editor.js is a function and NewScenario.js is a class. Notice how Editor.js can take
-//   in parameters if needed, while NewScenario.js cannot. 
 // - At the top of some of the pages I made a note if it will be used in the future AS IS or needs to be changed
 // - The best structures to follow (I think) are currently that of Dashboard.js and ScenarioCard.js, as it uses 
 //   most of what is needed, except for saving state.
@@ -63,7 +61,8 @@ export default function App() {
       <Route path="/home" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/new-scenario" component={NewScenario} />
-      <Route path="/introduction" component={Introduction} />
+      <Route path="/introduction-hub" component={IntroductionHub} />
+      <Route path="/introduction-text" component = {Introduction} />
       <Route path="/player-responses" component={PlayerResponses} />
       <Route path="/user-agreement" component={UserAgreement} />
       <Route path="/conversations" component={Conversations} />
