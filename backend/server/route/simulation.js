@@ -1,94 +1,70 @@
 const router = require("express").Router();
-const { isAuthenticated, validateToken } = require("../auth");
-const helper = require("../helper.js");
 const db = require("../db");
-const constants = require("../constants.js");
+const { auth, headers } = require("../middleware");
+const { httpStatusCode } = require("../constant");
+const { createInvalidResponse } = require("../utils");
 
-router.post("/create", isAuthenticated, async (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
-
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status !== 202) {
-    return res.json(authorization);
-  }
-
-  const {
-    simulation_title,
-    simulation_desc,
-    simulation_introduction,
-  } = req.body;
-
-  try {
-    const simulation_id = await db.createScenario(
+router.post(
+  "/create",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  async (req, res) => {
+    const {
       simulation_title,
-      simulation_desc
-    );
-    const response = await db.createIntroPage(
-      simulation_id,
-      simulation_introduction
-    );
-    if (200 <= response && response < 300) {
-      throw new Error(response);
+      simulation_desc,
+      simulation_introduction,
+    } = req.body;
+
+    try {
+      const simulation_id = await db.createScenario(
+        simulation_title,
+        simulation_desc
+      );
+      await db.createIntroPage(simulation_id, simulation_introduction);
+      db.connectScenarioAndCourse(simulation_id, 3); // TODO: 3 must be changed to real course id
+
+      res.status(httpStatusCode.success.CREATED);
+      res.json({
+        success: true,
+        simulation_id: simulation_id,
+      });
+    } catch (error) {
+      res.status(httpStatusCode.failed.BAD_REQUEST);
+      res.json({
+        success: false,
+        explanation: error.message,
+      });
     }
-    db.connectScenarioAndCourse(simulation_id, 3); // TODO: 3 must be changed to real course id
-
-    res.status(202);
-    res.json({
-      success: true,
-      simulation_id: simulation_id,
-    });
-  } catch (error) {
-    res.status(404);
-    res.json({
-      success: false,
-    });
   }
-});
+);
 
-router.delete("/:simulation_id", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
-
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  const { simulation_id } = req.params;
-  /*
+router.delete(
+  "/:simulation_id",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    const { simulation_id } = req.params;
+    /*
     TODO: remove saved simulation
 
     - path parameter
     * simulation_id: UID of simulation to be removed.
   */
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
-router.post("/:simulation_id/start", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
+    res.status(202);
+    res.json({
+      success: true,
+    });
   }
+);
 
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  const { simulation_id } = req.params;
-  const { available_to } = req.body;
-  /*
+router.post(
+  "/:simulation_id/start",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    const { simulation_id } = req.params;
+    const { available_to } = req.body;
+    /*
     TODO: start and open a simulation
 
     - path parameter
@@ -97,167 +73,115 @@ router.post("/:simulation_id/start", isAuthenticated, (req, res) => {
     - request body
     * available_to: UID of students who can access the simulation.
   */
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
-router.post("/:simulation_id/close", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
+    res.status(202);
+    res.json({
+      success: true,
+    });
   }
+);
 
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  const { simulation_id } = req.params;
-  /*
+router.post(
+  "/:simulation_id/close",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    const { simulation_id } = req.params;
+    /*
     TODO: close a simulation
 
     - path parameter
     * simulation_id: UID of simulation to be closed.
   */
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
-router.get("/:simulation_id/description", isAuthenticated, async (req, res) => {
-  const ERROR_CODE = 50650;
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
-
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  //db interface
-  const description = await db.getScenarioDescription(req.params.simulation_id);
-  console.log(description);
-  if (description != 404) {
     res.status(202);
     res.json({
-      description: description,
+      success: true,
     });
-  } else {
-    const error_description = `No simulation found with id ${req.params.simulation_id}.`;
-    const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
-    res.json(helper.INVALID_RESPONSE(ERROR_CODE, error_description));
   }
-});
+);
 
-router.put("/:simulation_id/description", isAuthenticated, async (req, res) => {
-  const ERROR_CODE = 50650;
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
+router.get(
+  "/:simulation_id/description",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  async (req, res) => {
+    const ERROR_CODE = 50650;
+    try {
+      const description = db.getScenarioDescription(req.params.simulation_id);
+      res.status(httpStatusCode.success.OK);
+      res.json({
+        description: description,
+      });
+    } catch (error) {
+      res.status(httpStatusCode.failed.NOT_FOUND);
+      res.json(createInvalidResponse(error.message));
+    }
   }
+);
 
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
+router.put(
+  "/:simulation_id/description",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  async (req, res) => {
+    try {
+      db.setScenarioDescription(req.params.simulation_id, req.body.description);
+      res.status(httpStatusCode.success.UPDATED);
+      res.json({
+        description: req.body.description,
+      });
+    } catch (error) {
+      res.status(httpStatusCode.failed.NOT_FOUND);
+      res.json(createInvalidResponse(error.message));
+    }
   }
+);
 
-  //db interface
-  const description = req.body.description;
-  let response = await db.setScenarioDescription(
-    req.params.simulation_id,
-    description
-  );
-  if (response != 404) {
-    res.status(202);
-    res.json({
-      description: description,
-    });
-  } else {
-    const error_description = `No simulation found with id ${req.params.simulation_id}.`;
-    const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
-    res.json(helper.INVALID_RESPONSE(ERROR_CODE, error_description));
+router.get(
+  "/:simulation_id/introduction",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    try {
+      const introduction = db.getSimulationIntroduction(
+        req.params.simulation_id
+      );
+      res.status(httpStatusCode.success.OK);
+      res.json({
+        summary: introduction,
+      });
+    } catch (error) {
+      res.status(httpStatusCode.failed.NOT_FOUND);
+      res.json(createInvalidResponse(error.message));
+    }
   }
-});
+);
 
-router.get("/:simulation_id/introduction", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
+router.put(
+  "/:simulation_id/introduction",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    try {
+      const introduction = db.getSimulationIntroductionByID(
+        req.token,
+        req.params.simulation_id
+      );
+      res.status(httpStatusCode.success.OK);
+      res.json({
+        summary: introduction,
+      });
+    } catch (error) {
+      res.status(httpStatusCode.failed.NOT_FOUND);
+      res.json(createInvalidResponse(error.message));
+    }
   }
-
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  //db interface
-  const introduction = db.getSimulationIntroduction(req.params.simulation_id);
-  console.log(introduction);
-  if (introduction != 404) {
-    res.status(202);
-    res.json({
-      summary: introduction,
-    });
-  } else {
-    const error_description = `No simulation found with id ${req.params.simulation_id}.`;
-    const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
-    res.json(helper.INVALID_RESPONSE(error_code, error_description));
-  }
-});
-
-router.put("/:simulation_id/introduction", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
-
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  //db interface
-  const introduction = db.getSimulationIntroductionByID(
-    token,
-    req.params.simulation_id
-  );
-  if (introduction != 404) {
-    res.status(202);
-    res.json({
-      summary: introduction,
-    });
-  } else {
-    const error_description = `No simulation found with id ${req.params.simulation_id}.`;
-    const error_code = constants.ERROR_CODE_INVALID_SIMULATION_ID;
-    res.json(helper.INVALID_RESPONSE(error_code, error_description));
-  }
-});
+);
 
 router.put(
   "/:simulation_id/initial-reflection",
-  isAuthenticated,
+  headers.areHeadersValid,
+  auth.isAuthenticated,
   (req, res) => {
-    const header_validation = helper.VALIDATE_HEADERS(req.headers);
-    if (header_validation.status != 202) {
-      return res.json(header_validation);
-    }
-
-    const token = header_validation.token;
-    const authorization = helper.VALIDATE_AUTHORIZATION(token);
-    if (header_validation.status != 202) {
-      return res.json(authorization);
-    }
-
     const { simulation_id } = req.params;
     const { description, questions } = req.body;
 
@@ -279,22 +203,15 @@ router.put(
   }
 );
 
-router.put("/:simulation_id/initial-action", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
+router.put(
+  "/:simulation_id/initial-action",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    const { simulation_id } = req.params;
+    const { description, choices } = req.body;
 
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  const { simulation_id } = req.params;
-  const { description, choices } = req.body;
-
-  /*
+    /*
     TODO: Add or update `initial-action` part of simulation
 
     - path variable:
@@ -305,27 +222,18 @@ router.put("/:simulation_id/initial-action", isAuthenticated, (req, res) => {
     * choices: list of choices
   */
 
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
+    res.status(202);
+    res.json({
+      success: true,
+    });
+  }
+);
 
 router.put(
   "/:simulation_id/stakeholders/description",
-  isAuthenticated,
+  headers.areHeadersValid,
+  auth.isAuthenticated,
   (req, res) => {
-    const header_validation = helper.VALIDATE_HEADERS(req.headers);
-    if (header_validation.status != 202) {
-      return res.json(header_validation);
-    }
-
-    const token = header_validation.token;
-    const authorization = helper.VALIDATE_AUTHORIZATION(token);
-    if (header_validation.status != 202) {
-      return res.json(authorization);
-    }
-
     const { simulation_id } = req.params;
     const { description } = req.body;
 
@@ -346,22 +254,15 @@ router.put(
   }
 );
 
-router.put("/:simulation_id/stakeholders", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
+router.put(
+  "/:simulation_id/stakeholders",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    const { simulation_id } = req.params;
+    const { name, description, conversation_text } = req.body;
 
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  const { simulation_id } = req.params;
-  const { name, description, conversation_text } = req.body;
-
-  /*
+    /*
     TODO: Add or update `stakeholder-list` part of simulation
 
     - path variable:
@@ -373,27 +274,18 @@ router.put("/:simulation_id/stakeholders", isAuthenticated, (req, res) => {
     * conversation_text: content of conversation with a new stakeholder
   */
 
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
+    res.status(202);
+    res.json({
+      success: true,
+    });
+  }
+);
 
 router.put(
   "/:simulation_id/additional-reflection",
-  isAuthenticated,
+  headers.areHeadersValid,
+  auth.isAuthenticated,
   (req, res) => {
-    const header_validation = helper.VALIDATE_HEADERS(req.headers);
-    if (header_validation.status != 202) {
-      return res.json(header_validation);
-    }
-
-    const token = header_validation.token;
-    const authorization = helper.VALIDATE_AUTHORIZATION(token);
-    if (header_validation.status != 202) {
-      return res.json(authorization);
-    }
-
     const { simulation_id } = req.params;
     const { description, questions } = req.body;
 
@@ -415,22 +307,15 @@ router.put(
   }
 );
 
-router.put("/:simulation_id/final-action", isAuthenticated, (req, res) => {
-  const header_validation = helper.VALIDATE_HEADERS(req.headers);
-  if (header_validation.status != 202) {
-    return res.json(header_validation);
-  }
+router.put(
+  "/:simulation_id/final-action",
+  headers.areHeadersValid,
+  auth.isAuthenticated,
+  (req, res) => {
+    const { simulation_id } = req.params;
+    const { description, choices } = req.body;
 
-  const token = header_validation.token;
-  const authorization = helper.VALIDATE_AUTHORIZATION(token);
-  if (header_validation.status != 202) {
-    return res.json(authorization);
-  }
-
-  const { simulation_id } = req.params;
-  const { description, choices } = req.body;
-
-  /*
+    /*
     TODO: Add or update `final-action` part of simulation
 
     - path variable:
@@ -441,10 +326,11 @@ router.put("/:simulation_id/final-action", isAuthenticated, (req, res) => {
     * choices: list of choices
   */
 
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
+    res.status(202);
+    res.json({
+      success: true,
+    });
+  }
+);
 
 module.exports = router;
