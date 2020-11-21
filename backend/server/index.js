@@ -1,7 +1,5 @@
 const path = require("path");
 const express = require("express");
-const passport = require("passport");
-const auth = require("./auth");
 const router = require("./route");
 const session = require("express-session");
 require("dotenv").config(); //env vars
@@ -10,12 +8,18 @@ const bodyParser = require("body-parser");
 const __VERSION = process.env.__VERSION || 1;
 
 const app = express();
-app.use(session({ secret: process.env.__secretSessionCode, resave: true, saveUninitialized: false }));
+app.use(
+  session({
+    secret: process.env.__secretSessionCode,
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(passport.initialize());
-app.use(passport.session());
-auth.config();
+// app.use(passport.initialize());
+// app.use(passport.session());
+// auth.config();
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
