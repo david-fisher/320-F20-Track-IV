@@ -42,13 +42,6 @@ exports.getCoursesBy = async function ({
 };
 
 exports.createCourse = async function (webpage, name, semester) {
-  const existing = await exports.getCoursesBy({ name, semester });
-  if (existing.length > 0) {
-    throw new Error(
-      "Cannot create new course with already registered name and semester"
-    );
-  }
-
   const query = "INSERT INTO courses VALUES(DEFAULT, $1, $2, $3)";
   const { rows } = await pool.query(query, [webpage, name, semester]);
   return rows.length > 0 ? rows[0] : null;

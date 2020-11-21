@@ -1,5 +1,4 @@
 const pool = require("./pool");
-const scenario = require("./scenario");
 
 exports.pageOrder = {
   INTRO: 1,
@@ -30,7 +29,7 @@ exports.getPage = async function (pageID) {
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getPageBy = async function ({
+exports.getPagesBy = async function ({
   order = null,
   type = null,
   scenarioID = null,
@@ -64,37 +63,17 @@ exports.getPageBy = async function ({
   return rows;
 };
 
-exports.scenarioPageExists = async function (order, type, scenarioID) {
-  if (await scenario.getScenario(scenarioID)) {
-    let thisQuery =
-      "select pages.id from pages, scenario where pages.scenario_id = $1 and pages.order = $2 and pages.type = $3";
-    try {
-      const { rows } = await pool.query(thisQuery, [scenarioID, order, type]);
-      return rows[0] ? rows[0].id : null;
-    } catch (error) {
-      throw new Error(error);
-    }
-  } else {
-    return 404;
-  }
-};
-
-exports.createPage = async function (order, type, body_text, scenarioID) {
+exports.createPage = async function (order, type, bodyText, scenarioID) {
   // returns ID of newly created page. If already exists, throw error.
-  const pages = await exports.getPageBy({ order, type, scenarioID });
+  const pages = await exports.getPagesBy({ order, type, scenarioID });
 
-  if (pages.length > 1) {
+  if (pages.length > 0) {
     throw new Error(
       "Page specified with order, type, and scenario already exists."
     );
   }
   const query = "insert into pages values(DEFAULT, $1, $2, $3, $4)";
-  const { rows } = await pool.query(query, [
-    order,
-    type,
-    body_text,
-    scenarioID,
-  ]);
+  const { rows } = await pool.query(query, [order, type, bodyText, scenarioID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
@@ -112,7 +91,7 @@ exports.createIntroPage = async function (scenarioID, text) {
 
 exports.updatePage = async function (pageID, body_text) {
   const query = "UPDATE pages SET body_text = $2 WHERE id = $1";
-  const { rows } = await pool.query(query, [pageID, body_text]);
+  const { rows } = await pool.query(query, [pageID, bodyText]);
   return rows.length > 0 ? rows[0] : null;
 };
 

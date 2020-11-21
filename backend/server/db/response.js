@@ -1,6 +1,4 @@
 const pool = require("./pool");
-const submissions = require("./submissions");
-const pages = require("./pages");
 
 const operatorList = {
   eq: "=",
@@ -65,14 +63,6 @@ exports.getResponsesBy = async function ({
   return rows;
 };
 exports.createResponse = async function (submissionID, pageID) {
-  if (!(await submissions.getPage(submissionID))) {
-    throw new Error("Cannot find a submission where response must belong");
-  }
-
-  if (!(await pages.getPage(pageID))) {
-    throw new Error("Cannot find a page where response must belong");
-  }
-
   const query = "INSERT INTO response VALUES($1, $2, DEFAULT)";
   const { rows } = await pool.query(query, [submissionID, pageID]);
   return rows.length > 0 ? rows[0] : null;

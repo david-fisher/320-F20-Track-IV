@@ -1,7 +1,4 @@
 const pool = require("./pool");
-const response = require("./response");
-const question = require("./question");
-const mcqOption = require("./mcq_option");
 
 exports.getMcqResponse = async function (response_id, question_id) {
   const query =
@@ -49,18 +46,6 @@ exports.createMcqResponse = async function (
   questionID,
   mcqOptionID
 ) {
-  if (!(await response.getResponse(responseID))) {
-    throw new Error("Cannot find a response where response of mcq must belong");
-  }
-
-  if (!(await question.getQuestion(questionID))) {
-    throw new Error("Cannot find a question where response of mcq must belong");
-  }
-
-  if (!(await mcqOption.getMcqOption(mcqOptionID))) {
-    throw new Error("Cannot find a mcq option where response of mcq choosed");
-  }
-
   const query = "insert into mcq_response values($1, $2, $3)";
   const { rows } = await pool.query(query, [
     responseID,
@@ -75,18 +60,6 @@ exports.updateMcqResponse = async function (
   questionID,
   mcqOptionID
 ) {
-  if (!(await response.getResponse(responseID))) {
-    throw new Error("Cannot find a response where response of mcq must belong");
-  }
-
-  if (!(await question.getQuestion(questionID))) {
-    throw new Error("Cannot find a question where response of mcq must belong");
-  }
-
-  if (!(await mcqOption.getMcqOption(mcqOptionID))) {
-    throw new Error("Cannot find a mcq option where response of mcq choosed");
-  }
-
   const query =
     "UPDATE mcq_response SET choice_id = $3 WHERE response_id = $1 and question_id = $2";
   const { rows } = await pool.query(query, [
@@ -97,9 +70,9 @@ exports.updateMcqResponse = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteMcqResponse = async function (response_id, stakeholder_id) {
+exports.deleteMcqResponse = async function (responseID, questionID) {
   const query =
-    "DELETE FROM mcq_response WHERE response_id = $1 and stakeholder_id = $2";
-  const { rows } = await pool.query(query, [response_id, stakeholder_id]);
+    "DELETE FROM mcq_response WHERE response_id = $1 and question_id = $2";
+  const { rows } = await pool.query(query, [responseID, questionID]);
   return rows.length > 0 ? rows[0] : null;
 };
