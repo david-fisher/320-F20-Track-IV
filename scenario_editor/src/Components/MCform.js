@@ -57,7 +57,9 @@ export default class Form extends React.Component {
 
   state = {
     question: "",
+    questionError: "",
     response: "",
+    responseError: "",
   };
 
   change = e => {
@@ -66,14 +68,34 @@ export default class Form extends React.Component {
       [e.target.name]: e.target.value
     });
   };
+  
+  validate = () => {
+    let isError = false;
+    const errors = {};
+    if (this.state.question.length < 5) {
+      isError = true;
+      errors.questionError = "error";
+    }
+    if (isError) {
+      this.setState({
+        ...this.state,
+        ...errors
+      })
+    }
+    return isError;
+  }
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
-    this.setState({
-      question:"",
-      response: "",
-    });
+    // this.props.onSubmit(this.state);
+    const err = this.validate();
+    if (!err) {
+      this.props.onSubmit(this.state);
+      this.setState({
+        question:"",
+        response: "",
+      });
+    }
   };
   render() {
     return (
@@ -89,6 +111,7 @@ export default class Form extends React.Component {
           placeholder='Enter multiple choice question here'
           value={this.state.question}
           onChange={e => this.change(e)}
+          errorText={this.state.questionError}
           style={{
               width: 1000,
               //margin: 20,
@@ -113,6 +136,7 @@ export default class Form extends React.Component {
           value={this.state.response}
           variant="outlined"
           onChange={e => this.change(e)}
+          errorText={this.state.responseError}
           InputLabelProps={{
             //readOnly: true,
             shrink: true

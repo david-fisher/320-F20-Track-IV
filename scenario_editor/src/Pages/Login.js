@@ -72,6 +72,7 @@ export default function SignIn() {
           </Typography>
         <form className={classes.form} noValidate onSubmit={(event) => {sendLogInToServer(event, history)}}>
           <TextField
+            //type="email"
             variant="outlined"
             margin="normal"
             required
@@ -83,6 +84,7 @@ export default function SignIn() {
             autoFocus
           />
           <TextField
+            type='password'
             variant="outlined"
             margin="normal"
             required
