@@ -1,4 +1,3 @@
-//import React from 'react';
 import React, { Component } from 'react';
 import './PlayerResponses.css';
 import Nav from '../../Components/Nav'
@@ -12,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
     marginLeft: theme.spacing(4),
     width: '100ch',
-},
+  },
   header: {
     margin: theme.spacing(4)
   },
@@ -47,7 +46,7 @@ function PlayerResponses() {
 
   const classes = useStyles();
   return (
-  <div >
+    <div >
       <Nav />
       <div className={classes.header}>
 
@@ -64,7 +63,7 @@ function PlayerResponses() {
             className={classes.optionButton}
           >
             <Link to="/multiple-choice">
-            Create Multiple Choice Response
+              Create Multiple Choice Response
             </Link>
           </Button>{' '}
         </div>
@@ -73,7 +72,7 @@ function PlayerResponses() {
             className={classes.optionButton}
           >
             <Link to="/open-response">
-            Create Open-Ended Response
+              Create Open-Ended Response
             </Link>
           </Button>
         </div>
@@ -84,3 +83,5 @@ function PlayerResponses() {
 }
 
 export default PlayerResponses;
+
+
