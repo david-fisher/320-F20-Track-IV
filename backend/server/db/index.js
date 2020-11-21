@@ -42,6 +42,8 @@ exports = {
   ...promptResponse,
 };
 
+// console.log(exports);
+
 exports.getScenarioIntroduction = (scenario_id) => {
   let introduction = "";
   // db
@@ -252,3 +254,5 @@ exports.getScenarioID = function (token) {
    */
   return [];
 };
+
+module.exports = exports;
