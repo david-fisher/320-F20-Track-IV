@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Form from "./MCform";
+import Form from "../../Components/MCform";
 import Nav from '../../Components/Nav'
 import {Link} from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
 // injectTapEventPlugin();
-import Table from "./MCtable";
+import Table from "../../Components/MCtable";
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class Introduction extends Component {
+class ProjectTaskAssignment extends Component {
 
   // const classes = useStyles();
   constructor() {
@@ -106,11 +106,11 @@ class Introduction extends Component {
       <div>
         <Nav />
         <div>
-          <h1>Introduction Page</h1>
+          <h1>Project Task Assignment</h1>
         </div>
 
         <b1 className="introduction-part">
-          Add/Edit Your Introduction Below:
+          Add/Edit Your Project Task Assignment Below:
         </b1>
         <div></div>
         <b2 className="text-editor">
@@ -120,7 +120,7 @@ class Introduction extends Component {
             width: '100%',
             //maxWidth: '1000px',
             buttonList: buttonList.complex,
-            placeholder: "Insert your introduction text here..."
+            placeholder: "Insert your task text here..."
 
           }}/>
 
@@ -129,9 +129,6 @@ class Introduction extends Component {
         <div>
           <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
         </div>
-        <div>
-            <Button type="submit"component={ Link } to="/player-responses">NEXT</Button>
-          </div>
         <div>
           {/**<form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
             <textarea rows='15' cols='75' value={this.state.value} onChange={this.handleChange} />
@@ -153,23 +150,8 @@ class Introduction extends Component {
             ))}
           </h4>
             */}
-          {/* <h4>
-            This is the local state value of suneditor before it gets "posted":
-            <SunEditor
-              disable={true}
-              setContents={this.state.contents}
-              showToolbar={false}
-               />
-          </h4> */}
-          {/* <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.scenarios.map(scenario => (
-              <li key={scenario.id}> <SunEditor
-                disable={true}
-                showToolbar={false}
-                setContents ={scenario.title}/> </li>
-            ))}
-          </h4> */}
+          
+       
           {/* I want to be able to post something even if it's null at first, so when it changes it's there */}
           {/* <h4>
             This is the 3rd object stored in the store:: {" "}
@@ -198,4 +180,4 @@ const mapDispatchToProps = dispatch => {
 // mapStateToProps determines what state from our store we want to pull into our component.
 // In this case, we're specifying to only pull our state's posts property.
 
-export default connect(mapStateToProps, mapDispatchToProps)(Introduction);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectTaskAssignment);

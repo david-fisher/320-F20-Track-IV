@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 function sendLogInToServer(event, history){
   event.preventDefault();
-  axios.get(`http://4acf3d2e295e.ngrok.io/api/v1/auth/login`).then(res => {
+  axios.get(`/api/v1/auth/login`).then(res => {
     let token = res.data.token;
     history.push({
       pathname: "/home",
@@ -54,6 +54,9 @@ function sendLogInToServer(event, history){
       }
     });
   });
+  // history.push({
+  //   pathname: "/home"
+  // });
 }
 
 export default function SignIn() {

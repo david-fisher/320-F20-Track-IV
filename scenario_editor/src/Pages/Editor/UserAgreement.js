@@ -245,7 +245,7 @@ class UserAgreement extends Component {
           <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
         </div>
         <div>
-            <Button type="submit"component={ Link } to="/introduction">NEXT</Button>
+            <Button type="submit"component={ Link } to="/introduction-hub">NEXT</Button>
           </div>
         <div>
           {/**<form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
@@ -314,3 +314,65 @@ const mapDispatchToProps = dispatch => {
 // In this case, we're specifying to only pull our state's posts property.
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserAgreement);
+
+
+// INCOMING CHANGES FOR MERGE CONFLICT. OLD.
+//          <Nav/>
+//          <form className={classes.root} noValidate autoComplete="off">
+//          <h1>  User Agreement </h1>
+//          {/* <b1>  Scenario Title:</b1> */}
+
+//              <TextField
+//               multiline
+//               fullWidth
+//               id="userAgreement"
+//               label="User Agreement"
+//               variant="outlined"
+//               placeholder='Enter user agreement here'
+//               value={value}
+//               onChange={onChange}
+//               style={{
+//                 marginTop: 50}}
+//               rows={20}
+//               margin="normal"
+//                   InputLabelProps={{
+//                     shrink: true }}
+//               />
+//            </form>
+
+
+//             <div className={classes.root}>
+//             <div>
+// {/* // <<<<<<< rebel-scrum-introduction-expanded */}
+//             <Button  
+//             component={ Link } to="/introduction-hub"
+//             variant="contained" 
+//             color="primary" 
+// // =======
+// //             <Button
+// //             component={ Link } to="/introduction"
+// //             variant="contained"
+// //             color="primary"
+// // >>>>>>> rs-bb-int-scenarios
+//             href="#contained-buttons"
+//             size='medium'
+//             alignItems='right'
+//             style={{
+//               //marginTop: 10,
+//               //marginRight: 100,
+//               marginLeft: 1100,
+//               //marginBottom: 100
+//             }}
+
+//             >
+//             Submit
+//           </Button>
+
+//             </div>
+
+//        </div>
+//        </div>
+
+//     );
+//   };
+//   export default UserAgreement;
