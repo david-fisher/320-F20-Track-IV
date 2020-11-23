@@ -46,8 +46,8 @@ export default function NavDashboard() {
                         <Link to="/conclusions">
                             <li>Conclusions </li>
                         </Link>
-                        <Link to="/build">
-                            <li>Build</li>
+                        <Link to="/dashboard">
+                            <li>Dashboard</li>
                         </Link>
 
                     </u1>

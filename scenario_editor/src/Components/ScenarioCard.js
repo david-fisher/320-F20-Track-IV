@@ -42,6 +42,8 @@ export default function ScenarioCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions>
+          {/* THIS SENDS THE DATA FROM THE PROPER SCENARIO TO THE INTRO-HUB. SAME GOES WITH RESULTS.
+          MAKE SURE THAT THE DATA IS PROPERLY HANDLED / PASSED DOWN IN THE FUTURE PAGES. */}
           <Button size="small" color="primary" component={Link} to={{
             pathname: "/introduction-hub/" + data.id,
             scenarioData: data

@@ -71,7 +71,7 @@ export default function App() {
       <Route path="/multiple-choice" component={MultipleChoice} />
       <Route path="/open-response" component={OpenResponse} />
       <Route path="/conclusions" component={Conclusions} />
-      {/* Dashboard is where the Editor can see Draft, Open, and Closed Scenarios */}
+      
       <Route path="/dashboard" component={Dashboard} />
           {/* This Route will be how we are able to edit individual scenarios in the future
       Have not gotten to implementing the functionality fully yet, but, in essence,
