@@ -53,18 +53,6 @@ async function getScenariosFromServer(){
   return res.data;
 }
 
-//Hardcoded data
-const sampleScenarios = [
-    { scenarioTitle: "Draft 1", className: "CS311", id: '1', draft: false, open: false },
-    { scenarioTitle: "Draft 2", className: "CS311", id: '2', draft: false, open: false },
-    { scenarioTitle: "Draft 3", className: "CS311", id: '3', draft: false, open: false },
-    { scenarioTitle: "What if this draft title is super duper long? How long can it get? Idk we'll see ", className: "CS311", id: '4', draft: false, open: false },
-    { scenarioTitle: "Open 1", className: "CS320", id: '5', draft: true, open: true },
-    { scenarioTitle: "This is just a sample mid length title", className: "CS320", id: '6', draft: true, open: true },
-    { scenarioTitle: "Open 3", className: "CS320", id: '8', draft: true, open: true },
-    { scenarioTitle: "Closed 1", className: "CS589", id: '7', draft: true, open: false },
-];
-
 class ScenarioGrid extends Component {
     constructor(props){
       super(props);
@@ -93,9 +81,9 @@ class ScenarioGrid extends Component {
       // let draftScenarios = this.scenarios.filter(data => (data.status === false));
       // let openScenarios = this.scenarios.filter(data => (data.draft === true && data.open === true));
       // let closedScenarios = this.scenarios.filter(data => (data.draft === true && data.open === false));
-      this.setState({draft: draftScenarios || [{"id": 1, "name": 'hello', "due_date":'12-12-2020', "description": 'desc', "additional_data": '', "status": 'DRAFT'}],
-                  open: openScenarios || [],
-                  closed: closedScenarios || []
+      this.setState({draft: draftScenarios || [{"id": 1, "name": 'title1', "due_date":'12-12-2020', "description": 'desc', "additional_data": '', "status": 'DRAFT'}],
+                  open: openScenarios || [{"id": 2, "name": 'title2', "due_date":'12-12-2020', "description": 'desc', "additional_data": 'does this show', "status": 'OPEN'}],
+                  closed: closedScenarios || [{"id": 3, "name": 'title3', "due_date":'12-12-2020', "description": 'desc', "additional_data": '', "status": 'CLOSED'}]
                 });
     }
 
@@ -211,7 +199,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-// THIS is where we actually output our stuff.
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -237,13 +224,10 @@ class Dashboard extends Component {
           {/* You can follow the NavHome component (imported at the top) to see how it was made */}
           {/* <NavHome /> */}
 
-          {/* Interchange between NavHome and NavDashboard to see how they vary, will probably use NavHome*/}
           <NavDashboard />
 
           <ScenarioGrid scenarios={this.state.data}/>
 
-          {/* Uncomment the line below to see what happens when you call it again */}
-          {/* <ScenarioGrid /> */}
 
       </div>
     )
