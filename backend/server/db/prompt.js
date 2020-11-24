@@ -14,7 +14,7 @@ exports.createPrompt = async function (pageID, prompt) {
 
 exports.updatePrompt = async function (pageID, promptNum, text) {
   const query =
-    "UPDATE prompt SET body_text = $3 WHERE page_id = $1 and prompt_num = $2";
+    "UPDATE prompt SET prompt = $3 WHERE page_id = $1 and prompt_num = $2";
   const { rows } = await pool.query(query, [pageID, promptNum, text]);
   return rows.length > 0 ? rows[0] : null;
 };
