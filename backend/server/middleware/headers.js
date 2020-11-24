@@ -66,7 +66,6 @@ const addAuthenticatorToRequest = (req, res, next) => {
   const auth_header = headers["Authorization"] || headers["authorization"];
   if (auth_header) {
     const token = auth_header.split(" ")[1];
-    req.token = token;
     req.isAuthenticated = createAuthenticator(token);
   } else {
     req.isAuthenticated = createAuthenticator();
