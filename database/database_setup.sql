@@ -148,26 +148,27 @@ CREATE TABLE "submissions" (
 CREATE TABLE "response" (
 	"id" SERIAL PRIMARY KEY,
 	"submission_id" INT REFERENCES submissions,
-	"page_id" INT REFERENCES pages,
-	"time" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	"page_num" INT,
+	"time" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(submission_id, page_num)
 );
 
 CREATE TABLE "prompt_response" (
-	"response_id" INT REFERENCES response,
+	"id" INT REFERENCES response,
 	"prompt_num" INT,
 	"response" VARCHAR,
-	PRIMARY KEY (response_id, prompt_num)
+	PRIMARY KEY (id, prompt_num)
 );
 
-CREATE TABLE "stakeholder_choices" (
-	"response_id" INT REFERENCES response,
-	"stakeholder_id" INT REFERENCES stakeholders,
-	PRIMARY KEY (response_id, stakeholder_id)
+CREATE TABLE "conversation_choices" (
+	"id" INT REFERENCES response,
+	"conversation_id" INT REFERENCES conversation,
+	PRIMARY KEY (id, conversation_id)
 );
 
 CREATE TABLE "mcq_response" (
-	"response_id" INT REFERENCES response,
+	"id" INT REFERENCES response,
 	"question_id" INT REFERENCES question,
-	PRIMARY KEY (response_id, question_id),
+	PRIMARY KEY (id, question_id),
 	"choice_id" INT REFERENCES mcq_option
 );
