@@ -1,0 +1,12 @@
+{
+  "DEFAULT_HEADERS": {
+    // "content-type": 	"application/json",
+    "accept": "application/json"
+    // "accept-encoding": 	"gzip, deflate, br"
+  },
+
+  "DEFAULT_HEADERS_FORM": {
+    "accept": "application/json",
+    "accept-encoding": "gzip, deflate, br"
+  }
+}
