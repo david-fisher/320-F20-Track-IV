@@ -1,4 +1,5 @@
 const pool = require("./pool");
+const scenario = require("./scenario");
 
 exports.pageOrder = {
   INTRO: 1,
@@ -54,7 +55,7 @@ exports.getPagesBy = async function ({
   });
   const where = queryValues
     .filter((el) => el.pos)
-    .map((el) => `${el.name}=$${el.pos}`)
+    .map((el) => `pages.${el.name}=$${el.pos}`)
     .join(" and ");
 
   const query = `SELECT * from pages WHERE ${where}`;
@@ -72,13 +73,24 @@ exports.createPage = async function (order, type, bodyText, scenarioID) {
       "Page specified with order, type, and scenario already exists."
     );
   }
-
   const query = "insert into pages values(DEFAULT, $1, $2, $3, $4)";
   const { rows } = await pool.query(query, [order, type, bodyText, scenarioID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updatePage = async function (pageID, bodyText) {
+exports.createIntroPage = async function (scenarioID, text) {
+    if (await scenario.getScenario(scenarioID)){
+        // create page object - plain-page when no prompt linked
+        page = await exports.createPage(exports.pageOrder.INTRO, exports.pageType.PLAIN, text, scenarioID)
+        return page;
+    }
+    else{
+        // TODO return InvalidScenarioError
+        return 404;
+    }
+}
+
+exports.updatePage = async function (pageID, body_text) {
   const query = "UPDATE pages SET body_text = $2 WHERE id = $1";
   const { rows } = await pool.query(query, [pageID, bodyText]);
   return rows.length > 0 ? rows[0] : null;

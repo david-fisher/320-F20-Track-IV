@@ -7,11 +7,11 @@ exports.createConnectionOfScenarioAndCourse = async function (
   courseID
 ) {
   // A scenario can be added to only one course.
-  if (!(await exports.getCourseOfScenario(scenarioID))) {
-    throw new Error(
-      "Cannot add scenario which is already added to another course"
-    );
-  }
+  // if (!(await exports.getCourseOfScenario(scenarioID))) {
+  //   throw new Error(
+  //     "Cannot add scenario which is already added to another course"
+  //   );
+  // }
 
   const query = "insert into partof values($1, $2)";
   const { rows } = await pool.query(query, [courseID, scenarioID]);

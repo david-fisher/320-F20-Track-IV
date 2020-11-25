@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const db = require("../db");
+const constants = require("../constants.js");
+
 const { auth, headers } = require("../middleware");
 const { httpStatusCode } = require("../constant");
 const { createInvalidResponse } = require("../utils");
@@ -37,6 +39,40 @@ router.post(
     }
   }
 );
+
+router.post("/create", isAuthenticated, async (req, res) => {
+  const header_validation = helper.VALIDATE_HEADERS(req.headers);
+  if (header_validation.status != 202) {
+    return res.json(header_validation);
+  }
+
+  const token = header_validation.token;
+  const authorization = helper.VALIDATE_AUTHORIZATION(token);
+  if (header_validation.status != 202) {
+    return res.json(authorization);
+  }
+
+  const { simulation_title, simulation_desc, simulation_introduction } = req.body;
+  const fortnightAway = new Date(Date.now() + 12096e5);
+  await db.createScenario(simulation_title, fortnightAway, simulation_desc, "DRAFT", "<additional data>");
+  const simulation_id = await db.retrieveLatestScenarioID();
+  const response = await db.createIntroPage(simulation_id, simulation_introduction);
+  db.createConnectionOfScenarioAndCourse(simulation_id, 3);
+
+  /*
+    TODO: create a new simulation
+
+    - request body
+    * simulation_name: name for a new simulation
+  */
+
+  res.status(202);
+  res.json({
+    success: true,
+    simulation_id: simulation_id,
+  });
+});
+
 
 router.delete(
   "/:simulation_id",
@@ -92,12 +128,13 @@ router.post(
     - path parameter
     * simulation_id: UID of simulation to be closed.
   */
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
+  res.status(202);
+  res.json({
+    success: true,
+  });
+});
+
+
 
 router.get(
   "/:simulation_id/description",
@@ -196,12 +233,11 @@ router.put(
     * questions: list of questions
   */
 
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
+  res.status(202);
+  res.json({
+    success: true,
+  });
+});
 
 router.put(
   "/:simulation_id/initial-action",
@@ -247,12 +283,11 @@ router.put(
     * description: content of a summary for all of the stakeholders
   */
 
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
+  res.status(202);
+  res.json({
+    success: true,
+  });
+});
 
 router.put(
   "/:simulation_id/stakeholders",
@@ -300,12 +335,11 @@ router.put(
     * questions: list of questions
   */
 
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
+  res.status(202);
+  res.json({
+    success: true,
+  });
+});
 
 router.put(
   "/:simulation_id/final-action",

@@ -18,8 +18,9 @@ exports.getScenario = async function (scenarioID) {
 exports.getScenariosBy = async function ({
   name = null,
   status = null,
-  dueDate = [...{ time: null, operator: "eq" }],
+  dueDate = [{ time: null, operator: "eq" }],
 }) {
+  // console.log(name, status);
   const queryValues = [];
   let argsPos = 1;
 
@@ -39,30 +40,37 @@ exports.getScenariosBy = async function ({
     .join(" and ");
   let values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
 
-  if (dueDate.length !== 0) {
-    const timeQueryValues = [];
-
-    for (let dd of dueDate) {
-      timeQueryValues.push({
-        name: "time",
-        operator: operatorList[dd.operator],
-        value: dd.time,
-        pos: argsPos++,
-      });
-    }
-
-    const whereTime = timeQueryValues
-      .map((el) => `${el.name}${el.operator}$${el.pos}`)
-      .join(" and ");
-    const valuesTime = timeQueryValues.map((el) => el.value);
-    where = where + " and " + whereTime;
-    values = values.concat(valuesTime);
-  }
+  // if (dueDate.length !== 0) {
+  //   const timeQueryValues = [];
+  //
+  //   for (let dd of dueDate) {
+  //     timeQueryValues.push({
+  //       name: "time",
+  //       operator: operatorList[dd.operator],
+  //       value: dd.time,
+  //       pos: argsPos++,
+  //     });
+  //   }
+  //
+  //   const whereTime = timeQueryValues
+  //     .map((el) => `${el.name}${el.operator}$${el.pos}`)
+  //     .join(" and ");
+  //   const valuesTime = timeQueryValues.map((el) => el.value);
+  //   where = where + " and " + whereTime;
+  //   values = values.concat(valuesTime);
+  // }
 
   const query = `SELECT * from scenario WHERE ${where}`;
+  console.log(query);
   const { rows } = await pool.query(query, values);
   return rows;
 };
+
+exports.retrieveLatestScenarioID = async function (){
+  const query = "select currval('scenario_id_seq')";
+  const { rows } = await pool.query(query);
+  return rows[0].currval;
+}
 
 exports.createScenario = async function (
   name,
