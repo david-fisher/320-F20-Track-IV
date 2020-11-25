@@ -1,4 +1,5 @@
 const pool = require("./pool");
+const scenario = require("./scenario");
 
 exports.pageOrder = {
   INTRO: 1,

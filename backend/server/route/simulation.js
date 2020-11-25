@@ -21,7 +21,7 @@ router.post("/create", isAuthenticated, async (req, res) => {
   await db.createScenario(simulation_title, fortnightAway, simulation_desc, "DRAFT", "<additional data>");
   const simulation_id = await db.retrieveLatestScenarioID();
   const response = await db.createIntroPage(simulation_id, simulation_introduction);
-  db.connectScenarioAndCourse(simulation_id, 3);
+  db.createConnectionOfScenarioAndCourse(simulation_id, 3);
 
   /*
     TODO: create a new simulation
