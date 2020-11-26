@@ -43,21 +43,21 @@ exports.getInstructionsBy = async function ({
 };
 
 exports.createInstruction = async function (userID, courseID, webpage) {
-  const query = "INSERT INTO instructs VALUES($1, $2, $3)";
+  const query = "INSERT INTO instructs VALUES($1, $2, $3) RETURNING *";
   const { rows } = await pool.query(query, [userID, webpage, courseID]); // watch out for order of values!
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateInstuction = async function (userID, courseID, webpage) {
   const query =
-    "UPDATE conversation_task SET webpage = $3 WHERE user_id = $1 and course_id = $2";
+    "UPDATE conversation_task SET webpage = $3 WHERE user_id = $1 and course_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [userID, courseID, webpage]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteInstruction = async function (userID, courseID) {
   const query =
-    "DELETE FROM instructs WHERE instructor_id = $1 and course_id = $2";
+    "DELETE FROM instructs WHERE instructor_id = $1 and course_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [userID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
@@ -91,7 +91,7 @@ exports.deleteInstructionsBy = async function ({
     .map((el) => `${el.name}=$${el.pos}`)
     .join(" and ");
 
-  const query = `DELETE FROM instructs WHERE ${where}`;
+  const query = `DELETE FROM instructs WHERE ${where} RETURNING *`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
   const { rows } = await pool.query(query, values);
   return rows;

@@ -17,7 +17,7 @@ exports.getResponse = async function (responseID) {
 exports.getResponsesBy = async function ({
   submissionID = null,
   pageID = null,
-  responseTime = [...{ time: null, operator: "eq" }],
+  responseTime = [],
 }) {
   const queryValues = [];
   let argsPos = 1;
@@ -63,13 +63,13 @@ exports.getResponsesBy = async function ({
   return rows;
 };
 exports.createResponse = async function (submissionID, pageID) {
-  const query = "INSERT INTO response VALUES($1, $2, DEFAULT)";
+  const query = "INSERT INTO response VALUES($1, $2, DEFAULT) RETURNING *";
   const { rows } = await pool.query(query, [submissionID, pageID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteResponse = async function (responseID) {
-  const query = "DELETE FROM response WHERE id = $1";
+  const query = "DELETE FROM response WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [responseID]);
   return rows.length > 0 ? rows[0] : null;
 };

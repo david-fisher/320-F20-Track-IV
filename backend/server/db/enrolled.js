@@ -33,13 +33,14 @@ exports.getEnrollmentsBy = async function ({ userID = null, courseID = null }) {
   return rows;
 };
 exports.createEnrollment = async function (userID, courseID) {
-  const query = "INSERT INTO enrolled VALUES($1, $2)";
+  const query = "INSERT INTO enrolled VALUES($1, $2) RETURNING *";
   const { rows } = await pool.query(query, [userID, courseID]); // watch out for order of values!
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteEnrollment = async function (userID, courseID) {
-  const query = "DELETE FROM enrolled WHERE student_id = $1 and course_id = $2";
+  const query =
+    "DELETE FROM enrolled WHERE student_id = $1 and course_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [userID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
@@ -67,7 +68,7 @@ exports.deleteEnrollmentsBy = async function ({
     .map((el) => `${el.name}=$${el.pos}`)
     .join(" and ");
 
-  const query = `DELETE FROM enrolled WHERE ${where}`;
+  const query = `DELETE FROM enrolled WHERE ${where} RETURNING *`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
   const { rows } = await pool.query(query, values);
   return rows;

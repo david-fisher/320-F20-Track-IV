@@ -29,21 +29,21 @@ exports.getStakeholderChoicesBy = async function ({
     .map((el) => `${el.name}=$${el.pos}`)
     .join(" and ");
 
-  const query = `SELECT * from stakeholder_chocies WHERE ${where}`;
+  const query = `SELECT * FROM stakeholder_chocies WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
   const { rows } = await pool.query(query, values);
   return rows;
 };
 
 exports.createStakeholderChoice = async function (responseID, stakeholderID) {
-  const query = "insert into stakeholder_choices values($1, $2)";
+  const query = "INSERT INTO stakeholder_choices VALUES($1, $2) RETURNING *";
   const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteStakeholderChoice = async function (responseID, stakeholderID) {
   const query =
-    "DELETE FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
+    "DELETE FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };

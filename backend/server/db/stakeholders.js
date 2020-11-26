@@ -34,7 +34,7 @@ exports.getStakeholdersBy = async function ({
     .map((el) => `${el.name}=$${el.pos}`)
     .join(" and ");
 
-  const query = `SELECT * from stakeholders WHERE ${where}`;
+  const query = `SELECT * FROM stakeholders WHERE ${where}`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
   const { rows } = await pool.query(query, values);
   return rows;
@@ -48,7 +48,7 @@ exports.createStakeholder = async function (
   conversation
 ) {
   const query =
-    "insert into stakeholders values(DEFAULT, $1, NULL, $2, $3, $4, $5)";
+    "INSERT INTO stakeholders VALUES(DEFAULT, $1, NULL, $2, $3, $4, $5) RETURNING *";
   const { rows } = await pool.query(query, [
     name,
     description,
@@ -68,7 +68,7 @@ exports.updateStakeholder = async function (
   const query =
     "UPDATE stakeholders " +
     "SET name = $2 and description = $3 and conversation = $4" +
-    "WHERE id = $1";
+    "WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [
     stakeholderID,
     name,
@@ -79,7 +79,7 @@ exports.updateStakeholder = async function (
 };
 
 exports.deleteStakeholder = async function (stakeholderID) {
-  const query = "DELETE FROM stakeholders WHERE id = $1";
+  const query = "DELETE FROM stakeholders WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };

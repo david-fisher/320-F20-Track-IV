@@ -47,14 +47,14 @@ exports.createUser = async function (fullName, email, demographics) {
     throw new Error("Cannot create new user with already registered email");
   }
 
-  const query = "INSERT INTO users VALUES(DEFAULT, $1, $2, $3)";
+  const query = "INSERT INTO users VALUES(DEFAULT, $1, $2, $3) RETURNING *";
   const { rows } = await pool.query(query, [fullName, email, demographics]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateUser = async function (userID, fullName, email, demographics) {
   const query =
-    "UPDATE users SET fullName = $2 and email = $3 and demographics = $4 WHERE id = $1";
+    "UPDATE users SET fullName = $2 and email = $3 and demographics = $4 WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [
     userID,
     fullName,
@@ -65,7 +65,7 @@ exports.updateUser = async function (userID, fullName, email, demographics) {
 };
 
 exports.deleteUser = async function (userID) {
-  const query = "DELETE FROM users WHERE id = $1";
+  const query = "DELETE FROM users WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [userID]);
   return rows.length > 0 ? rows[0] : null;
 };

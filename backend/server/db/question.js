@@ -27,19 +27,19 @@ exports.getQuestionsBy = async function ({ mcqID = null }) {
 };
 
 exports.createQuestion = async function (mcqID, question) {
-  const query = "INSERT INTO question VALUES(DEFAULT, $1, $2)";
+  const query = "INSERT INTO question VALUES(DEFAULT, $1, $2) RETURNING *";
   const { rows } = await pool.query(query, [question, mcqID]); // watch out for order of values!
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.updateQuestion = async function (questionID, question) {
-  const query = "UPDATE question SET question = $2 WHERE id = $1";
+  const query = "UPDATE question SET question = $2 WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [questionID, question]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteQuestion = async function (questionID) {
-  const query = "DELETE FROM question WHERE id = $1";
+  const query = "DELETE FROM question WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [questionID]);
   return rows.length > 0 ? rows[0] : null;
 };

@@ -2,22 +2,6 @@ const pool = require("./pool");
 const scenario = require("./scenario");
 const courses = require("./courses");
 
-exports.createConnectionOfScenarioAndCourse = async function (
-  scenarioID,
-  courseID
-) {
-  // A scenario can be added to only one course.
-  // if (!(await exports.getCourseOfScenario(scenarioID))) {
-  //   throw new Error(
-  //     "Cannot add scenario which is already added to another course"
-  //   );
-  // }
-
-  const query = "insert into partof values($1, $2)";
-  const { rows } = await pool.query(query, [courseID, scenarioID]);
-  return rows.length > 0 ? rows[0] : null;
-};
-
 exports.getConnectionOfScenarioAndCourse = async function (
   scenarioID,
   courseID
@@ -57,11 +41,28 @@ exports.getConnectionsOfScenarioAndCourse = async function ({
   return rows;
 };
 
+exports.createConnectionOfScenarioAndCourse = async function (
+  scenarioID,
+  courseID
+) {
+  // A scenario can be added to only one course.
+  // if (!(await exports.getCourseOfScenario(scenarioID))) {
+  //   throw new Error(
+  //     "Cannot add scenario which is already added to another course"
+  //   );
+  // }
+
+  const query = "INSERT INTO partof VALUES($1, $2) RETURNING *";
+  const { rows } = await pool.query(query, [courseID, scenarioID]);
+  return rows.length > 0 ? rows[0] : null;
+};
+
 exports.deleteConnectionOfScenarioAndCourse = async function (
   scenarioID,
   courseID
 ) {
-  const query = "DELETE FROM partof WHERE scenario_id = $1 and course_id = $2";
+  const query =
+    "DELETE FROM partof WHERE scenario_id = $1 and course_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [scenarioID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
@@ -89,7 +90,7 @@ exports.deleteConnectionsOfScenarioAndCourse = async function ({
     .map((el) => `${el.name}=$${el.pos}`)
     .join(" and ");
 
-  const query = `DELETE FROM partof WHERE ${where}`;
+  const query = `DELETE FROM partof WHERE ${where} RETURNING *`;
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
   const { rows } = await pool.query(query, values);
   return rows;

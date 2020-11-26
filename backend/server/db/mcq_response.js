@@ -46,7 +46,7 @@ exports.createMcqResponse = async function (
   questionID,
   mcqOptionID
 ) {
-  const query = "insert into mcq_response values($1, $2, $3)";
+  const query = "INSERT INTO mcq_response VALUES($1, $2, $3) RETURNING *";
   const { rows } = await pool.query(query, [
     responseID,
     questionID,
@@ -61,7 +61,7 @@ exports.updateMcqResponse = async function (
   mcqOptionID
 ) {
   const query =
-    "UPDATE mcq_response SET choice_id = $3 WHERE response_id = $1 and question_id = $2";
+    "UPDATE mcq_response SET choice_id = $3 WHERE response_id = $1 and question_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [
     responseID,
     questionID,
@@ -72,7 +72,7 @@ exports.updateMcqResponse = async function (
 
 exports.deleteMcqResponse = async function (responseID, questionID) {
   const query =
-    "DELETE FROM mcq_response WHERE response_id = $1 and question_id = $2";
+    "DELETE FROM mcq_response WHERE response_id = $1 and question_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [responseID, questionID]);
   return rows.length > 0 ? rows[0] : null;
 };

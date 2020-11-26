@@ -73,31 +73,36 @@ exports.createPage = async function (order, type, bodyText, scenarioID) {
       "Page specified with order, type, and scenario already exists."
     );
   }
-  const query = "insert into pages values(DEFAULT, $1, $2, $3, $4)";
+  const query =
+    "INSERT INTO pages VALUES(DEFAULT, $1, $2, $3, $4)  RETURNING *";
   const { rows } = await pool.query(query, [order, type, bodyText, scenarioID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.createIntroPage = async function (scenarioID, text) {
-    if (await scenario.getScenario(scenarioID)){
-        // create page object - plain-page when no prompt linked
-        page = await exports.createPage(exports.pageOrder.INTRO, exports.pageType.PLAIN, text, scenarioID)
-        return page;
-    }
-    else{
-        // TODO return InvalidScenarioError
-        return 404;
-    }
-}
+  if (await scenario.getScenario(scenarioID)) {
+    // create page object - plain-page when no prompt linked
+    const page = await exports.createPage(
+      exports.pageOrder.INTRO,
+      exports.pageType.PLAIN,
+      text,
+      scenarioID
+    );
+    return page;
+  } else {
+    // TODO return InvalidScenarioError
+    return 404;
+  }
+};
 
-exports.updatePage = async function (pageID, body_text) {
-  const query = "UPDATE pages SET body_text = $2 WHERE id = $1";
+exports.updatePage = async function (pageID, bodyText) {
+  const query = "UPDATE pages SET body_text = $2 WHERE id = $1  RETURNING *";
   const { rows } = await pool.query(query, [pageID, bodyText]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deletePage = async function (pageID) {
-  const query = "DELETE FROM pages WHERE id = $1";
+  const query = "DELETE FROM pages WHERE id = $1  RETURNING *";
   const { rows } = await pool.query(query, [pageID]);
   return rows.length > 0 ? rows[0] : null;
 };

@@ -58,30 +58,31 @@ exports.getSubmissionsBy = async function ({
     values = values.concat(valuesTime);
   }
 
-  const query = `SELECT * from submissions WHERE ${where}`;
+  const query = `SELECT * FROM submissions WHERE ${where}`;
   const { rows } = await pool.query(query, values);
   return rows;
 };
 exports.makeSubmissionOfScenarioByUser = async function (userID, scenarioID) {
-  const query = "INSERT INTO submissions VALUES(DEFAULT, $1, $2, DEFAULT)";
+  const query =
+    "INSERT INTO submissions VALUES(DEFAULT, $1, $2, DEFAULT) RETURNING *";
   const { rows } = await pool.query(query, [userID, scenarioID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteSubmission = async function (submissionID) {
-  const query = "DELETE FROM submissions WHERE id = $1";
+  const query = "DELETE FROM submissions WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [submissionID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
 exports.deleteSubmissionsByUser = async function (userID) {
-  const query = "DELETE FROM submissions WHERE user_id = $1";
+  const query = "DELETE FROM submissions WHERE user_id = $1 RETURNING *";
   const { rows } = await pool.query(query, [userID]);
   return rows;
 };
 
 exports.deleteSubmissionsOfScenario = async function (scenarioID) {
-  const query = "DELETE FROM submissions WHERE scenario_id = $1";
+  const query = "DELETE FROM submissions WHERE scenario_id = $1 RETURNING *";
   const { rows } = await pool.query(query, [scenarioID]);
   return rows;
 };
