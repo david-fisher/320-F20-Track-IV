@@ -57,7 +57,7 @@ exports.getScenarioIntroduction = (scenario_id) => {
   }
 };
 
-// exports.getScenarioIntroductionByID = function (token, scenario_id) {
+// exports.getScenarioIntroductionByID = function (scenario_id) {
 //   const scenario = scenarios.find((ele) => ele.scenario_id === scenario_id);
 //   if (scenario) {
 //     return scenario.introduction;
@@ -66,7 +66,7 @@ exports.getScenarioIntroduction = (scenario_id) => {
 //   }
 // };
 
-// exports.setScenarioIntroductionByID = function (token, scenario_id, summary) {
+// exports.setScenarioIntroductionByID = function (scenario_id, summary) {
 //   const scenario = scenarios.find((ele) => ele.scenario_id === scenario_id);
 //   if (scenario) {
 //     scenario.introduction = summary;
@@ -85,7 +85,7 @@ exports.getScenarioSummary = function (scenario_id) {
   return "";
 };
 
-exports.getIntialReflectionQuestions = function (token) {
+exports.getIntialReflectionQuestions = function () {
   // returns an array of questions
   /**
    * /scenario/:scenario_id/initial-reflection
@@ -94,7 +94,7 @@ exports.getIntialReflectionQuestions = function (token) {
 };
 
 // have to work on this
-exports.getStudentName = function (token) {
+exports.getStudentName = function () {
   /**
    * /scenario/:scenario_id/initial-reflection/answers
    * /scenario/:scenario_id/initial-action/answers
@@ -104,7 +104,7 @@ exports.getStudentName = function (token) {
 };
 
 // have to work on this
-exports.getStudentUID = function (token) {
+exports.getStudentUID = function () {
   /**
    * /scenario/:scenario_id/initial-reflection/answers
    * /scenario/:scenario_id/initial-action/answers
@@ -113,7 +113,7 @@ exports.getStudentUID = function (token) {
   return 0;
 };
 
-exports.getStudentResponses = function (token) {
+exports.getStudentResponses = function () {
   // an array of json with keys 'question', 'answer'.
   /**
    * /scenario/:scenario_id/initial-reflection/answers
@@ -122,15 +122,15 @@ exports.getStudentResponses = function (token) {
   return [];
 };
 
-exports.getQuestion = function (token) {
+exports.getQuestion = function () {
   return "";
 };
 
-exports.getAnswer = function (token) {
+exports.getAnswer = function () {
   return "";
 };
 
-exports.getIntialActionQuestions = function (instructor_token) {
+exports.getIntialActionQuestions = function () {
   // an array of json with keys 'question', 'choices'.
   /**
    * /scenario/:scenario_id/initial-action
@@ -138,7 +138,7 @@ exports.getIntialActionQuestions = function (instructor_token) {
   return [];
 };
 
-exports.getChoices = function (token) {
+exports.getChoices = function () {
   // return : array of string.
   /**
    * /scenario/:scenario_id/initial-action
@@ -146,7 +146,7 @@ exports.getChoices = function (token) {
   return [];
 };
 
-exports.getscenarioExplanation = function (token) {
+exports.getscenarioExplanation = function () {
   /**
     /scenario/:scenario_id/additional-reflection
     /scenario/:scenario_id/final-decision
@@ -154,7 +154,7 @@ exports.getscenarioExplanation = function (token) {
   return "";
 };
 
-exports.getStudentExplanation = function (token) {
+exports.getStudentExplanation = function () {
   /**
    /scenario/:scenario_id/additional-reflection
    /scenario/:scenario_id/final-decision
@@ -162,14 +162,14 @@ exports.getStudentExplanation = function (token) {
   return "";
 };
 
-exports.getStakeHolderSummary = function (token) {
+exports.getStakeHolderSummary = function () {
   /**
    * /scenario/:scenario_id/stakeholders/description
    */
   return "";
 };
 
-exports.getStakeHolder_ids = function (token) {
+exports.getStakeHolder_ids = function () {
   // an list of ids
   /**
 
@@ -180,7 +180,7 @@ exports.getStakeHolder_ids = function (token) {
 
 // http://localhost:3000/api/v1/scenario/:scenario_id/stakeholders/:stakeholder_id
 
-exports.getStakeHolderName = function (token) {
+exports.getStakeHolderName = function () {
   /**
    * /scenario/:scenario_id/stakeholders/:stakeholder_id
    */
@@ -189,7 +189,7 @@ exports.getStakeHolderName = function (token) {
 
 // http://localhost:3000/api/v1/scenario/:scenario_id/stakeholders/:stakeholder_id
 
-exports.getStakeHolderDescription = function (token) {
+exports.getStakeHolderDescription = function () {
   /**
    * /scenario/:scenario_id/stakeholders/:stakeholder_id
    */
@@ -198,14 +198,14 @@ exports.getStakeHolderDescription = function (token) {
 
 // http://localhost:3000/api/v1/scenario/:scenario_id/stakeholders/:stakeholder_id
 
-exports.getStakeHolderConversation_text = function (token) {
+exports.getStakeHolderConversation_text = function () {
   /**
    * /scenario/:scenario_id/stakeholders/:stakeholder_id
    */
   return "";
 };
 
-exports.getScenariosConversants = function (token) {
+exports.getScenariosConversants = function () {
   // return : array of string
   /**
    * /scenario/:scenario_id/issue-coverage-matrix
@@ -213,7 +213,7 @@ exports.getScenariosConversants = function (token) {
   return [];
 };
 
-exports.getScenarioIssues = function (token) {
+exports.getScenarioIssues = function () {
   // return : array of string (issues)
   /**
    * /scenario/:scenario_id/issue-coverage-matrix
@@ -221,7 +221,7 @@ exports.getScenarioIssues = function (token) {
   return [];
 };
 
-exports.getScenarioValues = function (token) {
+exports.getScenarioValues = function () {
   // return : 2-d array, with each inner array corresponding to each issues and conversants
   /**
    * /scenario/:scenario_id/issue-coverage-matrix
@@ -231,7 +231,7 @@ exports.getScenarioValues = function (token) {
 
 // http://localhost:3000/api/v1/scenario/:scenario_id/students
 
-exports.getStudents_scenarioInfo = function (token) {
+exports.getStudents_scenarioInfo = function () {
   /**
    * /scenario/:scenario_id/students
    */
@@ -240,14 +240,14 @@ exports.getStudents_scenarioInfo = function (token) {
 
 // scenarios
 
-exports.getScenarioSummary = function (token) {
+exports.getScenarioSummary = function () {
   /**
    * /scenario/:scenario_id/scenarios/:scenario_id/summary
    */
   return "";
 };
 
-exports.getScenarioID = function (token) {
+exports.getScenarioID = function () {
   // return a list of scenario id's
   /**
    * /scenario/:scenario_id/scenarios

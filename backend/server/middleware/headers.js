@@ -43,6 +43,7 @@ const isAuthHeaderValid = (req, res, next) => {
   if (!auth_header) {
     // No tokens => login required
     next();
+    return;
   }
 
   const [prefix, token] = auth_header.split(" ");
