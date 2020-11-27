@@ -131,8 +131,8 @@ export default class Form extends React.Component {
         color: 'white',
         marginRight: 100
         }}
-        //onClick={e => this.onSubmit(e)}>
-        onClick={e => this.handleEditorSubmit(e)}>
+        onClick={e => this.onSubmit(e)}>
+         {/* onClick={e => this.handleEditorSubmit(e)}> */}
           Add Response
           </Button>
 
