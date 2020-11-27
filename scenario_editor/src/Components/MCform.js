@@ -30,78 +30,79 @@ export default class Form extends React.Component {
     e.preventDefault();
     this.props.onSubmit(this.state);
     this.setState({
-      question:"",
+      question: "",
       response: "",
     });
   };
   render() {
     return (
-       <MuiThemeProvider>
-      <form>
-      <TextField 
-          name="question"
-          multiline
-          fullWidth
-          id="MCquestion" 
-          label="Multiple Choice Question" 
-          variant="outlined" 
-          placeholder='Enter multiple choice question here'
-          value={this.state.question}
-          onChange={e => this.change(e)}
-          style={{
+      <MuiThemeProvider>
+        <form>
+          <TextField
+            name="question"
+            multiline
+            fullWidth
+            id="MCquestion"
+            label="Multiple Choice Question"
+            variant="outlined"
+            placeholder='Enter multiple choice question here'
+            value={this.state.question}
+            onChange={e => this.change(e)}
+            style={{
               width: 1000,
               //margin: 20,
             }}
-          rows={15}
-          margin="normal"
-              InputLabelProps={{
-              shrink: true }}
+            rows={15}
+            margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
           />
           < br />
-        <TextField
-          name="response"
-          id="responses"
-          label="Question Responses"
-          fullWidth
-          placeholder="Enter response here"
-          margin="normal"
-          style={{
-            // margin: 20,
-            width: 1000
-          }}
-          value={this.state.response}
-          variant="outlined"
-          onChange={e => this.change(e)}
-          InputLabelProps={{
-            //readOnly: true,
-            shrink: true
-          }}
+          <TextField
+            name="response"
+            id="responses"
+            label="Question Responses"
+            fullWidth
+            placeholder="Enter response here"
+            margin="normal"
+            style={{
+              // margin: 20,
+              width: 1000
+            }}
+            value={this.state.response}
+            variant="outlined"
+            onChange={e => this.change(e)}
+            InputLabelProps={{
+              //readOnly: true,
+              shrink: true
+            }}
           />
           <br />
           <p> </p>
           <center>
-        <Button
-        variant="outlined"
-        style={{ 
-        backgroundColor:'#881c1c',
-        color: 'white',
-        marginRight: 100
-        }}
-        
-        onClick={e => this.onSubmit(e)}>
-          Add Response
+            <Button
+              variant="outlined"
+              style={{
+                backgroundColor: '#881c1c',
+                color: 'white',
+                marginRight: 100
+              }}
+
+              onClick={e => this.onSubmit(e)}>
+              Add Response
           </Button>
-          <Button  
-            variant="contained" 
-            color="primary" 
-            href="#contained-buttons"
-            size='medium'  
+            <Button
+              variant="contained"
+              color="primary"
+              href="#contained-buttons"
+              size='medium'
             >
-            Submit
+              Submit
           </Button>
           </center>
-      </form>
-       </MuiThemeProvider>
+        </form>
+      </MuiThemeProvider>
     );
   }
 }
@@ -179,7 +180,7 @@ export default class Form extends React.Component {
 //       [e.target.name]: e.target.value
 //     });
 //   };
-  
+
 //   validate = () => {
 //     let isError = false;
 //     const errors = {};
@@ -263,7 +264,7 @@ export default class Form extends React.Component {
 //         color: 'white',
 //         marginRight: 100
 //         }}
-        
+
 //         // onClick={e => this.onSubmit(e)}>
 //         onClick={e => this.handleEditorSubmit(e)} >
 //           Add Response

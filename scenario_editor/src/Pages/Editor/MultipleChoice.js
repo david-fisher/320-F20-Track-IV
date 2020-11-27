@@ -111,8 +111,6 @@ class MultipleChoice extends Component {
         <center>
                 {/* <form className={classes.root} noValidate autoComplete="off"> */}
                 <h1>  Multiple Choice </h1>
-                        <div className="MultipleChoice">
-                    </div>
                     <div className="MultipleChoice">
                     <Form 
                     // onChange={fields => this.onChange(fields)} 
