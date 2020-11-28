@@ -1,35 +1,26 @@
+const jwt = require('jsonwebtoken');
 const express = require("express");
 const { auth, headers } = require("../middleware");
 const router = express.Router();
 
-router.get(
-  "/login",
+router.post(
+  "/login/callback",
   headers.areHeadersValid,
   auth.isNotAuthenticated,
   (req, res, next) => {
+    // TODO: Check SAML properties.
+    const token = jwt.sign({
+      role: "instructor",
+      identity: "Professor McProfessorface",
+    }, process.env.JWT_SECRET, { expiresIn: 60 * 60});
     res.status(202);
-    res.json({ token: "abcdefghijklmnopqrstuvwxyz" });
-    // passport.authenticate('local', (err, user, info) => {
-    //   if (err) {
-    //     return next(err);
-    //   }
-    //   if (!user) {
-    //     return res.json({ error: info.message }); // Don't want 401 here
-    //   }
-    //   req.logIn(user, function (err) {
-    //     if (err) {
-    //       return next(err);
-    //     }
-    //     let { first_name, last_name, email } = user;
-    //     res.json({ first_name, last_name, email });
-    //     return next();
-    //   });
-    // })(req, res, next);
+    res.cookie('authorization', "Bearer " + token);
+    res.json({ token: token });
   }
 );
 
 router.get("/logout", function (req, res) {
-  req.logout();
+  res.clearCookie("authorization");
   res.redirect("/");
 });
 
