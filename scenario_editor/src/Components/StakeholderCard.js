@@ -8,12 +8,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,28 +16,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
-export default function ScenarioCard(props) {
+export default function StakeholderCard(props) {
   const classes = useStyles();
   const { data } = props;
-  const { id, name, due_date, description, additional_data, status } = data;
-
-  // const [state, setState] = React.useState({
-  //   age: '',
-  //   name: 'hai',
-  // });
-
-  const handleChange = (event) => {
-    // const newStatus = event.target.name;
-    // setState({
-    //   ...state,
-    //   [name]: event.target.value,
-    // });
-    // data.status = newStatus;
-
-
-  };
+  const { id, name, description, conversation} = data;
 
   return (
     <Grid
@@ -53,7 +29,7 @@ export default function ScenarioCard(props) {
     >
       <Card raised='true' className={classes.root}>
         <CardActionArea component={Link} to={{
-          pathname: "/editor/" + data.id,
+          pathname: "/stakeholder/" + data.id,
           scenarioData: data
         }}>
           <CardContent>
@@ -84,23 +60,6 @@ export default function ScenarioCard(props) {
           }}>
             Data
           </Button>
-          <FormControl className={classes.formControl}>
-            <NativeSelect
-              className={classes.selectEmpty}
-              value={data.status}
-              name="age"
-              onChange={handleChange}
-              inputProps={{ 'aria-label': 'age' }}
-            >
-              <option value={data.status} disabled>
-                {data.status}
-          </option>
-              <option value={'draft'}>Draft</option>
-              <option value={'open'}>Open</option>
-              <option value={'closed'}>Closed</option>
-            </NativeSelect>
-            <FormHelperText>Condition</FormHelperText>
-          </FormControl>
         </CardActions>
       </Card>
     </Grid>
