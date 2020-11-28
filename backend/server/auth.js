@@ -1,7 +1,7 @@
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcryptjs");
-const db = require("./db");
+const SamlStrategy = require('passport-saml').Strategy;
+const db = require("./db")
+const constants = require("./constants");
 require("dotenv").config();
 
 module.exports = {
@@ -14,46 +14,15 @@ module.exports = {
       done(null, user);
     });
 
-    passport.use(
-      new LocalStrategy(
-        {
-          usernameField: "username",
-          passwordField: "password",
-          session: true, // 세션에 저장 여부
-        },
-        (username, password, cb) => {
-          db.users.findByUsername(username, (err, user) => {
-            console.log(user);
-            if (err) {
-              return cb(err);
-            }
-            if (!user) {
-              return cb(null, null, { message: "Cannot find username" });
-            }
-            if (password !== user.passwordHash) {
-              return cb(null, null, { message: "Password does not match" });
-            }
-            return cb(null, user);
-          });
-        }
-      )
-    );
-  },
+    passport.use(new SamlStrategy(
+      {
+        path: '/auth/login/callback',
+        entryPoint: 'https://webauth.umass.edu/idp/profile/SAML2/Redirect/SSO',
+        issuer: 'passport-saml'
+      },
 
-  isAuthenticated: (req, res, next) => {
-    if (process.env.NODE_ENV === "dev") return next();
-    if (req.isAuthenticated()) return next();
-    res.redirect("/login");
-  },
-
-  isNotAuthenticated: (req, res, next) => {
-    if (process.env.NODE_ENV === "dev") return next();
-    if (!req.isAuthenticated()) return next();
-    res.redirect("/");
-  },
-  validateToken: (token) => {
-    //this function validates the given token
-    //TODO: implement validation
-    return true;
+      function(profile, done) {
+        return done(profile);
+      }));
   },
 };

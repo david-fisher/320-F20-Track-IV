@@ -162,7 +162,6 @@ router.put(
   (req, res) => {
     try {
       const introduction = db.getSimulationIntroductionByID(
-        req.token,
         req.params.simulation_id
       );
       res.status(httpStatusCode.success.OK);

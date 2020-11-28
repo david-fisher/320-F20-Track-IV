@@ -7,7 +7,6 @@ router.get(
   headers.areHeadersValid,
   auth.isAuthenticated,
   async (req, res) => {
-    const { token } = req;
     res.status(202);
     res.json({
       drafts: await db.getScenariosBy({status: "DRAFT"}),
