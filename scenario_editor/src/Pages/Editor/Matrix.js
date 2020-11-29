@@ -18,7 +18,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import MaterialTable, { MTableBodyRow } from "material-table";
 
-export default function CellEditable() {
+export default function Matrix() {
   const { useState } = React;
 
   const tableIcons = {
@@ -41,8 +41,8 @@ export default function CellEditable() {
     ViewColumn: ViewColumn
   };
   const [columns, setColumns] = useState([
-    { title: 'Name', field: 'name', backgroundColor:' #881c1c'},
-    { title: 'Description', field: 'description'},
+    { title: 'Name', field: 'name', backgroundColor: ' #881c1c' },
+    { title: 'Description', field: 'description' },
     { title: 'Public Safety Improvement', field: 'publicSafety', type: 'numeric' },
     { title: 'User Health Improvement', field: 'userHealth', type: 'numeric' },
     { title: 'Career-Building Opportunity', field: 'careerBuilding', type: 'numeric' },
@@ -52,46 +52,43 @@ export default function CellEditable() {
     { title: 'ML Misuse Harms Users and Public', field: 'MLharms', type: 'numeric' },
     { title: 'ML Misuse Damages Company Reputation', field: 'MLdamages', type: 'numeric' },
     { title: 'Project Harms Career', field: 'harmsCareer', type: 'numeric' },
-    // {
-      
-    //   title: 'Description',
-    //   field: 'birthCity',
-    //   lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-    // },
+
   ]);
 
   const [data, setData] = useState([
-    { name: 'Kokichi', 
-    description: 'Expert on Cognition medications', 
-    publicSafety: 0,
-    userHealth: 0,
-    careerBuilding: 0,
-    longTerm: 0,
-    shortTerm: 0,
-    privacyViolation: 0,
-    MLharms: 0,
-    MLdamages: 0,
-    harmsCareer: 0,
-  },
-  { name: 'Raisa', 
-    description: 'Neurology/cognition researcher', 
-    publicSafety: 0,
-    userHealth: 0,
-    careerBuilding: 0,
-    longTerm: 0,
-    shortTerm: 0,
-    privacyViolation: 0,
-    MLharms: 0,
-    MLdamages: 0,
-    harmsCareer: 0,
-  }
+    {
+      name: 'Kokichi',
+      description: 'Expert on Cognition medications',
+      publicSafety: 0,
+      userHealth: 0,
+      careerBuilding: 0,
+      longTerm: 0,
+      shortTerm: 0,
+      privacyViolation: 0,
+      MLharms: 0,
+      MLdamages: 0,
+      harmsCareer: 0,
+    },
+    {
+      name: 'Raisa',
+      description: 'Neurology/cognition researcher',
+      publicSafety: 0,
+      userHealth: 0,
+      careerBuilding: 0,
+      longTerm: 0,
+      shortTerm: 0,
+      privacyViolation: 0,
+      MLharms: 0,
+      MLdamages: 0,
+      harmsCareer: 0,
+    }
   ]);
 
   return (
     <MaterialTable
       title="Conversation Matrix"
 
-     columns={columns}
+      columns={columns}
 
       data={data}
       options={{
@@ -104,39 +101,39 @@ export default function CellEditable() {
           width: 20
         }
       }
-    }
-    editable={{
-      onRowAdd: newData =>
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            setData([...data, newData]);
-            
-            resolve();
-          }, 1000)
-        }),
-      onRowUpdate: (newData, oldData) =>
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            const dataUpdate = [...data];
-            const index = oldData.tableData.id;
-            dataUpdate[index] = newData;
-            setData([...dataUpdate]);
+      }
+      editable={{
+        onRowAdd: newData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setData([...data, newData]);
 
-            resolve();
-          }, 1000)
-        }),
-      onRowDelete: oldData =>
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            const dataDelete = [...data];
-            const index = oldData.tableData.id;
-            dataDelete.splice(index, 1);
-            setData([...dataDelete]);
-            
-            resolve()
-          }, 1000)
-        }),
-    }}
+              resolve();
+            }, 1000)
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              setData([...dataUpdate]);
+
+              resolve();
+            }, 1000)
+          }),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.id;
+              dataDelete.splice(index, 1);
+              setData([...dataDelete]);
+
+              resolve()
+            }, 1000)
+          }),
+      }}
       // cellEditable={{
       //   onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
       //     return new Promise((resolve, reject) => {
@@ -147,7 +144,7 @@ export default function CellEditable() {
       // }}
 
 
-    icons={tableIcons}
+      icons={tableIcons}
     />
   )
 }
