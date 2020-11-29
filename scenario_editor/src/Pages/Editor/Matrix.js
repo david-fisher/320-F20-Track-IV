@@ -34,10 +34,13 @@ export default function Matrix() {
   ];
 
   const handleSubmit = event => {
+    // Potentially find a way to 
     setColumns(columns.concat({ title: 'event.target.value', field: 'event.target.value', type: 'numeric' }));
     event.preventDefault();
     console.log(columns)
   };
+
+  // test
 
 
   const tableIcons = {
