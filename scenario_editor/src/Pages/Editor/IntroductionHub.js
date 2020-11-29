@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
   optionButton: {
     display: 'inline',
-    marginTop: '40px',
-    marginLeft: '40px',
     color: '#881c1c',
     textAlign: 'center',
     padding: '3rem',
@@ -56,7 +54,7 @@ function IntroductionHub() {
       <div className={classes.header}>
 
         <div >
-          <h1>Introduction Page</h1>
+          <h1>Introduction Hub</h1>
           <b1>
             Add/Edit one of the following choices below:
            </b1>

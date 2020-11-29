@@ -84,7 +84,7 @@ class FinalReflection extends Component {
 
             }} />
             <div>
-              <Button variant="contained" color="primary" aria-label="contained primary button group"onClick={this.handleEditorSubmit}>SAVE</Button>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
             </div>
           </div>
         </div>

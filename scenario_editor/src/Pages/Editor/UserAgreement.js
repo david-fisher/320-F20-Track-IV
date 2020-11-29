@@ -129,7 +129,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 
-import Suneditor, {buttonList}from 'suneditor-react';
+import Suneditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
 import axios from 'axios';
@@ -189,7 +189,7 @@ class UserAgreement extends Component {
   }
 
   handleEditorChange(event) {
-    this.setState({contents: event})
+    this.setState({ contents: event })
   }
 
   handleEditorSubmit(event) {
@@ -204,7 +204,7 @@ class UserAgreement extends Component {
       simulation_desc: this.state.scenario_desc,
       simulation_introduction: this.state.contents,
       simulation_ua: this.state.scenario_ua
-    }, {headers: headers}).then(res => {
+    }, { headers: headers }).then(res => {
       // debugger;
       alert(`Simulation ID: ${res.data.simulation_id}`)
     });
@@ -230,67 +230,25 @@ class UserAgreement extends Component {
         <div></div>
         <b2 className="text-editor">
 
-            <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions = {{
+          <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
             height: 600,
             width: '100%',
             //maxWidth: '1000px',
             buttonList: buttonList.complex,
             placeholder: "Insert your user agreement text here..."
 
-          }}/>
+          }} />
 
         </b2>
         <b2 className="second-body">
-        <div>
-          <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
-        </div>
-        <div>
-            <Button type="submit"component={ Link } to="/introduction-hub">NEXT</Button>
-          </div>
-        <div>
-          {/**<form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-            <textarea rows='15' cols='75' value={this.state.value} onChange={this.handleChange} />
-          </form >
           <div>
-            <Button type="submit" onClick={this.handleSubmit}>SAVE</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
           </div>
-          /*//*{/* className={classes.root} *//*}
-
-          <h4>
-            This is the local state value before it gets "posted": {" "}
-            {this.state.value}
-          </h4>
-
-          <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.posts.map(post => (
-              <li key={post.id}>{post.title}</li>
-            ))}
-          </h4>
-            */}
-          <h4>
-            This is the local state value of suneditor before it gets "posted":
-            <SunEditor
-              disable={true}
-              setContents={this.state.contents}
-              showToolbar={false}
-               />
-          </h4>
-          <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.scenarios.map(scenario => (
-              <li key={scenario.id}> <SunEditor
-                disable={true}
-                showToolbar={false}
-                setContents ={scenario.title}/> </li>
-            ))}
-          </h4>
-          {/* I want to be able to post something even if it's null at first, so when it changes it's there */}
-          {/* <h4>
-            This is the 3rd object stored in the store:: {" "}
-            {this.props.posts[2].title === null}
-          </h4> */}
-        </div>
+          <div>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/introduction-hub">NEXT</Button>
+          </div>
+          <div>
+          </div>
         </b2>
       </div>
 
