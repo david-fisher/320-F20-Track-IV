@@ -29,8 +29,8 @@ function Nav() {
             <Link to= "/introduction-hub">
               <li>Introduction</li>
             </Link>
-            <Link to= "/player-responses" >
-              <li>Player Responses</li>
+            <Link to= "/reflections" >
+              <li>Reflections</li>
             </Link>
             <Link to= "/conversations">
               <li>Conversations </li>
