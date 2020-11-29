@@ -14,7 +14,7 @@ import Reflections from './Pages/Editor/Reflections';
 import MiddleReflection from './Pages/Editor/MiddleReflection';
 import FinalReflection from './Pages/Editor/FinalReflection';
 import UserAgreement from './Pages/Editor/UserAgreement';
-import Conversations from './Pages/Editor/Conversations';
+import Stakeholders from './Pages/Editor/Stakeholders';
 import Matrix from './Pages/Editor/Matrix';
 import MultipleChoice from './Pages/Editor/MultipleChoice';
 import OpenResponse from './Pages/Editor/OpenResponse';
@@ -55,7 +55,7 @@ export default function App() {
           <Route path="/middle-reflection" component={MiddleReflection} />
           <Route path="/final-reflection" component={FinalReflection} />
           <Route path="/user-agreement" component={UserAgreement} />
-          <Route path="/conversations" component={Conversations} />
+          <Route path="/stakeholders" component={Stakeholders} />
           <Route path="/matrix" component={Matrix} />
           <Route path="/multiple-choice" component={MultipleChoice} />
           <Route path="/open-response" component={OpenResponse} />
