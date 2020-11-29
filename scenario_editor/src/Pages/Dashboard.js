@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import ScenarioCard from '../Components/ScenarioCard'
 import { makeStyles } from '@material-ui/core/styles';
-import NavHome from '../Components/NavHome';
+import Nav from '../Components/Nav';
 import { connect } from 'react-redux';
 import NavDashboard from '../Components/NavDashboard';
 import axios from 'axios';
@@ -224,7 +224,7 @@ class Dashboard extends Component {
           {/* You can follow the NavHome component (imported at the top) to see how it was made */}
           {/* <NavHome /> */}
 
-          <NavDashboard />
+          <Nav />
 
           <ScenarioGrid scenarios={this.state.data}/>
 

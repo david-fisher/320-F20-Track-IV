@@ -39,29 +39,29 @@ window.store = store;
 
 export default function App() {
   return (
-  // The ThemeProvider is wrapped around our Router below, and thus will be able to affect everything between
-  // the ThemeProvider's tags
-  <ThemeProvider theme={theme}>
-    <Provider store={store}>
-    <Router>
-      <Route path="/" to exact component={Login} />
-      <Route path="/home" component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/new-scenario" component={NewScenario} />
-      <Route path="/introduction-hub" component={IntroductionHub} />
-      <Route path="/introduction-text" component = {Introduction} />
-      <Route path="/player-responses" component={PlayerResponses} />
-      <Route path="/reflections" component={Reflections} />
-      <Route path="/middle-reflection" component={MiddleReflection} />
-      <Route path="/final-reflection" component={FinalReflection} />
-      <Route path="/user-agreement" component={UserAgreement} />
-      <Route path="/conversations" component={Conversations} />
-      <Route path="/matrix" component={Matrix} />
-      <Route path="/multiple-choice" component={MultipleChoice} />
-      <Route path="/open-response" component={OpenResponse} />
-      <Route path="/conclusions" component={Conclusions} />
-      
-      <Route path="/dashboard" component={Dashboard} />
+    // The ThemeProvider is wrapped around our Router below, and thus will be able to affect everything between
+    // the ThemeProvider's tags
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Router>
+          <Route path="/" to exact component={Login} />
+          <Route path="/home" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/new-scenario" component={NewScenario} />
+          <Route path="/introduction-hub" component={IntroductionHub} />
+          <Route path="/introduction-text" component={Introduction} />
+          <Route path="/player-responses" component={PlayerResponses} />
+          <Route path="/reflections" component={Reflections} />
+          <Route path="/middle-reflection" component={MiddleReflection} />
+          <Route path="/final-reflection" component={FinalReflection} />
+          <Route path="/user-agreement" component={UserAgreement} />
+          <Route path="/conversations" component={Conversations} />
+          <Route path="/matrix" component={Matrix} />
+          <Route path="/multiple-choice" component={MultipleChoice} />
+          <Route path="/open-response" component={OpenResponse} />
+          <Route path="/conclusions" component={Conclusions} />
+
+          <Route path="/dashboard" component={Dashboard} />
           {/* This Route will be how we are able to edit individual scenarios in the future
       Have not gotten to implementing the functionality fully yet, but, in essence,
       when the user clicks on a scenario to "Edit", the user will be routed to "/editor/:id", where :id will
