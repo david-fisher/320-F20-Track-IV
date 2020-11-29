@@ -1,38 +1,25 @@
 import { createStore } from 'redux'
 
 const initialState = {
-  // posts: [{ id: 1, title: 'This is the first post' }, { id: 2, title: 'second post', intro: "ff" }],
 
-  // // Testing out a potential scenario structure. Going to try not to over think it.
-  // // Notes:
-  // // I think this can create an initial one with empty values.
-  // // Do we even need anything here? Maybe we can "add" values to the individual object?
-  // // Lowkey might need to just preset the scenario data as empty at first. Then update from there.
-  // scenarios: [{ id: 0, title: '', description: '' }],
-  // scenario: [{ id: 0, title: '', description: '' }],
+// THIS DOESNT SHOW UP ON DASHBOARD.
+  scenarios: [{"id": 1, "name": 'title1', "due_date":'12-12-2020', "description": 'desc', "additional_data": '', "status": 'DRAFT'}]
 
-  // // This came with the tutorial I followed, idk what it is tho
-  // loginModal: {
-  //   open: false
-  // }
-  // posts: [{id: 1, title: 'This is the first post'}, {id: 2, title: 'second post', intro: "ff"}],
+  // draft: draftScenarios || [{"id": 1, "name": 'title1', "due_date":'12-12-2020', "description": 'desc', "additional_data": '', "status": 'DRAFT'}],
+  // open: openScenarios || [{"id": 2, "name": 'title2', "due_date":'12-12-2020', "description": 'desc', "additional_data": 'does this show', "status": 'OPEN'}],
+  // closed: closedScenarios || [{"id": 3, "name": 'title3', "due_date":'12-12-2020', "description": 'desc', "additional_data": '', "status": 'CLOSED'}]
 
-  scenarios: [{ id: 1, title: '', intro: '' }]
+  // Perform an axios call here?
 
-  // GET from databse, map return arr to id, title, intro, etc
-
-  // loginModal: {
-  //   open: false
-  // }
 }
 
 const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case 'ADD_SCENARIO':
-      return Object.assign({}, state, {
-        scenarios: state.scenarios.concat(action.payload)
-      })
+      return {
+        ...state, scenarios: state.scenarios.concat(action.payload)
+      }
     case 'SET_TOKEN':
       return state = {
         ...state,
