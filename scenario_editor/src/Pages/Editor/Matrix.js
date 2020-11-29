@@ -92,26 +92,7 @@ export default function CellEditable() {
       title="Conversation Matrix"
 
      columns={columns}
-    //  columns={[
-    //   {
-    //     title: 'Name', field: 'name',
-    //     cellStyle: {
-    //       backgroundColor: '#881c1c',
-    //       color: 'white'
-    //     },
-    //     headerStyle: {
-    //       backgroundColor: ' #881c1c',
-    //       color: 'white'
-    //     }
-    //   },
-    //   { title: 'Surname', field: 'surname' },
-    //   { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-    //   {
-    //     title: 'Birth Place',
-    //     field: 'birthCity',
-    //     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-    //   },
-    // ]}
+
       data={data}
       options={{
         headerStyle: {
