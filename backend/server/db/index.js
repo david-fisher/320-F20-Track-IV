@@ -18,6 +18,7 @@ const response = require("./response");
 const stakeholderChoices = require("./stakeholder_choices");
 const mcqResponse = require("./mcq_response");
 const promptResponse = require("./prompt_response");
+const pageGroup = require("./page-group");
 
 exports = {
   ...scenario,
@@ -40,6 +41,7 @@ exports = {
   ...stakeholderChoices,
   ...mcqResponse,
   ...promptResponse,
+  ...pageGroup,
 };
 
 // console.log(exports);

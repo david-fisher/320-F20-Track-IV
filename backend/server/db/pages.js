@@ -1,28 +1,4 @@
 const pool = require("./pool");
-const scenario = require("./scenario");
-
-exports.pageOrder = {
-  INTRO: 1,
-  TASK: 2,
-  INITIAL_REFLECTION: 3,
-  INIT_ACTION: 4,
-  INIT_ACTION_SUBSEQUENT: 5,
-  CONVERSATION: 6,
-  MIDDLE_REFLECTION: 7,
-  FINAL_ACTION: 8,
-  SUMMARY: 9,
-  FEEDBACK: 10,
-  FINAL_REFLECTION: 11,
-  CONCLUSION: 12,
-};
-
-// constants for page types
-exports.pageType = {
-  PLAIN: "PLAIN",
-  PROMPT: "PRMPT",
-  MCQ: "MCQ",
-  CONV: "CONV",
-};
 
 exports.getPage = async function (pageID) {
   const query = "SELECT * FROM pages WHERE id = $1";
@@ -77,22 +53,6 @@ exports.createPage = async function (order, type, bodyText, scenarioID) {
     "INSERT INTO pages VALUES(DEFAULT, $1, $2, $3, $4)  RETURNING *";
   const { rows } = await pool.query(query, [order, type, bodyText, scenarioID]);
   return rows.length > 0 ? rows[0] : null;
-};
-
-exports.createIntroPage = async function (scenarioID, text) {
-  if (await scenario.getScenario(scenarioID)) {
-    // create page object - plain-page when no prompt linked
-    const page = await exports.createPage(
-      exports.pageOrder.INTRO,
-      exports.pageType.PLAIN,
-      text,
-      scenarioID
-    );
-    return page;
-  } else {
-    // TODO return InvalidScenarioError
-    return 404;
-  }
 };
 
 exports.updatePage = async function (pageID, bodyText) {
