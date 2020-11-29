@@ -58,8 +58,9 @@ class Reflections extends Component {
     return (
       <div >
         <Nav />
+
         <div >
-          <div >
+          <div>
             <h1>Reflections</h1>
             <b1>
               Please choose the reflection to create below:

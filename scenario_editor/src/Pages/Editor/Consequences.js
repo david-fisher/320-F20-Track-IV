@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class Conclusions extends Component {
+class Consequences extends Component {
 
   // const classes = useStyles();
   constructor() {
@@ -107,11 +107,11 @@ class Conclusions extends Component {
       <div>
         <Nav />
         <div>
-          <h1>Conclusions Page</h1>
+          <h1>Consequences Page</h1>
         </div>
 
         <b1 className="introduction-part">
-          Add/Edit Your Conclusions Below:
+          Add/Edit Your Consequences Below:
         </b1>
         <div></div>
         <b2 className="text-editor">
@@ -121,17 +121,17 @@ class Conclusions extends Component {
             width: '100%',
             //maxWidth: '1000px',
             buttonList: buttonList.complex,
-            placeholder: "Insert your conclusions here..."
+            placeholder: "Insert your consequences here..."
 
           }} />
 
         </b2>
-        <b2 className="second-body">
+        <b2 className="second-body" >
           <div>
-            <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
           </div>
           <div>
-            <Button type="submit" component={Link} to="/dashboard">NEXT</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/dashboard">NEXT</Button>
           </div>
           <div>
 
@@ -153,8 +153,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-// The connect function takes another function as an argument: mapStateToProps.
-// mapStateToProps determines what state from our store we want to pull into our component.
-// In this case, we're specifying to only pull our state's posts property.
 
-export default connect(mapStateToProps, mapDispatchToProps)(Conclusions);
+export default connect(mapStateToProps, mapDispatchToProps)(Consequences);

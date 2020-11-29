@@ -18,7 +18,7 @@ import Conversations from './Pages/Editor/Conversations';
 import Matrix from './Pages/Editor/Matrix';
 import MultipleChoice from './Pages/Editor/MultipleChoice';
 import OpenResponse from './Pages/Editor/OpenResponse';
-import Conclusions from './Pages/Editor/Conclusions';
+import Consequences from './Pages/Editor/Consequences';
 
 import { Provider } from 'react-redux'
 import store from './Store'
@@ -59,7 +59,7 @@ export default function App() {
           <Route path="/matrix" component={Matrix} />
           <Route path="/multiple-choice" component={MultipleChoice} />
           <Route path="/open-response" component={OpenResponse} />
-          <Route path="/conclusions" component={Conclusions} />
+          <Route path="/consequences" component={Consequences} />
 
           <Route path="/dashboard" component={Dashboard} />
           {/* This Route will be how we are able to edit individual scenarios in the future
