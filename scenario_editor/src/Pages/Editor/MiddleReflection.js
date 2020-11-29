@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './PlayerResponses.css';
 import Nav from '../../Components/Nav'
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -16,8 +17,16 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(4),
     width: '100ch',
   },
+  buttonGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
   header: {
-    margin: theme.spacing(4)
+    margin: theme.spacing(4),
   },
   // header: {
   //   marginTop: theme.spacing(1),
@@ -46,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PlayerResponses() {
+function MiddleReflection() {
 
   const classes = useStyles();
   return (
@@ -55,24 +64,21 @@ function PlayerResponses() {
       <div className={classes.header}>
 
         <div >
-          <h1>Player Responses</h1>
+          <h1>Reflections</h1>
           <b1>
-            Please select an action below:
+            Please choose the reflection to create below:
       </b1>
         </div>
       </div>
-      <div className={classes.buttonContainer} >
+      <div className={classes.buttonGroup} >
+        <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+          <Button component={Link} to={'/reflections'}>Initial</Button>
+          <Button component={Link} to='/middle-reflection'>Middle</Button>
+          <Button component={Link} to='/final-reflection'>Final</Button>
+        </ButtonGroup>
+      </div>
 
-        {/* THIS IS TO CREATE A MULTIPLE CHOICE QUESTION. NOT NEEDED DUE TO THE FRONTEND PLAYER. */}
-        {/* <div>
-          <Button
-            className={classes.optionButton}
-          >
-            <Link to="/multiple-choice">
-              Create Multiple Choice Response
-            </Link>
-          </Button>{' '}
-        </div> */}
+      <div className={classes.buttonContainer} >
         <div>
           <Button
             className={classes.optionButton}
@@ -88,6 +94,6 @@ function PlayerResponses() {
   );
 }
 
-export default PlayerResponses;
+export default MiddleReflection;
 
 
