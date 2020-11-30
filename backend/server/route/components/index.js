@@ -19,25 +19,28 @@ const conversationChoices = require("./conversation_choices");
 const mcqResponse = require("./mcq_response");
 const promptResponse = require("./prompt_response");
 
-module.exports = {
-  scenario,
-  pages,
-  partof,
-  prompt,
-  conversationTask,
-  stakeholders,
-  issues,
-  score,
-  mcq,
-  question,
-  mcqOption,
-  users,
-  courses,
-  instructs,
-  enrolled,
-  submissions,
-  response,
-  conversationChoices,
-  mcqResponse,
-  promptResponse,
-};
+const router = require("express").Router();
+
+router
+  .use(scenario)
+  .use(pages)
+  .use(partof)
+  .use(prompt)
+  .use(conversationTask)
+  .use(stakeholders)
+  .use(issues)
+  .use(score)
+  .use(mcq)
+  .use(question)
+  .use(mcqOption)
+  .use(users)
+  .use(courses)
+  .use(instructs)
+  .use(enrolled)
+  .use(submissions)
+  .use(response)
+  .use(conversationChoices)
+  .use(mcqResponse)
+  .use(promptResponse);
+
+module.exports = router;

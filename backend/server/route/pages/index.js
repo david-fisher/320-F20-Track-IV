@@ -5,7 +5,7 @@ router
   .use("/task", require("./task"))
   .use("/initial-reflection", require("./initial-reflection"))
   .use("/initial-action", require("./initial-action"))
-  .use("/initial-action-subsequent", require("./nitial-action-subsequent"))
+  .use("/initial-action-subsequent", require("./initial-action-subsequent"))
   .use("/conversation", require("./conversation"))
   .use("/middle-reflection", require("./middle-reflection"))
   .use("/final-action", require("./final-action"))
