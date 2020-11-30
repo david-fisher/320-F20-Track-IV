@@ -138,10 +138,10 @@ class TaskAssignment extends Component {
         </b2>
         <b2 className="second-body">
         <div>
-          <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
+          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
         </div>
         <div>
-            <Button type="submit"component={ Link } to="/introduction-hub">NEXT</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={ Link } to="/introduction-hub">NEXT</Button>
           </div>
         <div>
         </div>
