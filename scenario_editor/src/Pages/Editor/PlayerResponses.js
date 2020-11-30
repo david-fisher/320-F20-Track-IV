@@ -59,6 +59,7 @@ function PlayerResponses() {
       </div>
       <div className={classes.buttonContainer} >
         <div>
+          <Link to="/multiple-choice">
           <Button
             className={classes.optionButton}
           >
@@ -66,8 +67,10 @@ function PlayerResponses() {
               Create Multiple Choice Response
             </Link>
           </Button>{' '}
+          </Link>
         </div>
         <div>
+          <Link to="/open-response">
           <Button
             className={classes.optionButton}
           >
@@ -75,6 +78,7 @@ function PlayerResponses() {
               Create Open-Ended Response
             </Link>
           </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import './Introduction.css';
+import './Continue-Prompt.css';
 import Nav from '../../Components/Nav';
 // import React, { Component } from 'react';
 //import './Home.css';
@@ -15,7 +15,6 @@ import SunEditor from 'suneditor-react';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
-
   multiText: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class Introduction extends Component {
+class ContinuePrompt extends Component {
 
   // const classes = useStyles();
   constructor() {
@@ -77,6 +76,7 @@ class Introduction extends Component {
 
   handleEditorSubmit(event) {
     // alert("Content has been submitted")
+    // Have to again change the editor submit to include the two text fields
     const headers = {
       'Authorization': `Bearer ${this.props.token}`,
       'Accept': 'application/json'
@@ -106,17 +106,18 @@ class Introduction extends Component {
       <div>
         <Nav />
         <div>
-          <h1>Introduction Page</h1>
+          <h1>Delay or Go Ahead Prompt</h1>
         </div>
 
         <b1 className="introduction-part">
-          Add/Edit your introduction below:
+          Add/Edit your prompt and choices below:
         </b1>
-        <div></div>
+
+
         <b2 className="text-editor">
 
-            <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions = {{
-            height: 600,
+            <SunEditor name="continue-prompt" contents={this.state.value} onChange={this.handleEditorChange} setOptions = {{
+            height: 500,
             width: '100%',
             //maxWidth: '1000px',
             buttonList: [
@@ -132,12 +133,44 @@ class Introduction extends Component {
           }}/>
 
         </b2>
-        <b2 className="second-body">
-        <div>
-          <Button type="editor-submit" onClick={this.handleEditorSubmit}>SAVE</Button>
+        <div className ="second-body">
+        
+        <TextField
+          id="Delay Prompt"
+          label="Delay Prompt"
+          style={{ margin: 8 }}
+          placeholder="Input your delay prompt here"
+          helperText="This prompt sends the reader to the stakeholder conversations!"
+          fullWidth 
+          variant = "outlined"
+          multiline
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        
+        <TextField
+          id="Go Ahead Prompt"
+          label="Go Ahead Prompt"
+          style={{ margin: 8 }}
+          placeholder="Input your delay prompt here"
+          helperText="This prompt skips the majority of conversations!"
+          fullWidth
+          variant = "outlined"
+          multiline
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
         </div>
+        <b2 className="third-body" >
         <div>
-            <Button type="submit"component={ Link } to="/introduction-hub">NEXT</Button>
+          <Button type="editor-submit" title="SAVE" style={{backgroundColor:'#881c1c', color: "white"}} onClick={this.handleEditorSubmit}>SAVE</Button>
+        </div>
+        <div marginLeft='100px'>
+            <Button type="submit" title="NEXT" style={{backgroundColor:'#881c1c', color: "white" }} component={ Link } to="/introduction-hub">NEXT</Button>
           </div>
         <div>
           {/**<form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
@@ -205,4 +238,4 @@ const mapDispatchToProps = dispatch => {
 // mapStateToProps determines what state from our store we want to pull into our component.
 // In this case, we're specifying to only pull our state's posts property.
 
-export default connect(mapStateToProps, mapDispatchToProps)(Introduction);
+export default connect(mapStateToProps, mapDispatchToProps)(ContinuePrompt);

@@ -7,8 +7,12 @@ import Dashboard from './Pages/Dashboard';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import NewScenario from './Pages/Editor/NewScenario';
-import Introduction from './Pages/Editor/Introduction';
+//Introduction Page links
 import IntroductionHub from './Pages/Editor/IntroductionHub';
+import Introduction from './Pages/Editor/Introduction';
+import TaskAssignment from './Pages/Editor/TaskAssignment';
+import ContinuePrompt from './Pages/Editor/Continue-Prompt';
+//End of Intro Page Links
 import PlayerResponses from './Pages/Editor/PlayerResponses';
 import UserAgreement from './Pages/Editor/UserAgreement';
 import Conversations from './Pages/Editor/Conversations';
@@ -19,6 +23,7 @@ import Conclusions from './Pages/Editor/Conclusions';
 
 import { Provider } from 'react-redux'
 import store from './Store'
+
 
 // TODO: 
 // - Create a Scenario context that can be used to store all of a scenarios data. Will discuss on Sunday best
@@ -62,8 +67,11 @@ export default function App() {
       <Route path="/home" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/new-scenario" component={NewScenario} />
+
       <Route path="/introduction-hub" component={IntroductionHub} />
       <Route path="/introduction-text" component = {Introduction} />
+      <Route path="/task-assignment" component = {TaskAssignment} />
+      <Route path="/continue-prompt" component = {ContinuePrompt}/>
       <Route path="/player-responses" component={PlayerResponses} />
       <Route path="/user-agreement" component={UserAgreement} />
       <Route path="/conversations" component={Conversations} />

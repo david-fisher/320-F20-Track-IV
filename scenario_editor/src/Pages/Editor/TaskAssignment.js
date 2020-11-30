@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class Introduction extends Component {
+class TaskAssignment extends Component {
 
   // const classes = useStyles();
   constructor() {
@@ -77,11 +77,13 @@ class Introduction extends Component {
 
   handleEditorSubmit(event) {
     // alert("Content has been submitted")
+    // Make sure to change to the appropriate axios post command
     const headers = {
       'Authorization': `Bearer ${this.props.token}`,
       'Accept': 'application/json'
     }
     event.preventDefault();
+    //axios post is not set up!!, I looked through the axios page, and didn't end up seeing a axios post for the task assignment, will I have to adjust it??
     axios.post(`/api/v1/simulation/create`, {
       simulation_title: this.state.scenario_title,
       simulation_desc: this.state.scenario_desc,
@@ -106,12 +108,14 @@ class Introduction extends Component {
       <div>
         <Nav />
         <div>
-          <h1>Introduction Page</h1>
+        <div>
+          <h1>Project Task Assignment</h1>
         </div>
 
         <b1 className="introduction-part">
-          Add/Edit your introduction below:
+          Add/Edit Your Task Assignment Below:
         </b1>
+        </div>
         <div></div>
         <b2 className="text-editor">
 
@@ -127,7 +131,7 @@ class Introduction extends Component {
               ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
               ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
           ],
-            placeholder: "Insert your introduction text here..."
+            placeholder: "Insert your project task assignment text here..."
 
           }}/>
 
@@ -140,48 +144,6 @@ class Introduction extends Component {
             <Button type="submit"component={ Link } to="/introduction-hub">NEXT</Button>
           </div>
         <div>
-          {/**<form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-            <textarea rows='15' cols='75' value={this.state.value} onChange={this.handleChange} />
-          </form >
-          <div>
-            <Button type="submit" onClick={this.handleSubmit}>SAVE</Button>
-          </div>
-          /*//*{/* className={classes.root} *//*}
-
-          <h4>
-            This is the local state value before it gets "posted": {" "}
-            {this.state.value}
-          </h4>
-
-          <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.posts.map(post => (
-              <li key={post.id}>{post.title}</li>
-            ))}
-          </h4>
-            */}
-          {/* <h4>
-            This is the local state value of suneditor before it gets "posted":
-            <SunEditor
-              disable={true}
-              setContents={this.state.contents}
-              showToolbar={false}
-               />
-          </h4> */}
-          {/* <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.scenarios.map(scenario => (
-              <li key={scenario.id}> <SunEditor
-                disable={true}
-                showToolbar={false}
-                setContents ={scenario.title}/> </li>
-            ))}
-          </h4> */}
-          {/* I want to be able to post something even if it's null at first, so when it changes it's there */}
-          {/* <h4>
-            This is the 3rd object stored in the store:: {" "}
-            {this.props.posts[2].title === null}
-          </h4> */}
         </div>
         </b2>
       </div>
@@ -205,4 +167,4 @@ const mapDispatchToProps = dispatch => {
 // mapStateToProps determines what state from our store we want to pull into our component.
 // In this case, we're specifying to only pull our state's posts property.
 
-export default connect(mapStateToProps, mapDispatchToProps)(Introduction);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskAssignment);

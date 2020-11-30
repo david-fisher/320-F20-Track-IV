@@ -1,0 +1,53 @@
+.custom-textbox-size{
+    padding: 10rem 20rem;
+    color: black;
+    font-weight: 400;
+    font-size: 20px;
+    background-color: white;
+    margin-top: 50px;
+    margin-left: 180px;
+    
+  }
+
+.text-editor{
+  margin-top: 4%;
+  margin-left: 14%;
+  margin-right: 14%;
+  margin-bottom: 5%;
+  display: flex;
+  width: '%100';
+  justify-content: space-around;
+  align-items: center;
+  border: 5px solid #881c1c;
+
+}
+
+.second-body{
+
+    margin-left: 14%;
+    margin-right: 14%;
+    display:flex;
+      
+}
+
+.third-body{
+  margin-bottom: 10%;
+  margin-left: 14%;
+  margin-right: 14%;
+  display:flex;
+    
+}
+
+.introduction-part{
+  display: flex;
+}
+
+.btn-custom-submit-button{
+    padding: 10px 10px;
+    color: inherit;
+    margin-bottom: 600px;
+    margin-right: 200px;
+    float: right;
+    background-color: #881c1c;
+    color: white;
+}
