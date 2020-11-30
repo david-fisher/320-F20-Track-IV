@@ -9,8 +9,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 
-import SunEditor, { buttonList } from 'suneditor-react';
+import Suneditor, {buttonList}from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
+import SunEditor from 'suneditor-react';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     margin: theme.spacing(4)
-  },
+  }, 
   root: {
     margin: theme.spacing(1),
     marginTop: theme.spacing(4),
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class Introduction extends Component {
+class TaskAssignment extends Component {
 
   // const classes = useStyles();
   constructor() {
@@ -71,22 +72,24 @@ class Introduction extends Component {
   }
 
   handleEditorChange(event) {
-    this.setState({ contents: event })
+    this.setState({contents: event})
   }
 
   handleEditorSubmit(event) {
     // alert("Content has been submitted")
+    // Make sure to change to the appropriate axios post command
     const headers = {
       'Authorization': `Bearer ${this.props.token}`,
       'Accept': 'application/json'
     }
     event.preventDefault();
+    //axios post is not set up!!, I looked through the axios page, and didn't end up seeing a axios post for the task assignment, will I have to adjust it??
     axios.post(`/api/v1/simulation/create`, {
       simulation_title: this.state.scenario_title,
       simulation_desc: this.state.scenario_desc,
       simulation_introduction: this.state.contents,
       simulation_ua: this.state.scenario_ua
-    }, { headers: headers }).then(res => {
+    }, {headers: headers}).then(res => {
       // debugger;
       alert(`Simulation ID: ${res.data.simulation_id}`)
     });
@@ -95,25 +98,28 @@ class Introduction extends Component {
       type: 'ADD_SCENARIO',
       payload: { id: this.state.scenarioID, title: this.state.contents }
     });
-    this.setState({ scenarioID: this.state.scenarioID + 1 })
+    this.setState({scenarioID: this.state.scenarioID + 1})
   }
 
-  render() {
 
+  render() {
+    
     return (
       <div>
         <Nav />
         <div>
-          <h1>Introduction Page</h1>
+        <div>
+          <h1>Project Task Assignment</h1>
         </div>
 
         <b1 className="introduction-part">
-          Add/Edit your introduction below:
+          Add/Edit Your Task Assignment Below:
         </b1>
+        </div>
         <div></div>
         <b2 className="text-editor">
 
-          <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
+            <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions = {{
             height: 600,
             width: '100%',
             //maxWidth: '1000px',
@@ -125,18 +131,20 @@ class Introduction extends Component {
               ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
               ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
           ],
-            placeholder: "Insert your introduction text here..."
+            placeholder: "Insert your project task assignment text here..."
 
-          }} />
+          }}/>
 
         </b2>
         <b2 className="second-body">
-          <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
+        <div>
+          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
+        </div>
+        <div>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={ Link } to="/introduction-hub">NEXT</Button>
           </div>
-          <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
-          </div>
+        <div>
+        </div>
         </b2>
       </div>
 
@@ -155,4 +163,8 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Introduction);
+// The connect function takes another function as an argument: mapStateToProps.
+// mapStateToProps determines what state from our store we want to pull into our component.
+// In this case, we're specifying to only pull our state's posts property.
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskAssignment);

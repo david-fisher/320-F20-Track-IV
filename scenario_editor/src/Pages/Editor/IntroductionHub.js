@@ -56,7 +56,7 @@ function IntroductionHub() {
         <div >
           <h1>Introduction Hub</h1>
           <b1>
-            Add/Edit one of the following choices below:
+            Access different parts of the scenario introduction from here:
            </b1>
         </div>
       </div>
@@ -73,7 +73,7 @@ function IntroductionHub() {
             </Link>
         </div>
         <div>
-          <Link to="project-task">
+          <Link to="task-assignment">
             <Button
               className={classes.optionButton}
             >
