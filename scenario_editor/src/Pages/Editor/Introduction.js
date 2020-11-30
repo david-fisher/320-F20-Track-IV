@@ -47,28 +47,28 @@ class Introduction extends Component {
       scenario_ua: localStorage.getItem("RS_SCENARIO__user_agreement"),
     }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value })
-  }
+  // handleChange(event) {
+  //   this.setState({ value: event.target.value })
+  // }
 
   // If you'd like your changes to persist (stay in place after page refresh),
   // you'd want to add your new posts to a database within your reducer function's action handlers.
-  handleSubmit(event) {
-    alert('Content submitted' /*+ this.state.value*/)
-    event.preventDefault()
-    this.props.dispatch({
-      type: 'ADD_SCENARIO',
-      payload: { id: this.state.scenarioID, title: this.state.value }
-    })
+  // handleSubmit(event) {
+  //   alert('Content submitted' /*+ this.state.value*/)
+  //   event.preventDefault()
+  //   this.props.dispatch({
+  //     type: 'ADD_SCENARIO',
+  //     payload: { id: this.state.scenarioID, title: this.state.value }
+  //   })
 
-    this.setState({ scenarioID: this.state.scenarioID + 1 })
-  }
+  //   this.setState({ scenarioID: this.state.scenarioID + 1 })
+  // }
 
   handleEditorChange(event) {
     this.setState({ contents: event })
@@ -90,6 +90,8 @@ class Introduction extends Component {
       // debugger;
       alert(`Simulation ID: ${res.data.simulation_id}`)
     });
+
+    console.log(this.props)
 
     this.props.dispatch({
       type: 'ADD_SCENARIO',
