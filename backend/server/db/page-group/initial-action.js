@@ -5,7 +5,7 @@ const mcqPages = require("../mcq");
 const question = require("../question");
 const mcqOption = require("../mcq_option");
 
-const getInitActionPageGroup = async function (scenarioID) {
+const getInitialActionPageGroup = async function (scenarioID) {
   const page = await pages.getPagesBy({
     scenarioID,
     order: pageOrder.INIT_ACTION,
@@ -26,7 +26,7 @@ const getInitActionPageGroup = async function (scenarioID) {
   };
 };
 
-const createInitActionPageGroup = async function (
+const createInitialActionPageGroup = async function (
   scenarioID,
   text,
   prompts,
@@ -63,6 +63,6 @@ const createInitActionPageGroup = async function (
 };
 
 module.exports = {
-  getInitActionPageGroup,
-  createInitActionPageGroup,
+  getInitialActionPageGroup,
+  createInitialActionPageGroup,
 };

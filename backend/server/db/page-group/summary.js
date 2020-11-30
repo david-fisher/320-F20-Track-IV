@@ -28,5 +28,6 @@ const createSummaryPageGroup = async function (scenarioID, text) {
 };
 
 module.exports = {
+  getSummaryPageGroup,
   createSummaryPageGroup,
 };

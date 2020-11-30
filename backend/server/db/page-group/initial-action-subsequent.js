@@ -5,7 +5,7 @@ const mcqPages = require("../mcq");
 const question = require("../question");
 const mcqOption = require("../mcq_option");
 
-const getInitActionSubsequentPageGroup = async function (scenarioID, text) {
+const getInitialActionSubsequentPageGroup = async function (scenarioID, text) {
   return {
     [pageType.PLAIN]: null,
     [pageType.PROMPT]: null,
@@ -14,7 +14,10 @@ const getInitActionSubsequentPageGroup = async function (scenarioID, text) {
   };
 };
 
-const createInitActionSubsequentPageGroup = async function (scenarioID, text) {
+const createInitialActionSubsequentPageGroup = async function (
+  scenarioID,
+  text
+) {
   return {
     [pageType.PLAIN]: null,
     [pageType.PROMPT]: null,
@@ -24,6 +27,6 @@ const createInitActionSubsequentPageGroup = async function (scenarioID, text) {
 };
 
 module.exports = {
-  getInitActionSubsequentPageGroup,
-  createInitActionSubsequentPageGroup,
+  getInitialActionSubsequentPageGroup,
+  createInitialActionSubsequentPageGroup,
 };
