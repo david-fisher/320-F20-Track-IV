@@ -1,13 +1,13 @@
 const pool = require("./pool");
 
-exports.getStakeholderChoice = async function (responseID, stakeholderID) {
+const getStakeholderChoice = async function (responseID, stakeholderID) {
   const query =
     "SELECT * FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2";
   const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getStakeholderChoicesBy = async function ({
+const getStakeholderChoicesBy = async function ({
   responseID = null,
   stakeholderID = null,
 }) {
@@ -35,15 +35,22 @@ exports.getStakeholderChoicesBy = async function ({
   return rows;
 };
 
-exports.createStakeholderChoice = async function (responseID, stakeholderID) {
+const createStakeholderChoice = async function (responseID, stakeholderID) {
   const query = "INSERT INTO stakeholder_choices VALUES($1, $2) RETURNING *";
   const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteStakeholderChoice = async function (responseID, stakeholderID) {
+const deleteStakeholderChoice = async function (responseID, stakeholderID) {
   const query =
     "DELETE FROM stakeholder_choices WHERE response_id = $1 and stakeholder_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [responseID, stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
+};
+
+module.exports = {
+  getStakeholderChoice,
+  getStakeholderChoicesBy,
+  createStakeholderChoice,
+  deleteStakeholderChoice,
 };

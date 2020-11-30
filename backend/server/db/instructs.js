@@ -1,13 +1,13 @@
 const pool = require("./pool");
 
-exports.getInstruction = async function (userID, courseID) {
+const getInstruction = async function (userID, courseID) {
   const query =
     "SELECT * FROM instructs WHERE instructor_id = $1 and course_id = $2";
   const { rows } = await pool.query(query, [userID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getInstructionsBy = async function ({
+const getInstructionsBy = async function ({
   userID = null,
   courseID = null,
   webpage = null,
@@ -42,27 +42,27 @@ exports.getInstructionsBy = async function ({
   return rows;
 };
 
-exports.createInstruction = async function (userID, courseID, webpage) {
+const createInstruction = async function (userID, courseID, webpage) {
   const query = "INSERT INTO instructs VALUES($1, $2, $3) RETURNING *";
   const { rows } = await pool.query(query, [userID, webpage, courseID]); // watch out for order of values!
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updateInstuction = async function (userID, courseID, webpage) {
+const updateInstuction = async function (userID, courseID, webpage) {
   const query =
     "UPDATE conversation_task SET webpage = $3 WHERE user_id = $1 and course_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [userID, courseID, webpage]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteInstruction = async function (userID, courseID) {
+const deleteInstruction = async function (userID, courseID) {
   const query =
     "DELETE FROM instructs WHERE instructor_id = $1 and course_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [userID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteInstructionsBy = async function ({
+const deleteInstructionsBy = async function ({
   userID = null,
   courseID = null,
   webpage = null,
@@ -95,4 +95,13 @@ exports.deleteInstructionsBy = async function ({
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
   const { rows } = await pool.query(query, values);
   return rows;
+};
+
+module.exports = {
+  getInstruction,
+  getInstructionsBy,
+  createInstruction,
+  updateInstuction,
+  deleteInstruction,
+  deleteInstructionsBy,
 };

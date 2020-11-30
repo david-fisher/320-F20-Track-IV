@@ -2,14 +2,14 @@ const pool = require("./pool");
 const response = require("./response");
 const prompt = require("./prompt");
 
-exports.getPromptResponse = async function (responseID, promptNum) {
+const getPromptResponse = async function (responseID, promptNum) {
   const query =
     "SELECT * FROM prompt_response WHERE response_id = $1 and prompt_num = $2";
   const { rows } = await pool.query(query, [responseID, promptNum]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.createPromptResponse = async function (
+const createPromptResponse = async function (
   responseID,
   promptNum,
   responseValue
@@ -33,7 +33,7 @@ exports.createPromptResponse = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updatePromptResponse = async function (
+const updatePromptResponse = async function (
   responseID,
   promptNum,
   responseValue
@@ -58,9 +58,16 @@ exports.updatePromptResponse = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deletePromptResponse = async function (responseID, promptNum) {
+const deletePromptResponse = async function (responseID, promptNum) {
   const query =
     "DELETE FROM prompt_response WHERE response_id = $1 and prompt_num = $2 RETURNING *";
   const { rows } = await pool.query(query, [responseID, promptNum]);
   return rows.length > 0 ? rows[0] : null;
+};
+
+module.exports = {
+  getPromptResponse,
+  createPromptResponse,
+  updatePromptResponse,
+  deletePromptResponse,
 };

@@ -8,13 +8,13 @@ const operatorList = {
   lt: "<",
   le: "<=",
 };
-exports.getResponse = async function (responseID) {
+const getResponse = async function (responseID) {
   const query = "SELECT * FROM response WHERE id = $1";
   const { rows } = await pool.query(query, [responseID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getResponsesBy = async function ({
+const getResponsesBy = async function ({
   submissionID = null,
   pageID = null,
   responseTime = [],
@@ -62,14 +62,21 @@ exports.getResponsesBy = async function ({
   const { rows } = await pool.query(query, values);
   return rows;
 };
-exports.createResponse = async function (submissionID, pageID) {
+const createResponse = async function (submissionID, pageID) {
   const query = "INSERT INTO response VALUES($1, $2, DEFAULT) RETURNING *";
   const { rows } = await pool.query(query, [submissionID, pageID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteResponse = async function (responseID) {
+const deleteResponse = async function (responseID) {
   const query = "DELETE FROM response WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [responseID]);
   return rows.length > 0 ? rows[0] : null;
+};
+
+module.exports = {
+  getResponse,
+  getResponsesBy,
+  createResponse,
+  deleteResponse,
 };

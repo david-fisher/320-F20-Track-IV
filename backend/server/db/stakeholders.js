@@ -1,12 +1,12 @@
 const pool = require("./pool");
 
-exports.getStakeholder = async function (stakeholderID) {
+const getStakeholder = async function (stakeholderID) {
   const query = "SELECT * FROM stakeholders WHERE id = $1";
   const { rows } = await pool.query(query, [stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getStakeholdersBy = async function ({
+const getStakeholdersBy = async function ({
   scenarioID = null,
   convTaskID = null,
   name = null,
@@ -40,7 +40,7 @@ exports.getStakeholdersBy = async function ({
   return rows;
 };
 
-exports.createStakeholder = async function (
+const createStakeholder = async function (
   scenarioID,
   convTaskID,
   name,
@@ -59,7 +59,7 @@ exports.createStakeholder = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updateStakeholder = async function (
+const updateStakeholder = async function (
   stakeholderID,
   name,
   description,
@@ -78,8 +78,16 @@ exports.updateStakeholder = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteStakeholder = async function (stakeholderID) {
+const deleteStakeholder = async function (stakeholderID) {
   const query = "DELETE FROM stakeholders WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [stakeholderID]);
   return rows.length > 0 ? rows[0] : null;
+};
+
+module.exports = {
+  getStakeholder,
+  getStakeholdersBy,
+  createStakeholder,
+  updateStakeholder,
+  deleteStakeholder,
 };

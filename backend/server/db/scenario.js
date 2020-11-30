@@ -9,13 +9,13 @@ const operatorList = {
   le: "<=",
 };
 
-exports.getScenario = async function (scenarioID) {
+const getScenario = async function (scenarioID) {
   const query = "SELECT * FROM scenario WHERE id = $1";
   const { rows } = await pool.query(query, [scenarioID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
-exports.getScenariosBy = async function ({
+const getScenariosBy = async function ({
   name = null,
   status = null,
   dueDate = [],
@@ -66,13 +66,13 @@ exports.getScenariosBy = async function ({
   return rows;
 };
 
-exports.retrieveLatestScenarioID = async function () {
+const retrieveLatestScenarioID = async function () {
   const query = "select currval('scenario_id_seq')";
   const { rows } = await pool.query(query);
   return rows[0].currval;
 };
 
-exports.createScenario = async function (
+const createScenario = async function (
   name,
   dueDate,
   description,
@@ -95,7 +95,7 @@ exports.createScenario = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updateScenario = async function (
+const updateScenario = async function (
   scenarioID,
   name,
   dueDate,
@@ -122,8 +122,17 @@ exports.updateScenario = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteScenario = async function (scenarioID) {
+const deleteScenario = async function (scenarioID) {
   const query = "DELETE FROM scenario WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [scenarioID]);
   return rows.length > 0 ? rows[0] : null;
+};
+
+module.exports = {
+  getScenario,
+  getScenariosBy,
+  retrieveLatestScenarioID,
+  createScenario,
+  updateScenario,
+  deleteScenario,
 };

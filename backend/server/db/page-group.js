@@ -24,7 +24,7 @@ const PROMPT = "PRMPT";
 const MCQ = "MCQ";
 const CONV = "CONV";
 
-exports.pageOrder = {
+const pageOrder = {
   INTRO,
   TASK,
   INITIAL_REFLECTION,
@@ -39,18 +39,18 @@ exports.pageOrder = {
   CONCLUSION,
 };
 
-exports.pageType = {
+const pageType = {
   PLAIN,
   PROMPT,
   MCQ,
   CONV,
 };
 
-exports.createIntroPageGroup = async function (scenarioID, text) {
+const createIntroPageGroup = async function (scenarioID, text) {
   return {
     PLAIN: await pages.createPage(
-      exports.pageOrder.INTRO,
-      exports.pageType.PLAIN,
+      pageOrder.INTRO,
+      pageType.PLAIN,
       text,
       scenarioID
     ),
@@ -60,7 +60,7 @@ exports.createIntroPageGroup = async function (scenarioID, text) {
   };
 };
 
-exports.createTaskPageGroup = async function (scenarioID, text) {
+const createTaskPageGroup = async function (scenarioID, text) {
   // TODO: finish this
   return {
     PLAIN: null,
@@ -70,14 +70,14 @@ exports.createTaskPageGroup = async function (scenarioID, text) {
   };
 };
 
-exports.createInitialReflectionPageGroup = async function (
+const createInitialReflectionPageGroup = async function (
   scenarioID,
   text,
   prompts
 ) {
   const page = await pages.createPage(
-    exports.pageOrder.INITIAL_REFLECTION,
-    exports.pageType.PROMPT,
+    pageOrder.INITIAL_REFLECTION,
+    pageType.PROMPT,
     text,
     scenarioID
   );
@@ -92,7 +92,7 @@ exports.createInitialReflectionPageGroup = async function (
   };
 };
 
-exports.createInitActionPageGroup = async function (
+const createInitActionPageGroup = async function (
   scenarioID,
   text,
   prompts,
@@ -101,8 +101,8 @@ exports.createInitActionPageGroup = async function (
   mcqOptionContents
 ) {
   const page = await pages.createPage(
-    exports.pageOrder.INIT_ACTION,
-    exports.pageType.MCQ,
+    pageOrder.INIT_ACTION,
+    pageType.MCQ,
     text,
     scenarioID
   );
@@ -128,21 +128,18 @@ exports.createInitActionPageGroup = async function (
   };
 };
 
-exports.createInitActionSubsequentPageGroup = async function (
-  scenarioID,
-  text
-) {
+const createInitActionSubsequentPageGroup = async function (scenarioID, text) {
   // TODO: figure out what this is.
 };
 
-exports.createConversationPageGroup = async function (
+const createConversationPageGroup = async function (
   scenarioID,
   text,
   convTaskContent
 ) {
   const page = await pages.createPage(
-    exports.pageOrder.CONVERSATION,
-    exports.pageType.CONV,
+    pageOrder.CONVERSATION,
+    pageType.CONV,
     text,
     scenarioID
   );
@@ -158,14 +155,14 @@ exports.createConversationPageGroup = async function (
   };
 };
 
-exports.createMiddleReflectionPageGroup = async function (
+const createMiddleReflectionPageGroup = async function (
   scenarioID,
   text,
   prompts
 ) {
   const page = await pages.createPage(
-    exports.pageOrder.MIDDLE_REFLECTION,
-    exports.pageType.PROMPT,
+    pageOrder.MIDDLE_REFLECTION,
+    pageType.PROMPT,
     text,
     scenarioID
   );
@@ -180,7 +177,7 @@ exports.createMiddleReflectionPageGroup = async function (
   };
 };
 
-exports.createFinalActionPageGroup = async function (
+const createFinalActionPageGroup = async function (
   scenarioID,
   text,
   prompts,
@@ -189,8 +186,8 @@ exports.createFinalActionPageGroup = async function (
   mcqOptionContents
 ) {
   const page = await pages.createPage(
-    exports.pageOrder.FINAL_ACTION,
-    exports.pageType.MCQ,
+    pageOrder.FINAL_ACTION,
+    pageType.MCQ,
     text,
     scenarioID
   );
@@ -216,11 +213,11 @@ exports.createFinalActionPageGroup = async function (
   };
 };
 
-exports.createSummaryPageGroup = async function (scenarioID, text) {
+const createSummaryPageGroup = async function (scenarioID, text) {
   return {
-    PLAIN: await exports.createPage(
-      exports.pageOrder.SUMMARY,
-      exports.pageType.PLAIN,
+    PLAIN: await pages.createPage(
+      pageOrder.SUMMARY,
+      pageType.PLAIN,
       text,
       scenarioID
     ),
@@ -230,11 +227,11 @@ exports.createSummaryPageGroup = async function (scenarioID, text) {
   };
 };
 
-exports.createFeedbackPageGroup = async function (scenarioID, text) {
+const createFeedbackPageGroup = async function (scenarioID, text) {
   return {
-    PLAIN: await exports.createPage(
-      exports.pageOrder.FEEDBACK,
-      exports.pageType.PLAIN,
+    PLAIN: await pages.createPage(
+      pageOrder.FEEDBACK,
+      pageType.PLAIN,
       text,
       scenarioID
     ),
@@ -244,14 +241,14 @@ exports.createFeedbackPageGroup = async function (scenarioID, text) {
   };
 };
 
-exports.createFinalReflectionPageGroup = async function (
+const createFinalReflectionPageGroup = async function (
   scenarioID,
   text,
   prompts
 ) {
   const page = await pages.createPage(
-    exports.pageOrder.FINAL_REFLECTION,
-    exports.pageType.PROMPT,
+    pageOrder.FINAL_REFLECTION,
+    pageType.PROMPT,
     text,
     scenarioID
   );
@@ -266,11 +263,11 @@ exports.createFinalReflectionPageGroup = async function (
   };
 };
 
-exports.createConclusionPageGroup = async function (scenarioID, text) {
+const createConclusionPageGroup = async function (scenarioID, text) {
   return {
-    PLAIN: await exports.createPage(
-      exports.pageOrder.CONCLUSION,
-      exports.pageType.PLAIN,
+    PLAIN: await pages.createPage(
+      pageOrder.CONCLUSION,
+      pageType.PLAIN,
       text,
       scenarioID
     ),
@@ -278,4 +275,21 @@ exports.createConclusionPageGroup = async function (scenarioID, text) {
     MCQ: null,
     CONV: null,
   };
+};
+
+module.exports = {
+  pageOrder,
+  pageType,
+  createIntroPageGroup,
+  createTaskPageGroup,
+  createInitialReflectionPageGroup,
+  createInitActionPageGroup,
+  createInitActionSubsequentPageGroup,
+  createConversationPageGroup,
+  createMiddleReflectionPageGroup,
+  createFinalActionPageGroup,
+  createSummaryPageGroup,
+  createFeedbackPageGroup,
+  createFinalReflectionPageGroup,
+  createConclusionPageGroup,
 };

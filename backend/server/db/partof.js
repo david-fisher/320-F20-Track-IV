@@ -1,18 +1,13 @@
 const pool = require("./pool");
-const scenario = require("./scenario");
-const courses = require("./courses");
 
-exports.getConnectionOfScenarioAndCourse = async function (
-  scenarioID,
-  courseID
-) {
+const getConnectionOfScenarioAndCourse = async function (scenarioID, courseID) {
   const query =
     "SELECT * FROM partof WHERE scenario_id = $1 and course_id = $2";
   const { rows } = await pool.query(query, [scenarioID, courseID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getConnectionsOfScenarioAndCourse = async function ({
+const getConnectionsOfScenarioAndCourse = async function ({
   scenarioID = null,
   courseID = null,
 }) {
@@ -41,23 +36,16 @@ exports.getConnectionsOfScenarioAndCourse = async function ({
   return rows;
 };
 
-exports.createConnectionOfScenarioAndCourse = async function (
+const createConnectionOfScenarioAndCourse = async function (
   scenarioID,
   courseID
 ) {
-  // A scenario can be added to only one course.
-  // if (!(await exports.getCourseOfScenario(scenarioID))) {
-  //   throw new Error(
-  //     "Cannot add scenario which is already added to another course"
-  //   );
-  // }
-
   const query = "INSERT INTO partof VALUES($1, $2) RETURNING *";
   const { rows } = await pool.query(query, [courseID, scenarioID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteConnectionOfScenarioAndCourse = async function (
+const deleteConnectionOfScenarioAndCourse = async function (
   scenarioID,
   courseID
 ) {
@@ -67,7 +55,7 @@ exports.deleteConnectionOfScenarioAndCourse = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteConnectionsOfScenarioAndCourse = async function ({
+const deleteConnectionsOfScenarioAndCourse = async function ({
   scenarioID = null,
   courseID = null,
 }) {
@@ -94,4 +82,12 @@ exports.deleteConnectionsOfScenarioAndCourse = async function ({
   const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
   const { rows } = await pool.query(query, values);
   return rows;
+};
+
+module.exports = {
+  getConnectionOfScenarioAndCourse,
+  getConnectionsOfScenarioAndCourse,
+  createConnectionOfScenarioAndCourse,
+  deleteConnectionOfScenarioAndCourse,
+  deleteConnectionsOfScenarioAndCourse,
 };
