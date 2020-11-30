@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
   optionButton: {
     display: 'inline',
-    marginTop: '40px',
-    marginLeft: '40px',
     color: '#881c1c',
     textAlign: 'center',
     padding: '3rem',

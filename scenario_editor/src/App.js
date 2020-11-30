@@ -14,33 +14,19 @@ import TaskAssignment from './Pages/Editor/TaskAssignment';
 import ContinuePrompt from './Pages/Editor/Continue-Prompt';
 //End of Intro Page Links
 import PlayerResponses from './Pages/Editor/PlayerResponses';
+import Reflections from './Pages/Editor/Reflections';
+import MiddleReflection from './Pages/Editor/MiddleReflection';
+import FinalReflection from './Pages/Editor/FinalReflection';
 import UserAgreement from './Pages/Editor/UserAgreement';
-import Conversations from './Pages/Editor/Conversations';
+import Stakeholders from './Pages/Editor/Stakeholders';
 import Matrix from './Pages/Editor/Matrix';
 import MultipleChoice from './Pages/Editor/MultipleChoice';
 import OpenResponse from './Pages/Editor/OpenResponse';
-import Conclusions from './Pages/Editor/Conclusions';
+import Consequences from './Pages/Editor/Consequences';
 
 import { Provider } from 'react-redux'
 import store from './Store'
 
-
-// TODO: 
-// - Create a Scenario context that can be used to store all of a scenarios data. Will discuss on Sunday best
-//   way to approach this. This will use "useState", "setState", "useContext", and other functions.
-// - Phase out .css files. Might cause some aesthetic issues at first. Needs to be converted to MaterialUI
-// - Style the Dashboard.js page a lot better, kind of ugly right now
-// - Route to the other pages, but this will be easy and just requires the pages to be structured properly 
-//   so data can be transferred.
-// - Stop using bootstrap, if you have questions on it just ask or look up how to use MaterialUI <3
-// - Figure out how to do a conversation matrix or find a workaround (finger's crossed)
-
-// TIPS:
-// - At the top of some of the pages I made a note if it will be used in the future AS IS or needs to be changed
-// - The best structures to follow (I think) are currently that of Dashboard.js and ScenarioCard.js, as it uses 
-//   most of what is needed, except for saving state.
-// - If you want to work on other pages but they are not being routed to, just change the routes below to route 
-//   to the page you want to work on :)  I think that would work
 
 // This is how you customize the MaterialUI standard 
 const theme = createMuiTheme({
@@ -67,20 +53,23 @@ export default function App() {
       <Route path="/home" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/new-scenario" component={NewScenario} />
-
       <Route path="/introduction-hub" component={IntroductionHub} />
       <Route path="/introduction-text" component = {Introduction} />
       <Route path="/task-assignment" component = {TaskAssignment} />
       <Route path="/continue-prompt" component = {ContinuePrompt}/>
       <Route path="/player-responses" component={PlayerResponses} />
+      <Route path="/reflections" component={Reflections} />
+      <Route path="/middle-reflection" component={MiddleReflection} />
+      <Route path="/final-reflection" component={FinalReflection} />
       <Route path="/user-agreement" component={UserAgreement} />
-      <Route path="/conversations" component={Conversations} />
+      <Route path="/stakeholders" component={Stakeholders} />
       <Route path="/matrix" component={Matrix} />
       <Route path="/multiple-choice" component={MultipleChoice} />
       <Route path="/open-response" component={OpenResponse} />
-      <Route path="/conclusions" component={Conclusions} />
+      <Route path="/consequences" component={Consequences} />
       
       <Route path="/dashboard" component={Dashboard} />
+
           {/* This Route will be how we are able to edit individual scenarios in the future
       Have not gotten to implementing the functionality fully yet, but, in essence,
       when the user clicks on a scenario to "Edit", the user will be routed to "/editor/:id", where :id will

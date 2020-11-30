@@ -5,6 +5,10 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
+
+// PlayerResponses.js will become Reflections.js
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(4),
@@ -58,8 +62,6 @@ function PlayerResponses() {
         </div>
       </div>
       <div className={classes.buttonContainer} >
-        <div>
-          <Link to="/multiple-choice">
           <Button
             className={classes.optionButton}
           >
@@ -67,8 +69,6 @@ function PlayerResponses() {
               Create Multiple Choice Response
             </Link>
           </Button>{' '}
-          </Link>
-        </div>
         <div>
           <Link to="/open-response">
           <Button
