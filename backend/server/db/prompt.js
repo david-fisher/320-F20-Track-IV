@@ -6,6 +6,26 @@ const getPrompt = async function (pageID, promptNum) {
   return rows.length > 0 ? rows[0] : null;
 };
 
+const getPromptsBy = async function ({ pageID = null }) {
+  const queryValues = [];
+  let argsPos = 1;
+
+  queryValues.push({
+    name: "page_id",
+    value: pageID,
+    pos: pageID ? argsPos++ : 0,
+  });
+  const where = queryValues
+    .filter((el) => el.pos)
+    .map((el) => `pages.${el.name}=$${el.pos}`)
+    .join(" and ");
+
+  const query = `SELECT * from pages WHERE ${where}`;
+  const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
+  const { rows } = await pool.query(query, values);
+  return rows;
+};
+
 const createPrompt = async function (pageID, prompt) {
   const query = "INSERT INTO prompt VALUES($1, $2, DEFAULT) RETURNING *";
   const { rows } = await pool.query(query, [pageID, prompt]);
@@ -28,6 +48,7 @@ const deletePrompt = async function (pageID, promptNum) {
 
 module.exports = {
   getPrompt,
+  getPromptsBy,
   createPrompt,
   updatePrompt,
   deletePrompt,

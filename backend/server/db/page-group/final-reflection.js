@@ -2,6 +2,20 @@ const { pageOrder, pageType } = require("../../constant");
 const pages = require("../pages");
 const promptPages = require("../prompt");
 
+const getFinalReflectionPageGroup = async function (scenarioID) {
+  const page = await pages.getPagesBy({
+    scenarioID,
+    order: pageOrder.FINAL_REFLECTION,
+  })[0];
+
+  return {
+    [pageType.PLAIN]: page,
+    [pageType.PROMPT]: await promptPages.getPromptsBy({ pageID: page.id }),
+    [pageType.MCQ]: null,
+    [pageType.CONV]: null,
+  };
+};
+
 const createFinalReflectionPageGroup = async function (
   scenarioID,
   text,
@@ -25,5 +39,6 @@ const createFinalReflectionPageGroup = async function (
 };
 
 module.exports = {
+  getFinalReflectionPageGroup,
   createFinalReflectionPageGroup,
 };

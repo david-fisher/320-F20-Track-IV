@@ -5,6 +5,27 @@ const mcqPages = require("../mcq");
 const question = require("../question");
 const mcqOption = require("../mcq_option");
 
+const getFinalActionPageGroup = async function (scenarioID) {
+  const page = await pages.getPagesBy({
+    scenarioID,
+    order: pageOrder.FINAL_ACTION,
+  })[0];
+  const mcq = await mcqPages.getMcq(page.id);
+  const quest = await question.getQuestionsBy({ mcqID: mcq.id })[0];
+  const mcqOptions = await mcqOption.getMcqOptionsBy({ questionID: quest.id });
+
+  return {
+    [pageType.PLAIN]: page,
+    [pageType.PROMPT]: await promptPages.getPromptsBy({ pageID: page.id }),
+    [pageType.MCQ]: {
+      mcq,
+      question: quest,
+      mcqOptions,
+    },
+    [pageType.CONV]: null,
+  };
+};
+
 const createFinalActionPageGroup = async function (
   scenarioID,
   text,
@@ -42,5 +63,6 @@ const createFinalActionPageGroup = async function (
 };
 
 module.exports = {
+  getFinalActionPageGroup,
   createFinalActionPageGroup,
 };
