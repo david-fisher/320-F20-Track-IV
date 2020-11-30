@@ -51,25 +51,94 @@ router.post(
   }
 );
 
-router.delete(
-  "/:simulation_id",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  async (req, res) => {
-    const { simulation_id: scenarioID } = req.params;
-
-    try {
-      await db.scenario.deleteScenario(scenarioID);
-      res.status(httpStatusCode.success.DELETED);
-      res.json({
-        success: true,
-      });
-    } catch (error) {
-      res.status(httpStatusCode.failed.NOT_FOUND);
-      res.json(createInvalidResponse(error.message));
+router
+  .get(
+    "/:simulation_id",
+    headers.areHeadersValid,
+    auth.isAuthenticated,
+    async (req, res) => {
+      const { simulation_id: scenarioID } = req.params;
+      try {
+        const scenario = await db.scenario.getScenario(scenarioID);
+        res.status(httpStatusCode.success.OK);
+        res.json({
+          simulation: scenario,
+        });
+      } catch (error) {
+        res.status(httpStatusCode.failed.NOT_FOUND);
+        res.json(createInvalidResponse(error.message));
+      }
     }
-  }
-);
+  )
+  .put(
+    "/:simulation_id",
+    headers.areHeadersValid,
+    auth.isAuthenticated,
+    async (req, res) => {
+      const { simulation_id: scenarioID } = req.params;
+      let name, dueDate, description, status, additionalData;
+      try {
+        name = req.body.name || null;
+        dueDate = req.body.due_date || null;
+        description = req.body.description || null;
+        status = req.body.status || null;
+        additionalData = req.body.additionalData || null;
+      } catch (error) {
+        res.status(httpStatusCode.failed.BAD_REQUEST);
+        return res.json(createInvalidResponse(error.message));
+      }
+
+      let scenario;
+      try {
+        scenario = await db.scenario.getScenario(scenarioID);
+      } catch (error) {
+        res.status(httpStatusCode.failed.NOT_FOUND);
+        return res.json(createInvalidResponse(error.message));
+      }
+
+      try {
+        name = name || scenario.name;
+        dueDate = dueDate || scenario.due_date;
+        description = description || scenario.description;
+        status = status || scenario.status;
+        additionalData = additionalData || scenario.additional_data;
+        await db.scenario.updateScenario(
+          scenarioID,
+          name,
+          dueDate,
+          description,
+          status,
+          additionalData
+        );
+        res.status(httpStatusCode.success.UPDATED);
+        res.json({
+          success: true,
+        });
+      } catch (error) {
+        res.status(httpStatusCode.failed.BAD_REQUEST);
+        res.json(createInvalidResponse(error.message));
+      }
+    }
+  )
+  .delete(
+    "/:simulation_id",
+    headers.areHeadersValid,
+    auth.isAuthenticated,
+    async (req, res) => {
+      const { simulation_id: scenarioID } = req.params;
+
+      try {
+        await db.scenario.deleteScenario(scenarioID);
+        res.status(httpStatusCode.success.DELETED);
+        res.json({
+          success: true,
+        });
+      } catch (error) {
+        res.status(httpStatusCode.failed.NOT_FOUND);
+        res.json(createInvalidResponse(error.message));
+      }
+    }
+  );
 
 router.post(
   "/:simulation_id/start",
@@ -140,67 +209,6 @@ router.post(
     }
   }
 );
-
-router
-  .get(
-    "/:simulation_id/description",
-    headers.areHeadersValid,
-    auth.isAuthenticated,
-    async (req, res) => {
-      const { simulation_id: scenarioID } = req.params;
-      try {
-        const scenario = await db.scenario.getScenario(scenarioID);
-        res.status(httpStatusCode.success.OK);
-        res.json({
-          description: scenario.description,
-        });
-      } catch (error) {
-        res.status(httpStatusCode.failed.NOT_FOUND);
-        res.json(createInvalidResponse(error.message));
-      }
-    }
-  )
-  .put(
-    "/:simulation_id/description",
-    headers.areHeadersValid,
-    auth.isAuthenticated,
-    async (req, res) => {
-      const { simulation_id: scenarioID } = req.params;
-      let description;
-      try {
-        description = req.body.description;
-      } catch (error) {
-        res.status(httpStatusCode.failed.BAD_REQUEST);
-        return res.json(createInvalidResponse(error.message));
-      }
-
-      let scenario;
-      try {
-        scenario = await db.scenario.getScenario(scenarioID);
-      } catch (error) {
-        res.status(httpStatusCode.failed.NOT_FOUND);
-        return res.json(createInvalidResponse(error.message));
-      }
-
-      try {
-        await db.scenario.updateScenario(
-          scenarioID,
-          scenario.name,
-          scenario.dueDate,
-          description,
-          scenario.status,
-          scenario.additionalData
-        );
-        res.status(httpStatusCode.success.UPDATED);
-        res.json({
-          success: true,
-        });
-      } catch (error) {
-        res.status(httpStatusCode.failed.BAD_REQUEST);
-        res.json(createInvalidResponse(error.message));
-      }
-    }
-  );
 
 router.use("/:simulation_id", pages);
 
