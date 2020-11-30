@@ -29,13 +29,16 @@ router
     auth.isAuthenticated,
     async (req, res) => {
       const { simulation_id: scenarioID } = req.params;
-      let bodyText, prompts;
-      try {
-        bodyText = req.body.bodyText;
-        prompts = req.body.prompts;
-      } catch (error) {
+      const { body_text: bodyText = null, prompts = null } = req.body;
+
+      if (!bodyText) {
         res.status(httpStatusCode.failed.BAD_REQUEST);
-        return res.json(createInvalidResponse(error.message));
+        return res.json(createInvalidResponse("'body_text' is not defined"));
+      }
+
+      if (!prompts) {
+        res.status(httpStatusCode.failed.BAD_REQUEST);
+        return res.json(createInvalidResponse("'prompts' is not defined"));
       }
 
       try {
