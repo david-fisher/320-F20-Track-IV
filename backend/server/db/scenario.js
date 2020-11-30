@@ -1,4 +1,6 @@
 const pool = require("./pool");
+const partof = require("./partof");
+const instructs = require("./instructs");
 
 const operatorList = {
   eq: "=",
@@ -9,10 +11,30 @@ const operatorList = {
   le: "<=",
 };
 
+const isScenarioEditableByUser = async function (scenarioID, userID) {
+  const query = `SELECT * FROM scenario WHERE id = $1 and id IN (
+    SELECT scenario_id FROM partof WHERE scenario_id = $1 and course_id IN (
+      SELECT course_id FROM instructs WHERE instructor_id = $2
+    )
+  )`;
+  const { rows } = await pool.query(query, [scenarioID, userID]);
+  return rows.length > 0;
+};
+
 const getScenario = async function (scenarioID) {
   const query = "SELECT * FROM scenario WHERE id = $1";
   const { rows } = await pool.query(query, [scenarioID]);
   return rows.length !== 0 ? rows[0] : null;
+};
+
+const getScenariosByUserID = async function (userID) {
+  const query = `SELECT * FROM scenario WHERE id IN (
+    SELECT scenario_id FROM partof WHERE course_id IN (
+      SELECT course_id FROM instructs WHERE instructor_id = $1
+    )
+  )`;
+  const { rows } = await pool.query(query, [userID]);
+  return rows;
 };
 
 const getScenariosBy = async function ({
@@ -64,12 +86,6 @@ const getScenariosBy = async function ({
   console.log(query);
   const { rows } = await pool.query(query, values);
   return rows;
-};
-
-const retrieveLatestScenarioID = async function () {
-  const query = "select currval('scenario_id_seq')";
-  const { rows } = await pool.query(query);
-  return rows[0].currval;
 };
 
 const createScenario = async function (
@@ -129,9 +145,10 @@ const deleteScenario = async function (scenarioID) {
 };
 
 module.exports = {
+  isScenarioEditableByUser,
+  getScenariosByUserID,
   getScenario,
   getScenariosBy,
-  retrieveLatestScenarioID,
   createScenario,
   updateScenario,
   deleteScenario,
