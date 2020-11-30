@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { httpStatusCode, auth, headers } = require("../middleware");
+const { httpStatusCode } = require("../constant");
+const { auth, headers } = require("../middleware");
 const db = require("../db");
 const { createInvalidResponse } = require("../utils");
 

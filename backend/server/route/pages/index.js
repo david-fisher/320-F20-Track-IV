@@ -12,6 +12,7 @@ router
   .use("/summary", require("./summary"))
   .use("/feedback", require("./feedback"))
   .use("/final-reflection", require("./final-reflection"))
-  .use("/conclusion", require("./conclusion"));
+  .use("/conclusion", require("./conclusion"))
+  .use("/issue-coverage-matrix", require("./issue-coverage-matrix"));
 
 module.exports = router;

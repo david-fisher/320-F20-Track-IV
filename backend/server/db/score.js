@@ -7,6 +7,32 @@ const getScore = async function (stakeholderID, issueID) {
   return rows.length > 0 ? rows[0] : null;
 };
 
+const getScoresBy = async function ({ stakeholderID = null, issueID = null }) {
+  const queryValues = [];
+  let argsPos = 1;
+
+  queryValues.push({
+    name: "stakeholder_id",
+    value: stakeholderID,
+    pos: stakeholderID ? argsPos++ : 0,
+  });
+  queryValues.push({
+    name: "issue_id",
+    value: issueID,
+    pos: issueID ? argsPos++ : 0,
+  });
+
+  const where = queryValues
+    .filter((el) => el.pos)
+    .map((el) => `${el.name}=$${el.pos}`)
+    .join(" and ");
+
+  const query = `SELECT * from score WHERE ${where}`;
+  const values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
+  const { rows } = await pool.query(query, values);
+  return rows;
+};
+
 const createScore = async function (stakeholderID, issueID, value) {
   const query = "INSERT INTO score VALUES($1, $2, $3) RETURNING *";
   const { rows } = await pool.query(query, [stakeholderID, issueID, value]);
@@ -29,6 +55,7 @@ const deleteScore = async function (issueID) {
 
 module.exports = {
   getScore,
+  getScoresBy,
   createScore,
   updateScore,
   deleteScore,
