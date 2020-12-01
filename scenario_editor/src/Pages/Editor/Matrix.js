@@ -1,5 +1,9 @@
 import Nav from '../../Components/Nav'
-import React from 'react';
+
+import React, { Component, useState, useEffect } from 'react';
+import Suneditor, {buttonList, table} from 'suneditor-react';
+import SunEditor from 'suneditor-react';
+import 'suneditor/dist/css/suneditor.min.css';
 import FirstPage from '@material-ui/icons/FirstPage';
 import Search from '@material-ui/icons/Search';
 import Clear from '@material-ui/icons/Clear';
@@ -18,155 +22,105 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import MaterialTable, { MTableBodyRow } from "material-table";
 
-export default function CellEditable() {
-  const { useState } = React;
 
-  const tableIcons = {
-    PreviousPage: ChevronLeft,
-    NextPage: ChevronRight,
-    ResetSearch: Clear,
-    FirstPage: FirstPage,
-    LastPage: LastPage,
-    Search: Search,
-    Add: AddBox,
-    Check: Check,
-    Clear: Clear,
-    Delete: DeleteOutline,
-    DetailPanel: ChevronRight,
-    Edit: Edit,
-    Export: SaveAlt,
-    Filter: FilterList,
-    SortArrow: ArrowUpward,
-    ThirdStateCheck: Remove,
-    ViewColumn: ViewColumn
-  };
-  const [columns, setColumns] = useState([
-    { title: 'Name', field: 'name', backgroundColor:' #881c1c'},
-    { title: 'Description', field: 'description'},
-    { title: 'Public Safety Improvement', field: 'publicSafety', type: 'numeric' },
-    { title: 'User Health Improvement', field: 'userHealth', type: 'numeric' },
-    { title: 'Career-Building Opportunity', field: 'careerBuilding', type: 'numeric' },
-    { title: 'Long-Term Company Benefits', field: 'longTerm', type: 'numeric' },
-    { title: 'Short-Term Company Profits', field: 'shortTerm', type: 'numeric' },
-    { title: 'Violation of User Privacy', field: 'privacyViolation', type: 'numeric' },
-    { title: 'ML Misuse Harms Users and Public', field: 'MLharms', type: 'numeric' },
-    { title: 'ML Misuse Damages Company Reputation', field: 'MLdamages', type: 'numeric' },
-    { title: 'Project Harms Career', field: 'harmsCareer', type: 'numeric' },
-    // {
-      
-    //   title: 'Description',
-    //   field: 'birthCity',
-    //   lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-    // },
-  ]);
 
-  const [data, setData] = useState([
-    { name: 'Kokichi', 
-    description: 'Expert on Cognition medications', 
-    publicSafety: 0,
-    userHealth: 0,
-    careerBuilding: 0,
-    longTerm: 0,
-    shortTerm: 0,
-    privacyViolation: 0,
-    MLharms: 0,
-    MLdamages: 0,
-    harmsCareer: 0,
-  },
-  { name: 'Raisa', 
-    description: 'Neurology/cognition researcher', 
-    publicSafety: 0,
-    userHealth: 0,
-    careerBuilding: 0,
-    longTerm: 0,
-    shortTerm: 0,
-    privacyViolation: 0,
-    MLharms: 0,
-    MLdamages: 0,
-    harmsCareer: 0,
-  }
-  ]);
 
-  return (
-    <MaterialTable
-      title="Conversation Matrix"
+class Matrix extends Component{
 
-     columns={columns}
-    //  columns={[
-    //   {
-    //     title: 'Name', field: 'name',
-    //     cellStyle: {
-    //       backgroundColor: '#881c1c',
-    //       color: 'white'
-    //     },
-    //     headerStyle: {
-    //       backgroundColor: ' #881c1c',
-    //       color: 'white'
-    //     }
-    //   },
-    //   { title: 'Surname', field: 'surname' },
-    //   { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-    //   {
-    //     title: 'Birth Place',
-    //     field: 'birthCity',
-    //     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-    //   },
-    // ]}
-      data={data}
-      options={{
-        headerStyle: {
-          backgroundColor: '#881c1c',
-          color: 'black',
-          width: 20
-        },
-        cellStyle: {
-          width: 20
-        }
-      }
+  constructor() {
+    super()
+    this.state = {
+      value: '',
+      scenarioID: 2,
+      contents: '',
+      scenario_title: localStorage.getItem("RS_SCENARIO__title"),
+      scenario_desc: localStorage.getItem("RS_SCENARIO__description"),
+      scenario_ua: localStorage.getItem("RS_SCENARIO__user_agreement"),
     }
-    editable={{
-      onRowAdd: newData =>
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            setData([...data, newData]);
-            
-            resolve();
-          }, 1000)
-        }),
-      onRowUpdate: (newData, oldData) =>
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            const dataUpdate = [...data];
-            const index = oldData.tableData.id;
-            dataUpdate[index] = newData;
-            setData([...dataUpdate]);
 
-            resolve();
-          }, 1000)
-        }),
-      onRowDelete: oldData =>
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            const dataDelete = [...data];
-            const index = oldData.tableData.id;
-            dataDelete.splice(index, 1);
-            setData([...dataDelete]);
-            
-            resolve()
-          }, 1000)
-        }),
-    }}
-      // cellEditable={{
-      //   onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-      //     return new Promise((resolve, reject) => {
-      //       console.log('newValue: ' + newValue);
-      //       setTimeout(resolve, 1000);
-      //     });
-      //   }
-      // }}
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
+  }
 
 
-    icons={tableIcons}
-    />
-  )
+  handleChange(event) {
+    this.setState({ value: event.target.value })
+  }
+
+  // If you'd like your changes to persist (stay in place after page refresh),
+  // you'd want to add your new posts to a database within your reducer function's action handlers.
+  handleSubmit(event) {
+    alert('Content submitted' /*+ this.state.value*/)
+    event.preventDefault()
+    this.props.dispatch({
+      type: 'ADD_SCENARIO',
+      payload: { id: this.state.scenarioID, title: this.state.value }
+    })
+
+    this.setState({ scenarioID: this.state.scenarioID + 1 })
+  }
+
+  handleEditorChange(event) {
+    this.setState({contents: event})
+  }
+
+  handleEditorSubmit(event) {
+    // alert("Content has been submitted")
+    // const headers = {
+    //   'Authorization': `Bearer ${this.props.token}`,
+    //   'Accept': 'application/json'
+    // }
+    // event.preventDefault();
+    // axios.post(`/api/v1/simulation/create`, {
+    //   simulation_title: this.state.scenario_title,
+    //   simulation_desc: this.state.scenario_desc,
+    //   simulation_introduction: this.state.contents,
+    //   simulation_ua: this.state.scenario_ua
+    // }, {headers: headers}).then(res => {
+    //   // debugger;
+    //   alert(`Simulation ID: ${res.data.simulation_id}`)
+    // });
+
+    // this.props.dispatch({
+    //   type: 'ADD_SCENARIO',
+    //   payload: { id: this.state.scenarioID, title: this.state.contents }
+    // });
+    // this.setState({scenarioID: this.state.scenarioID + 1})
+  }
+
+
+  render(){
+    return (
+      <div>
+        <Nav />
+        <div>
+          <h1>
+            Stakeholder Matrix
+          </h1>
+        </div>
+        <b1 className ="Matrix-header">
+          Edit your Stakeholder Matrix here:
+        </b1>
+        <b2 className="text-editor">
+
+{/* Right now the main question is; how do we create a default table, and how do we only render this
+    table while making sure that we don't accidentally break the page itself?
+    We also have to make sure the customer doesn't break it by inputting something incorrectly
+    Would we have to create a checker to make sure it followed a format that we can give to the backend team? */}
+          <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions = {{
+            height: 600,
+            width: '100%',
+            //maxWidth: '1000px',
+            buttonList: buttonList.complex
+            // plugins: [table]
+
+          }}/>
+        </b2>
+      </div>
+    )
+  }
 }
+
+export default Matrix;
