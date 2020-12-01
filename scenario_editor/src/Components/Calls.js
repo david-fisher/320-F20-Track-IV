@@ -1,84 +1,112 @@
-import React, {Component} from 'react';
 import axios from 'axios';
 
-const baseURL = 'http://e5ac4bbde7ef.ngrok.io/api/v1'; // change this if different tunnel link
+const baseURL = "" // need to change this
 
-let TOKEN = "abcdefghijklmnopqrstuvwxyz";
-let config = {
-headers: {
-    'Authorization': `Bearer ${TOKEN}`,
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Accept-Encoding': 'gzip, deflate, br'
-    }
-};
-
-class Calls extends Component{
-    constructor(props){
-        super(props);
-        this.getAuthenticatedInstructorDashboardSummary = this.getAuthenticatedInstructorDashboardSummary.bind(this);
-        this.createNewSimulation = this.createNewSimulation.bind(this);
-    }
-    getAuthenticatedInstructorDashboardSummary(){
-        axios
-            .get(baseURL + '/dashboard', config)
-            .then(res => {
-                let data = res.data;
-                this.setState({...data});
+export function universalFetch(
+    setResponse, // should be the setState from a state set up like: const [state, setState] = useState({data: null, loading: false, error: true})
+    endpoint, // endpoint path
+    onSuccess, // optional function to run when call is a success
+    onError, // optional function to run when the call fails
+    options // set up like this options = { headers: {‘Authorization’: `token`}
+) {
+    console.log('Fetch started');
+    setResponse({
+        data: null,
+        loading: true,
+        error: null,
+    });
+    axios
+        .get(`${baseURL}${endpoint}`, options)
+        .then((resp) => {
+            console.log('Response received');
+            console.log(resp.data);
+            setResponse({
+                data: resp.data,
+                loading: false,
+                error: null,
             });
-    }
-
-    createNewSimulation(){
-        axios 
-            .post(baseURL + '/simulation', params, config)
-            .then(res => {
-                this.setState(prevState => {
-                    drafts: [...prevState.drafts, res.data]
-                });
+            onSuccess && onSuccess(resp.data);
+        })
+        .catch((err) => {
+            console.log(`Fetch failed with error ${err.message}`);
+            setResponse({
+                data: null,
+                loading: false,
+                error: err.message,
             });
-    }
-    
-    deleteSimulation(){
-        axios 
-            .delete(baseURL + `/simulation/${this.state.sim_id}`, config)
-            .then(res=> console.log(res.data));
-    }
-
-    startSimulation(){
-        axios
-            .post(baseURL + `/simulation/${this.state.sim_id}/start`, {/*array of uid*/},config)
-    }
-
-    closeSimulation(){
-        axios
-            .post(baseURL + `/simulation/${this.state.sim_id}/close`, {/*params*/},config)
-    }
-
-    getSimulationIntroduction(){
-        axios
-            .get(baseURL + `/simulation/${this.state.sim_id}/introduction`, config)
-            .then(res => {
-                this.setState(state => {
-                });
-            });
-    }
-
-    addSimulationIntialIntroduction(){
-        axios
-            .post(baseURL + ` /simulation/${this.state.sim_id}/introduction`, config)
-    }
-
-    getInitialReflection(){
-    }
-
-    getInitialReflectionResponses(){
-
-    }
-
-    getInitialAction(){
-
-    }
-
+            onError && onError(err.message);
+        });
 }
- 
-export default Calls;
+
+export function universalPost(
+    setResponse,
+    endpoint,
+    data, // Data to post
+    onSuccess,
+    onError,
+    options
+) {
+    console.log("Post Started");
+    setResponse({
+        data: null,
+        loading: true,
+        error: null
+    })
+    axios
+        .post(`${baseURL}${endpoint}`, data, options)
+        .then((resp) => {
+            console.log("Response received");
+            console.log(resp.data);
+            setResponse({
+                data: resp.data,
+                loading: false,
+                error: null,
+            });
+            onSuccess && onSuccess(resp.data);
+        })
+        .catch((err) => {
+            console.log(`Post failed with error ${err.message}`);
+            setResponse({
+                data: null,
+                loading: false,
+                error: err.message,
+            });
+            onError && onError(err.message);
+        })
+}
+
+export function universalDelete(
+    setResponse,
+    endpoint,
+    onSuccess,
+    onError,
+    options
+) {
+    console.log("Delete Started");
+    setResponse({
+        data: null,
+        loading: true,
+        error: null
+    })
+    axios
+        .delete(`${baseURL}${endpoint}`, options)
+        .then((resp) => {
+            console.log("Response received");
+            console.log(resp.data);
+            setResponse({
+                data: resp.data,
+                loading: false,
+                error: null,
+            });
+            onSuccess && onSuccess(resp.data);
+        })
+        .catch((err) => {
+            console.log(`Delete failed with error ${err.message}`);
+            setResponse({
+                data: null,
+                loading: false,
+                error: err.message,
+            });
+            onError && onError(err.message);
+        })
+}
