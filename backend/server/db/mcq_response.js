@@ -1,13 +1,13 @@
 const pool = require("./pool");
 
-exports.getMcqResponse = async function (response_id, question_id) {
+const getMcqResponse = async function (response_id, question_id) {
   const query =
     "SELECT * FROM mcq_response WHERE response_id = $1 and question_id = $2";
   const { rows } = await pool.query(query, [response_id, question_id]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getMcqResponsesBy = async function ({
+const getMcqResponsesBy = async function ({
   responseID = null,
   questionID = null,
   mcqOptionID = null,
@@ -41,12 +41,8 @@ exports.getMcqResponsesBy = async function ({
   return rows;
 };
 
-exports.createMcqResponse = async function (
-  responseID,
-  questionID,
-  mcqOptionID
-) {
-  const query = "insert into mcq_response values($1, $2, $3)";
+const createMcqResponse = async function (responseID, questionID, mcqOptionID) {
+  const query = "INSERT INTO mcq_response VALUES($1, $2, $3) RETURNING *";
   const { rows } = await pool.query(query, [
     responseID,
     questionID,
@@ -55,13 +51,9 @@ exports.createMcqResponse = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updateMcqResponse = async function (
-  responseID,
-  questionID,
-  mcqOptionID
-) {
+const updateMcqResponse = async function (responseID, questionID, mcqOptionID) {
   const query =
-    "UPDATE mcq_response SET choice_id = $3 WHERE response_id = $1 and question_id = $2";
+    "UPDATE mcq_response SET choice_id = $3 WHERE response_id = $1 and question_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [
     responseID,
     questionID,
@@ -70,9 +62,17 @@ exports.updateMcqResponse = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteMcqResponse = async function (responseID, questionID) {
+const deleteMcqResponse = async function (responseID, questionID) {
   const query =
-    "DELETE FROM mcq_response WHERE response_id = $1 and question_id = $2";
+    "DELETE FROM mcq_response WHERE response_id = $1 and question_id = $2 RETURNING *";
   const { rows } = await pool.query(query, [responseID, questionID]);
   return rows.length > 0 ? rows[0] : null;
+};
+
+module.exports = {
+  getMcqResponse,
+  getMcqResponsesBy,
+  createMcqResponse,
+  updateMcqResponse,
+  deleteMcqResponse,
 };

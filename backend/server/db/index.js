@@ -15,244 +15,29 @@ const instructs = require("./instructs");
 const enrolled = require("./enrolled");
 const submissions = require("./submissions");
 const response = require("./response");
-const stakeholderChoices = require("./stakeholder_choices");
+const conversationChoices = require("./conversation_choices");
 const mcqResponse = require("./mcq_response");
 const promptResponse = require("./prompt_response");
 
-exports = {
-  ...scenario,
-  ...pages,
-  ...partof,
-  ...prompt,
-  ...conversationTask,
-  ...stakeholders,
-  ...issues,
-  ...score,
-  ...mcq,
-  ...question,
-  ...mcqOption,
-  ...users,
-  ...courses,
-  ...instructs,
-  ...enrolled,
-  ...submissions,
-  ...response,
-  ...stakeholderChoices,
-  ...mcqResponse,
-  ...promptResponse,
+module.exports = {
+  scenario,
+  pages,
+  partof,
+  prompt,
+  conversationTask,
+  stakeholders,
+  issues,
+  score,
+  mcq,
+  question,
+  mcqOption,
+  users,
+  courses,
+  instructs,
+  enrolled,
+  submissions,
+  response,
+  conversationChoices,
+  mcqResponse,
+  promptResponse,
 };
-
-// console.log(exports);
-
-exports.getScenarioIntroduction = (scenario_id) => {
-  let introduction = "";
-  // db
-  //   .query('SELECT * FROM scenario WHERE id=$1', [scenario_id])
-  //   .then(res => {introduction = res.rows[0].introduction;})
-  //   .catch(err => console.error('Error executing query', err.stack));
-  if (!introduction) {
-    return 404;
-  } else {
-    return introduction;
-  }
-};
-
-// exports.getScenarioIntroductionByID = function (scenario_id) {
-//   const scenario = scenarios.find((ele) => ele.scenario_id === scenario_id);
-//   if (scenario) {
-//     return scenario.introduction;
-//   } else {
-//     return 404;
-//   }
-// };
-
-// exports.setScenarioIntroductionByID = function (scenario_id, summary) {
-//   const scenario = scenarios.find((ele) => ele.scenario_id === scenario_id);
-//   if (scenario) {
-//     scenario.introduction = summary;
-//     return 202;
-//   } else {
-//     return 404;
-//   }
-// };
-
-exports.getScenarioSummary = function (scenario_id) {
-  /**
-   * /scenario/:scenario_id/introduction
-   * /scenario/:scenario_id/initial-reflection
-   * /scenario/:scenario_id/initial-action
-   */
-  return "";
-};
-
-exports.getIntialReflectionQuestions = function () {
-  // returns an array of questions
-  /**
-   * /scenario/:scenario_id/initial-reflection
-   */
-  return [];
-};
-
-// have to work on this
-exports.getStudentName = function () {
-  /**
-   * /scenario/:scenario_id/initial-reflection/answers
-   * /scenario/:scenario_id/initial-action/answers
-   * /scenario/:scenario_id/stakeholders/answers
-   */
-  return "";
-};
-
-// have to work on this
-exports.getStudentUID = function () {
-  /**
-   * /scenario/:scenario_id/initial-reflection/answers
-   * /scenario/:scenario_id/initial-action/answers
-   * /scenario/:scenario_id/stakeholders/answers
-   */
-  return 0;
-};
-
-exports.getStudentResponses = function () {
-  // an array of json with keys 'question', 'answer'.
-  /**
-   * /scenario/:scenario_id/initial-reflection/answers
-   * /scenario/:scenario_id/initial-action/answers
-   */
-  return [];
-};
-
-exports.getQuestion = function () {
-  return "";
-};
-
-exports.getAnswer = function () {
-  return "";
-};
-
-exports.getIntialActionQuestions = function () {
-  // an array of json with keys 'question', 'choices'.
-  /**
-   * /scenario/:scenario_id/initial-action
-   */
-  return [];
-};
-
-exports.getChoices = function () {
-  // return : array of string.
-  /**
-   * /scenario/:scenario_id/initial-action
-   */
-  return [];
-};
-
-exports.getscenarioExplanation = function () {
-  /**
-    /scenario/:scenario_id/additional-reflection
-    /scenario/:scenario_id/final-decision
-  */
-  return "";
-};
-
-exports.getStudentExplanation = function () {
-  /**
-   /scenario/:scenario_id/additional-reflection
-   /scenario/:scenario_id/final-decision
-  */
-  return "";
-};
-
-exports.getStakeHolderSummary = function () {
-  /**
-   * /scenario/:scenario_id/stakeholders/description
-   */
-  return "";
-};
-
-exports.getStakeHolder_ids = function () {
-  // an list of ids
-  /**
-
-  /scenario/:scenario_id/stakeholders/answers
-  */
-  return [];
-};
-
-// http://localhost:3000/api/v1/scenario/:scenario_id/stakeholders/:stakeholder_id
-
-exports.getStakeHolderName = function () {
-  /**
-   * /scenario/:scenario_id/stakeholders/:stakeholder_id
-   */
-  return "";
-};
-
-// http://localhost:3000/api/v1/scenario/:scenario_id/stakeholders/:stakeholder_id
-
-exports.getStakeHolderDescription = function () {
-  /**
-   * /scenario/:scenario_id/stakeholders/:stakeholder_id
-   */
-  return "";
-};
-
-// http://localhost:3000/api/v1/scenario/:scenario_id/stakeholders/:stakeholder_id
-
-exports.getStakeHolderConversation_text = function () {
-  /**
-   * /scenario/:scenario_id/stakeholders/:stakeholder_id
-   */
-  return "";
-};
-
-exports.getScenariosConversants = function () {
-  // return : array of string
-  /**
-   * /scenario/:scenario_id/issue-coverage-matrix
-   */
-  return [];
-};
-
-exports.getScenarioIssues = function () {
-  // return : array of string (issues)
-  /**
-   * /scenario/:scenario_id/issue-coverage-matrix
-   */
-  return [];
-};
-
-exports.getScenarioValues = function () {
-  // return : 2-d array, with each inner array corresponding to each issues and conversants
-  /**
-   * /scenario/:scenario_id/issue-coverage-matrix
-   */
-  return [];
-};
-
-// http://localhost:3000/api/v1/scenario/:scenario_id/students
-
-exports.getStudents_scenarioInfo = function () {
-  /**
-   * /scenario/:scenario_id/students
-   */
-  return [];
-};
-
-// scenarios
-
-exports.getScenarioSummary = function () {
-  /**
-   * /scenario/:scenario_id/scenarios/:scenario_id/summary
-   */
-  return "";
-};
-
-exports.getScenarioID = function () {
-  // return a list of scenario id's
-  /**
-   * /scenario/:scenario_id/scenarios
-   */
-  return [];
-};
-
-module.exports = exports;

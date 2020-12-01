@@ -1,4 +1,6 @@
 const pool = require("./pool");
+const partof = require("./partof");
+const instructs = require("./instructs");
 
 const operatorList = {
   eq: "=",
@@ -9,16 +11,36 @@ const operatorList = {
   le: "<=",
 };
 
-exports.getScenario = async function (scenarioID) {
+const isScenarioEditableByUser = async function (scenarioID, userID) {
+  const query = `SELECT * FROM scenario WHERE id = $1 and id IN (
+    SELECT scenario_id FROM partof WHERE scenario_id = $1 and course_id IN (
+      SELECT course_id FROM instructs WHERE instructor_id = $2
+    )
+  )`;
+  const { rows } = await pool.query(query, [scenarioID, userID]);
+  return rows.length > 0;
+};
+
+const getScenario = async function (scenarioID) {
   const query = "SELECT * FROM scenario WHERE id = $1";
   const { rows } = await pool.query(query, [scenarioID]);
   return rows.length !== 0 ? rows[0] : null;
 };
 
-exports.getScenariosBy = async function ({
+const getScenariosByUserID = async function (userID) {
+  const query = `SELECT * FROM scenario WHERE id IN (
+    SELECT scenario_id FROM partof WHERE course_id IN (
+      SELECT course_id FROM instructs WHERE instructor_id = $1
+    )
+  )`;
+  const { rows } = await pool.query(query, [userID]);
+  return rows;
+};
+
+const getScenariosBy = async function ({
   name = null,
   status = null,
-  dueDate = [{ time: null, operator: "eq" }],
+  dueDate = [],
 }) {
   // console.log(name, status);
   const queryValues = [];
@@ -40,25 +62,25 @@ exports.getScenariosBy = async function ({
     .join(" and ");
   let values = queryValues.filter((el) => el.pos !== 0).map((el) => el.value);
 
-  // if (dueDate.length !== 0) {
-  //   const timeQueryValues = [];
-  //
-  //   for (let dd of dueDate) {
-  //     timeQueryValues.push({
-  //       name: "time",
-  //       operator: operatorList[dd.operator],
-  //       value: dd.time,
-  //       pos: argsPos++,
-  //     });
-  //   }
-  //
-  //   const whereTime = timeQueryValues
-  //     .map((el) => `${el.name}${el.operator}$${el.pos}`)
-  //     .join(" and ");
-  //   const valuesTime = timeQueryValues.map((el) => el.value);
-  //   where = where + " and " + whereTime;
-  //   values = values.concat(valuesTime);
-  // }
+  if (dueDate.length !== 0) {
+    const timeQueryValues = [];
+
+    for (let dd of dueDate) {
+      timeQueryValues.push({
+        name: "time",
+        operator: operatorList[dd.operator],
+        value: dd.time,
+        pos: argsPos++,
+      });
+    }
+
+    const whereTime = timeQueryValues
+      .map((el) => `${el.name}${el.operator}$${el.pos}`)
+      .join(" and ");
+    const valuesTime = timeQueryValues.map((el) => el.value);
+    where = where + " and " + whereTime;
+    values = values.concat(valuesTime);
+  }
 
   const query = `SELECT * from scenario WHERE ${where}`;
   console.log(query);
@@ -66,13 +88,7 @@ exports.getScenariosBy = async function ({
   return rows;
 };
 
-exports.retrieveLatestScenarioID = async function (){
-  const query = "select currval('scenario_id_seq')";
-  const { rows } = await pool.query(query);
-  return rows[0].currval;
-}
-
-exports.createScenario = async function (
+const createScenario = async function (
   name,
   dueDate,
   description,
@@ -83,7 +99,8 @@ exports.createScenario = async function (
     throw new Error("Due date cannot be earlier than current time");
   }
 
-  const query = "INSERT INTO scenario VALUES(DEFAULT, $1, $2, $3, $4, $5)";
+  const query =
+    "INSERT INTO scenario VALUES(DEFAULT, $1, $2, $3, $4, $5) RETURNING *";
   const { rows } = await pool.query(query, [
     name,
     dueDate,
@@ -94,7 +111,7 @@ exports.createScenario = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updateScenario = async function (
+const updateScenario = async function (
   scenarioID,
   name,
   dueDate,
@@ -109,7 +126,7 @@ exports.updateScenario = async function (
   const query =
     "UPDATE scenario " +
     "SET name = $2 and due_date = $3 and description = $4 and status = $5 and additional_data = $6 " +
-    "WHERE id = $1";
+    "WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [
     scenarioID,
     name,
@@ -121,8 +138,18 @@ exports.updateScenario = async function (
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteScenario = async function (scenarioID) {
-  const query = "DELETE FROM scenario WHERE id = $1";
+const deleteScenario = async function (scenarioID) {
+  const query = "DELETE FROM scenario WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [scenarioID]);
   return rows.length > 0 ? rows[0] : null;
+};
+
+module.exports = {
+  isScenarioEditableByUser,
+  getScenariosByUserID,
+  getScenario,
+  getScenariosBy,
+  createScenario,
+  updateScenario,
+  deleteScenario,
 };

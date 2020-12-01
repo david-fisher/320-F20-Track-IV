@@ -1,12 +1,12 @@
 const pool = require("./pool");
 
-exports.getQuestion = async function (questionID) {
+const getQuestion = async function (questionID) {
   const query = "SELECT * FROM question WHERE id = $1";
   const { rows } = await pool.query(query, [questionID]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.getQuestionsBy = async function ({ mcqID = null }) {
+const getQuestionsBy = async function ({ mcqID = null }) {
   const queryValues = [];
   let argsPos = 1;
 
@@ -26,20 +26,27 @@ exports.getQuestionsBy = async function ({ mcqID = null }) {
   return rows;
 };
 
-exports.createQuestion = async function (mcqID, question) {
-  const query = "INSERT INTO question VALUES(DEFAULT, $1, $2)";
+const createQuestion = async function (mcqID, question) {
+  const query = "INSERT INTO question VALUES(DEFAULT, $1, $2) RETURNING *";
   const { rows } = await pool.query(query, [question, mcqID]); // watch out for order of values!
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.updateQuestion = async function (questionID, question) {
-  const query = "UPDATE question SET question = $2 WHERE id = $1";
+const updateQuestion = async function (questionID, question) {
+  const query = "UPDATE question SET question = $2 WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [questionID, question]);
   return rows.length > 0 ? rows[0] : null;
 };
 
-exports.deleteQuestion = async function (questionID) {
-  const query = "DELETE FROM question WHERE id = $1";
+const deleteQuestion = async function (questionID) {
+  const query = "DELETE FROM question WHERE id = $1 RETURNING *";
   const { rows } = await pool.query(query, [questionID]);
   return rows.length > 0 ? rows[0] : null;
+};
+module.exports = {
+  getQuestion,
+  getQuestionsBy,
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
 };

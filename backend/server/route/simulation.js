@@ -4,6 +4,7 @@ const db = require("../db");
 const { auth, headers } = require("../middleware");
 const { httpStatusCode } = require("../constant");
 const { createInvalidResponse } = require("../utils");
+const pages = require("./pages");
 
 router.post(
   "/create",
@@ -16,66 +17,161 @@ router.post(
       simulation_introduction,
     } = req.body;
 
-    // try {
+    let scenario;
+    try {
       const fortnightAway = new Date(Date.now() + 12096e5);
-      await db.createScenario(
+      scenario = await db.scenario.createScenario(
         simulation_title,
         fortnightAway,
         simulation_desc,
         "DRAFT",
         "<additional data>"
       );
-      const simulation_id = await db.retrieveLatestScenarioID();
-      await db.createIntroPage(simulation_id, simulation_introduction);
-      db.createConnectionOfScenarioAndCourse(simulation_id, 3); // TODO: 3 must be changed to real course id
+    } catch (error) {
+      res.status(httpStatusCode.failed.BAD_REQUEST);
+      return res.json(createInvalidResponse(error.message));
+    }
+
+    try {
+      await db.pageGroup.intro.createIntroPageGroup(
+        scenario.id,
+        simulation_introduction
+      );
+      db.partof.createConnectionOfScenarioAndCourse(scenario.id, 3); // TODO: 3 must be changed to real course id
 
       res.status(httpStatusCode.success.CREATED);
       res.json({
         success: true,
-        simulation_id: simulation_id,
+        simulation_id: scenario.id,
       });
+    } catch (error) {
+      res.status(httpStatusCode.failed.BAD_REQUEST);
+      res.json(createInvalidResponse(error.message));
+    }
   }
 );
 
-router.delete(
-  "/:simulation_id",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    /*
-    TODO: remove saved simulation
+router
+  .get(
+    "/:simulation_id",
+    headers.areHeadersValid,
+    auth.isAuthenticated,
+    async (req, res) => {
+      const { simulation_id: scenarioID } = req.params;
+      try {
+        const scenario = await db.scenario.getScenario(scenarioID);
+        res.status(httpStatusCode.success.OK);
+        res.json({
+          simulation: scenario,
+        });
+      } catch (error) {
+        res.status(httpStatusCode.failed.NOT_FOUND);
+        res.json(createInvalidResponse(error.message));
+      }
+    }
+  )
+  .put(
+    "/:simulation_id",
+    headers.areHeadersValid,
+    auth.isAuthenticated,
+    async (req, res) => {
+      const { simulation_id: scenarioID } = req.params;
+      let name, dueDate, description, status, additionalData;
+      try {
+        name = req.body.name || null;
+        dueDate = req.body.due_date || null;
+        description = req.body.description || null;
+        status = req.body.status || null;
+        additionalData = req.body.additionalData || null;
+      } catch (error) {
+        res.status(httpStatusCode.failed.BAD_REQUEST);
+        return res.json(createInvalidResponse(error.message));
+      }
 
-    - path parameter
-    * simulation_id: UID of simulation to be removed.
-  */
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
+      let scenario;
+      try {
+        scenario = await db.scenario.getScenario(scenarioID);
+      } catch (error) {
+        res.status(httpStatusCode.failed.NOT_FOUND);
+        return res.json(createInvalidResponse(error.message));
+      }
+
+      try {
+        name = name || scenario.name;
+        dueDate = dueDate || scenario.due_date;
+        description = description || scenario.description;
+        status = status || scenario.status;
+        additionalData = additionalData || scenario.additional_data;
+        await db.scenario.updateScenario(
+          scenarioID,
+          name,
+          dueDate,
+          description,
+          status,
+          additionalData
+        );
+        res.status(httpStatusCode.success.UPDATED);
+        res.json({
+          success: true,
+        });
+      } catch (error) {
+        res.status(httpStatusCode.failed.BAD_REQUEST);
+        res.json(createInvalidResponse(error.message));
+      }
+    }
+  )
+  .delete(
+    "/:simulation_id",
+    headers.areHeadersValid,
+    auth.isAuthenticated,
+    async (req, res) => {
+      const { simulation_id: scenarioID } = req.params;
+
+      try {
+        await db.scenario.deleteScenario(scenarioID);
+        res.status(httpStatusCode.success.DELETED);
+        res.json({
+          success: true,
+        });
+      } catch (error) {
+        res.status(httpStatusCode.failed.NOT_FOUND);
+        res.json(createInvalidResponse(error.message));
+      }
+    }
+  );
 
 router.post(
   "/:simulation_id/start",
   headers.areHeadersValid,
   auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    const { available_to } = req.body;
-    /*
-    TODO: start and open a simulation
+  async (req, res) => {
+    const { simulation_id: scenarioID } = req.params;
 
-    - path parameter
-    * simulation_id: UID of simulation to be opened.
+    let scenario;
+    try {
+      scenario = await db.scenario.getScenario(scenarioID);
+    } catch (error) {
+      res.status(httpStatusCode.failed.NOT_FOUND);
+      return res.json(createInvalidResponse(error.message));
+    }
 
-    - request body
-    * available_to: UID of students who can access the simulation.
-  */
-    res.status(202);
-    res.json({
-      success: true,
-    });
+    try {
+      await db.scenario.updateScenario(
+        scenarioID,
+        scenario.name,
+        scenario.dueDate,
+        scenario.description,
+        "PUBLISHED",
+        scenario.additionalData
+      );
+      res.status(httpStatusCode.success.UPDATED);
+      res.json({
+        success: true,
+      });
+    } catch (error) {
+      res.status(httpStatusCode.failed.BAD_REQUEST);
+      res.json(createInvalidResponse(error.message));
+    }
   }
 );
 
@@ -83,249 +179,37 @@ router.post(
   "/:simulation_id/close",
   headers.areHeadersValid,
   auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    /*
-    TODO: close a simulation
-
-    - path parameter
-    * simulation_id: UID of simulation to be closed.
-  */
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
-
-router.get(
-  "/:simulation_id/description",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
   async (req, res) => {
-    const ERROR_CODE = 50650;
+    const { simulation_id: scenarioID } = req.params;
+    let scenario;
+
     try {
-      const description = db.getScenarioDescription(req.params.simulation_id);
-      res.status(httpStatusCode.success.OK);
-      res.json({
-        description: description,
-      });
+      scenario = await db.scenario.getScenario(scenarioID);
     } catch (error) {
       res.status(httpStatusCode.failed.NOT_FOUND);
-      res.json(createInvalidResponse(error.message));
+      return res.json(createInvalidResponse(error.message));
     }
-  }
-);
 
-router.put(
-  "/:simulation_id/description",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  async (req, res) => {
     try {
-      db.setScenarioDescription(req.params.simulation_id, req.body.description);
+      await db.scenario.updateScenario(
+        scenarioID,
+        scenario.name,
+        scenario.dueDate,
+        scenario.description,
+        "CLOSED",
+        scenario.additionalData
+      );
       res.status(httpStatusCode.success.UPDATED);
       res.json({
-        description: req.body.description,
+        success: true,
       });
     } catch (error) {
-      res.status(httpStatusCode.failed.NOT_FOUND);
+      res.status(httpStatusCode.failed.BAD_REQUEST);
       res.json(createInvalidResponse(error.message));
     }
   }
 );
 
-router.get(
-  "/:simulation_id/introduction",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    try {
-      const introduction = db.getSimulationIntroduction(
-        req.params.simulation_id
-      );
-      res.status(httpStatusCode.success.OK);
-      res.json({
-        summary: introduction,
-      });
-    } catch (error) {
-      res.status(httpStatusCode.failed.NOT_FOUND);
-      res.json(createInvalidResponse(error.message));
-    }
-  }
-);
-
-router.put(
-  "/:simulation_id/introduction",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    try {
-      const introduction = db.getSimulationIntroductionByID(
-        req.params.simulation_id
-      );
-      res.status(httpStatusCode.success.OK);
-      res.json({
-        summary: introduction,
-      });
-    } catch (error) {
-      res.status(httpStatusCode.failed.NOT_FOUND);
-      res.json(createInvalidResponse(error.message));
-    }
-  }
-);
-
-router.put(
-  "/:simulation_id/initial-reflection",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    const { description, questions } = req.body;
-
-    /*
-    TODO: Add or update `initial-reflection` part of simulation
-
-    - path variable:
-    * simulation_id: UID of simuluation whose `initial-reflection` is updated.
-
-    - request body:
-    * description: content of `initial-reflection`
-    * questions: list of questions
-  */
-
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
-router.put(
-  "/:simulation_id/initial-action",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    const { description, choices } = req.body;
-
-    /*
-    TODO: Add or update `initial-action` part of simulation
-
-    - path variable:
-    * simulation_id: UID of simuluation whose `initial-action` is updated.
-
-    - request body:
-    * description: content of `initial-action`
-    * choices: list of choices
-  */
-
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
-
-router.put(
-  "/:simulation_id/stakeholders/description",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    const { description } = req.body;
-
-    /*
-    TODO: Add or update a summary for all of the stakeholders
-
-    - path variable:
-    * simulation_id: UID of simuluation whose a summary for all of the stakeholders is updated.
-
-    - request body:
-    * description: content of a summary for all of the stakeholders
-  */
-
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
-router.put(
-  "/:simulation_id/stakeholders",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    const { name, description, conversation_text } = req.body;
-
-    /*
-    TODO: Add or update `stakeholder-list` part of simulation
-
-    - path variable:
-    * simulation_id: UID of simuluation where a stakeholder is added or updated
-
-    - request body:
-    * name: name of a stakeholder
-    * description: short description of a new stakeholder
-    * conversation_text: content of conversation with a new stakeholder
-  */
-
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
-
-router.put(
-  "/:simulation_id/additional-reflection",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    const { description, questions } = req.body;
-
-    /*
-    TODO: Add or update `additional-reflection` part of simulation
-
-    - path variable:
-    * simulation_id: UID of simuluation whose `additional-reflection` is updated.
-
-    - request body:
-    * description: content of `additional-reflection`
-    * questions: list of questions
-  */
-
-  res.status(202);
-  res.json({
-    success: true,
-  });
-});
-
-router.put(
-  "/:simulation_id/final-action",
-  headers.areHeadersValid,
-  auth.isAuthenticated,
-  (req, res) => {
-    const { simulation_id } = req.params;
-    const { description, choices } = req.body;
-
-    /*
-    TODO: Add or update `final-action` part of simulation
-
-    - path variable:
-    * simulation_id: UID of simuluation whose `final-action` is updated.
-
-    - request body:
-    * description: content of `final-action`
-    * choices: list of choices
-  */
-
-    res.status(202);
-    res.json({
-      success: true,
-    });
-  }
-);
+router.use("/:simulation_id", pages);
 
 module.exports = router;
