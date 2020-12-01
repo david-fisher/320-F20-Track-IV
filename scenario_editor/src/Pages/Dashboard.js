@@ -69,10 +69,10 @@ async function getScenariosFromServer() {
     const response = universalFetch('/api/v1/dashboard', headers)
 
     // Attempt to change the state in the store to the response from the universal API call
-    this.props.dispatch({
-        type: 'LOAD_SCENARIOS',
-        payload: { response }
-    });
+    // this.props.dispatch({
+    //     type: 'LOAD_SCENARIOS',
+    //     payload: { response }
+    // });
 
     console.log("THIS IS THE RESPONSE " + response)
     return response

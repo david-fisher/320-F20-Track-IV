@@ -30,7 +30,7 @@ function NewScenario(props) {
       "status": status,
     }
     props.dispatch({
-      type: 'ADD_SCENARIO',
+      type: 'UPDATE_SCENARIO',
       payload: { ...createdScenario }
     });
   }
@@ -48,11 +48,13 @@ function NewScenario(props) {
     // 'init_action': ''
   }
 
+  // Might be useful later when editing scenarios, passing the ID and other stuff along as props, etc.
+  // const [scenarioID, setScenarioID] = useState();
+
   const [name, setName] = useState(newScenario.name);
   const [description, setDescription] = useState(newScenario.description);
   const [additionalData, setAdditionalData] = useState(newScenario.additional_data);
   const [status, setStatus] = useState(newScenario.status);
-  const onChangeName = event => setName(event.target.value);
   const [selectedDate, setSelectedDate] = useState(newScenario.due_date);
 
   const handleDateChange = (date) => {
