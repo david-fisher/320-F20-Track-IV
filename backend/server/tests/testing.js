@@ -21,19 +21,99 @@ describe('API tests for simulation introduction', () => {
   });
 });
 
-describe('API tests for simulation description', () => {
-    describe('### GET /:simulation_id/description', () => {
-      it('should get description of the simulation', (done) => {
-          chai.request(server)
-              .get('/:simulation_id/description')
-              .end((err, res) => {
-                      res.should.have.status(202)
-                      res.body.should.be.a('object');
-                      res.body.should.have.property('description')
-                  done();
-              });
-      });
+describe('API tests for simulation ID', () => {
+  describe('### GET /:simulation_id', () => {
+    it('should get simulation id', (done) => {
+        chai.request(server)
+            .get('/:simulation_id')
+            .end((err, res) => {
+                    res.should.have.status(202)
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('simulation')
+                done();
+            });
     });
   });
+});
 
-  
+describe('API tests for simulation description', () => {
+  describe('### GET /:simulation_id/description', () => {
+    it('should get description of the simulation', (done) => {
+        chai.request(server)
+            .get('/:simulation_id/description')
+            .end((err, res) => {
+                    res.should.have.status(202)
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                done();
+            });
+    });
+  });
+});
+
+describe('API tests for simulation ID', () => {
+  describe('### GET /:simulation_id', () => {
+    it('should get simulation id', (done) => {
+        chai.request(server)
+            .get('/:simulation_id')
+            .end((err, res) => {
+                    res.should.have.status(202)
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('simulation')
+                done();
+            });
+    });
+  });
+});
+
+describe('API tests for simulation inital action', () => {
+  describe('### GET /:simulation_id/initial-action', () => {
+    it('initial action', (done) => {
+        chai.request(server)
+            .get('/:simulation_id/initial-action')
+            .end((err, res) => {
+                    res.should.have.status(202)
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('initialActionPageGroup');
+                    res.body.initialActionPageGroup.should.have.property('CONV').eql(null);
+                done();
+            });
+    });
+  });
+});
+
+describe('API tests for simulation inital reflection', () => {
+  describe('### GET /:simulation_id/initial-reflection', () => {
+    it('initial reflection', (done) => {
+        chai.request(server)
+            .get('/:simulation_id/initial-reflection')
+            .end((err, res) => {
+                    res.should.have.status(202)
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('initialReflectionPageGroup');
+                    res.body.initialReflectionPageGroup.should.have.property('CONV').eql(null);
+                    res.body.initialReflectionPageGroup.should.have.property('MCQ').eql(null);
+                done();
+            });
+    });
+  });
+});
+
+describe('API tests for simulation final action', () => {
+  describe('### GET /:simulation_id/final-action', () => {
+    it('final action', (done) => {
+        chai.request(server)
+            .get('/:simulation_id/final-action')
+            .end((err, res) => {
+                    res.should.have.status(202)
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('finalActionPageGroup');
+                    res.body.finalActionPageGroup.should.have.property('CONV').eql(null);
+                done();
+            });
+    });
+  });
+});
