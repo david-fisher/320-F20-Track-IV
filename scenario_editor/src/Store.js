@@ -57,6 +57,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         token: action.token
       }
+    case 'ADD_INTRO':
+      return state = {
+        ...state,
+        scenarios: state.scenarios.concat(action.payload)
+      }
     default:
       return state
 

@@ -19,17 +19,17 @@ const useStyles = makeStyles((theme) => ({
 export default function ScenarioCard(props) {
   const classes = useStyles();
   const { data } = props;
-  const { id, name, due_date, description, additional_data, status } = data;
+  const { scenarioID, name, due_date, description, additional_data, status } = data;
 
   return (
     <Grid
-      key={id}
+      key={scenarioID}
       item
       xs
     >
       <Card raised='true' className={classes.root}>
         <CardActionArea component={Link} to={{
-          pathname: "/editor/" + data.id,
+          pathname: "/new-scenario/" + data.scenarioID,
           scenarioData: data
         }}>
           <CardContent>
@@ -45,7 +45,7 @@ export default function ScenarioCard(props) {
           {/* THIS SENDS THE DATA FROM THE PROPER SCENARIO TO THE INTRO-HUB. SAME GOES WITH RESULTS.
           MAKE SURE THAT THE DATA IS PROPERLY HANDLED / PASSED DOWN IN THE FUTURE PAGES. */}
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/introduction-hub/" + data.id,
+            pathname: "/introduction-hub/" + data.scenarioID,
             scenarioData: data
           }}>
             Edit
@@ -55,7 +55,7 @@ export default function ScenarioCard(props) {
           </Button>
 
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/data/" + data.id,
+            pathname: "/data/" + data.scenarioID,
             scenarioData: data
           }}>
             Data

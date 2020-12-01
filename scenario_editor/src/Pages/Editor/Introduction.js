@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 class Introduction extends Component {
 
   // const classes = useStyles();

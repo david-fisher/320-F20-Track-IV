@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import NavDashboard from '../Components/NavDashboard';
 import axios from 'axios';
 import universalFetch from '../Components/Calls2'
+import Button from '@material-ui/core/Button';
+import { Link, useHistory } from 'react-router-dom';
 
 
 
@@ -103,7 +105,7 @@ class ScenarioGrid extends Component {
         if (!this.scenarios) {
             return;
         }
-        getScenariosFromServer();
+        // getScenariosFromServer();
         let draftScenarios = this.scenarios.drafts;
         let closedScenarios = this.scenarios.closed;
         let openScenarios = this.scenarios.open;
@@ -198,7 +200,7 @@ class ScenarioGrid extends Component {
                 }}>
                     <Typography variant="h4">
                         Closed Scenarios:
-              </Typography>
+                    </Typography>
                     <Grid
                         style={{
                             justify: 'flex-start',
@@ -213,8 +215,17 @@ class ScenarioGrid extends Component {
                         {/* Same as draftScenarios above */}
                         {closedScenarios}
                     </Grid>
+
                 </div>
+                {/* <div>
+                    <Button variant="contained" color="primary" aria-label="contained primary button group">
+                        <Link to="/new-scenario">
+                            Create a New Scenario
+                        </Link>
+                    </Button>{' '}
+                </div> */}
             </Container>
+
         );
     }
 }
@@ -255,6 +266,7 @@ class Dashboard extends Component {
                 <Nav />
 
                 <ScenarioGrid scenarios={this.state.data} />
+
 
             </div>
         )
