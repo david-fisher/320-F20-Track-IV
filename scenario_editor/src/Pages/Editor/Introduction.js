@@ -88,7 +88,7 @@ function Introduction(props) {
       </b2>
       <b2 className="second-body">
         <div>
-          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={handleBodyChange} >SAVE</Button>
+          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addIntroduction} >SAVE</Button>
         </div>
         <div>
           <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
