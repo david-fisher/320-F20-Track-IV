@@ -83,6 +83,23 @@ describe('API tests for simulation inital action', () => {
   });
 });
 
+describe('API tests for simulation final action', () => {
+  describe('### GET /:simulation_id/final-action', () => {
+    it('final action', (done) => {
+        chai.request(server)
+            .get('/:simulation_id/final-action')
+            .end((err, res) => {
+                    res.should.have.status(202)
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('finalActionPageGroup');
+                    res.body.finalActionPageGroup.should.have.property('CONV').eql(null);
+                done();
+            });
+    });
+  });
+});
+
 describe('API tests for simulation inital reflection', () => {
   describe('### GET /:simulation_id/initial-reflection', () => {
     it('initial reflection', (done) => {
@@ -95,23 +112,6 @@ describe('API tests for simulation inital reflection', () => {
                     res.body.should.have.property('initialReflectionPageGroup');
                     res.body.initialReflectionPageGroup.should.have.property('CONV').eql(null);
                     res.body.initialReflectionPageGroup.should.have.property('MCQ').eql(null);
-                done();
-            });
-    });
-  });
-});
-
-describe('API tests for simulation final action', () => {
-  describe('### GET /:simulation_id/final-action', () => {
-    it('final action', (done) => {
-        chai.request(server)
-            .get('/:simulation_id/final-action')
-            .end((err, res) => {
-                    res.should.have.status(202)
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('success').eql(true);
-                    res.body.should.have.property('finalActionPageGroup');
-                    res.body.finalActionPageGroup.should.have.property('CONV').eql(null);
                 done();
             });
     });
