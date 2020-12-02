@@ -1,16 +1,19 @@
 import React from 'react';
 //import '../Components/Components.css'
 import Nav from '../../Components/Nav'
+
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Matrix from './Matrix'
 
+
 const Stakeholders = () => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
+
       margin: theme.spacing(1),
       marginTop: theme.spacing(4),
       marginLeft: theme.spacing(4),
@@ -42,3 +45,4 @@ const Stakeholders = () => {
   );
 };
 export default Stakeholders;
+
