@@ -36,7 +36,7 @@ function FinalReflection(props) {
 
   const middleReflectionNew = {
     "type": 'MiddleReflection',
-    "order": 6,
+    "order": 7,
     "body_text": " ",
   }
 

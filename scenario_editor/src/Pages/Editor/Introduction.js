@@ -55,7 +55,7 @@ function Introduction(props) {
 
   const introNew = {
     "type": 'Introduction',
-    "order": 0,
+    "order": 1,
     "body_text": " ",
   }
 

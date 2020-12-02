@@ -10,6 +10,12 @@ import Container from '@material-ui/core/Container';
 import axios from 'axios';
 
 
+// POST /api/v1/auth/login/callback
+// The HTTP header is Authentication: bearer [token]
+// Any endpoint that needs authentication needs this header
+
+
+
 function Login() {
   return (
     <div>

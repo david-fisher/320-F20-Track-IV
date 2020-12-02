@@ -36,7 +36,7 @@ function Reflections(props) {
 
   const initialReflectionNew = {
     "type": 'InitialReflection',
-    "order": 2,
+    "order": 3,
     "body_text": " ",
   }
 

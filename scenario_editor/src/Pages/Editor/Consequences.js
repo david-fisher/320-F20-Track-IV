@@ -48,10 +48,11 @@ function Consequences(props) {
     });
   }
 
-  // Need to double check on page ordering...
+  // Need to double check on page ordering... there is a conclusions page, not sure 
+  // where Consequences fits into this yet...
   const consequencesNew = {
     "type": 'Consequences',
-    "order": 11,
+    "order": 12,
     "body_text": " ",
   }
 

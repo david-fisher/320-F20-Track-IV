@@ -53,11 +53,10 @@ export default function App() {
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/new-scenario" component={NewScenario} />
-          <Route path="/introduction-hub" component={IntroductionHub} />
-          {/* Attempt at learning to send props through routes and such */}
-          <Route path="/introduction-text" render={(props) => (
-            <Introduction {...props} />
-          )} />
+          <Route path="/introduction-hub" render={(props) => (
+            <IntroductionHub {...props} />)} />
+          {/* Attempt at learning to send props through routes and such if needed */}
+          <Route path="/introduction-text" component={Introduction} />
           <Route path="/task-assignment" component={TaskAssignment} />
           <Route path="/continue-prompt" component={ContinuePrompt} />
           <Route path="/player-responses" component={PlayerResponses} />

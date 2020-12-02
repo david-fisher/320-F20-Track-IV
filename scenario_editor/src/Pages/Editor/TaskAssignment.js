@@ -53,7 +53,7 @@ function TaskAssignment(props) {
   const taskNew =
   {
     "type": 'Task_Assignment',
-    "order": 1,
+    "order": 2,
     "body_text": " ",
   }
 
