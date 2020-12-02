@@ -39,7 +39,7 @@ exports.isNotAuthenticated = (req, res, next) => {
 
   const token = req.headers.authorization.split(" ")[1];
   try {
-    req.user = jwt.verify(token+"d", process.env.JWT_SECRET);
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
     const msg = "The user already has valid token.";
     res.status(httpStatusCode.failed.UNAUTHORIZED);
     res.json(createInvalidResponse(msg));
