@@ -1,53 +1,86 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
+import scenarioReducer from './Reducers/scenarioReducer';
+import pagesReducer from './Reducers/pagesReducer';
 
-const initialState = {
-  // posts: [{ id: 1, title: 'This is the first post' }, { id: 2, title: 'second post', intro: "ff" }],
-
-  // // Testing out a potential scenario structure. Going to try not to over think it.
-  // // Notes:
-  // // I think this can create an initial one with empty values.
-  // // Do we even need anything here? Maybe we can "add" values to the individual object?
-  // // Lowkey might need to just preset the scenario data as empty at first. Then update from there.
-  // scenarios: [{ id: 0, title: '', description: '' }],
-  // scenario: [{ id: 0, title: '', description: '' }],
-
-  // // This came with the tutorial I followed, idk what it is tho
-  // loginModal: {
-  //   open: false
-  // }
-  // posts: [{id: 1, title: 'This is the first post'}, {id: 2, title: 'second post', intro: "ff"}],
-
-  scenarios: [{ id: 1, title: '', intro: '' }]
-
-  // GET from databse, map return arr to id, title, intro, etc
-
-  // loginModal: {
-  //   open: false
-  // }
-}
-
-const reducer = (state = initialState, action) => {
-
-  switch (action.type) {
-    case 'ADD_SCENARIO':
-      return Object.assign({}, state, {
-        scenarios: state.scenarios.concat(action.payload)
-      })
-    case 'SET_TOKEN':
-      return state = {
-        ...state,
-        token: action.token
-      }
-    default:
-      return state
-
-  }
-
-  return state
-}
+// combining two reducers into a single reducer
+const reducer = combineReducers({
+  scenarioData: scenarioReducer,
+  pages: pagesReducer
+})
 
 const store = createStore(reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ &&
   window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store
+
+// {theDefaultReducer : 0, firstNamedReducer : 1, secondNamedReducer : 2}
+
+// import { createStore } from 'redux'
+// import universalFetch from '../src/Components/Calls2'
+
+// const initialState = {
+
+//   // Would it make sense to put an axios call here that retrieves the states from the api/dashboard?
+//   // scenarios: getScenariosFromServer() || {"id": 1}
+
+//   scenario:
+//   {
+//     "id": 0,
+//     "name": 'title1',
+//     "due_date": '12-12-2020',
+//     "description": 'desc',
+//     "additional_data": "",
+//     "status": 'DRAFT',
+//     pages: [
+//       {
+//         "type": 'Introduction',
+//         "order": 0,
+//         "body_text": "",
+//       }
+
+//     ]
+
+//   }
+
+// }
+
+
+
+
+// const reducer = (state = initialState, action) => {
+
+//   switch (action.type) {
+//     // case 'LOAD_SCENARIOS':
+//     //   return action.payload
+//     case 'UPDATE_SCENARIO':
+//       return state = {
+//         ...state,
+//         scenario: action.payload
+//       }
+//     case 'SET_TOKEN':
+//       return state = {
+//         ...state,
+//         token: action.token
+//       }
+    // case 'ADD_INTRODUCTION':
+    //   return state = {
+    //     ...state,
+    //     scenario: state.scenario.pages.concat(action.payload)
+    //     // scenarios: state.scenarios.concat(action.payload)
+    //   }
+    // default:
+    //   return state
+
+//   }
+
+//   return state
+// }
+
+// const store = createStore(reducer,
+  // window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  // window.__REDUX_DEVTOOLS_EXTENSION__())
+
+// export default store
+
+
