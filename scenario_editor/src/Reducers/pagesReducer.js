@@ -3,11 +3,6 @@ const initialPages =
 
 const pagesReducer = (state = initialPages, action) => {
 
-
-    // Let page = State.filter(item => item.type === currentType);
-    // If page is undefined
-    // Doesn’t exist
-    // Otherwise, update page
     switch (action.type) {
 
         // Currently allows only ONE of each page to be added. 

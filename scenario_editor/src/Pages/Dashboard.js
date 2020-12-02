@@ -232,30 +232,9 @@ class ScenarioGrid extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return { scenarios: state.scenarios, token: state.token }
-}
 
-const mapDispatchToProps = dispatch => {
-    return {
-        dispatch
-    }
-}
 
-function Dashboard() {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { data: null }
-    // }
-    // async componentDidMount() {
-    //     const headers = {
-    //         'Authorization': `Bearer ${this.props.token}`,
-    //         'Accept': 'application/json'
-    //     }
-    //     let res = await axios.get(`/api/v1/dashboard`, { headers: headers });
-    //     // debugger;
-    //     this.setState({ data: res.data });
-    // }
+function Dashboard(props) {
 
     // const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
     //     loading: false,
@@ -299,6 +278,15 @@ function Dashboard() {
     )
 }
 
+const mapStateToProps = state => {
+    return { scenarios: state.scenarios, token: state.token }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
