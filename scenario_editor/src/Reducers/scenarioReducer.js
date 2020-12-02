@@ -26,8 +26,6 @@ const scenarioReducer = (state = initialScenario, action) => {
         default:
             return state
     }
-
-
 }
 
 export default scenarioReducer

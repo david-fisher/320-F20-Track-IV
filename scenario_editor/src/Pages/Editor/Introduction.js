@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Introduction(props) {
 
+  console.log("PROPS IN INTRODUCTION: " + props.items)
 
   // Look into custom hooks for fetching and setResponse
 
@@ -150,7 +151,6 @@ function Introduction(props) {
               ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
             ],
             placeholder: "Insert your introduction text here..."
-
           }} />
 
         </b2>
@@ -278,7 +278,8 @@ function Introduction(props) {
 // }
 
 const mapStateToProps = state => {
-  return { scenarios: state.scenarios, token: state.token }
+  // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
+  return { scenario: state.scenario, token: state.token }
 }
 
 const mapDispatchToProps = dispatch => {
