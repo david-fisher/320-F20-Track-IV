@@ -82,7 +82,7 @@ function TaskAssignment(props) {
       <b2 className="text-editor">
 
         <SunEditor name="my-editor" setOptions={{
-          height: 600,
+          height: 250,
           width: '100%',
           //maxWidth: '1000px',
           buttonList: [
