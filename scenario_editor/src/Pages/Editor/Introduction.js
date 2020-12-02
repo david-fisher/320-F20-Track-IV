@@ -54,12 +54,14 @@ function Introduction(props) {
   }
 
   const introNew = {
-    "type": 'Introduction',
+    "name": 'Introduction',
+    "type": 'PLAIN',
     "order": 1,
     "body_text": " ",
   }
 
   const [type, setType] = useState(introNew.type);
+  const [name , setName] = useState(introNew.name);
   const [order, setOrder] = useState(introNew.order);
   const [bodyText, setBodyText] = useState(introNew.body_text);
 

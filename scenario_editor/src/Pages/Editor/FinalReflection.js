@@ -35,7 +35,8 @@ function FinalReflection(props) {
   const classes = useStyles();
 
   const finalReflectionNew = {
-    "type": 'FinalReflection',
+    "name": 'FinalReflection',
+    "type": 'PLAIN',
     "order": 11,
     "body_text": " ",
   }
@@ -53,6 +54,7 @@ function FinalReflection(props) {
   }
 
   const [type, setType] = useState(finalReflectionNew.type);
+  const [name, setName] = useState(finalReflectionNew.name);
   const [order, setOrder] = useState(finalReflectionNew.order);
   const [bodyText, setBodyText] = useState(finalReflectionNew.body_text);
 

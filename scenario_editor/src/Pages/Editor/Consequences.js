@@ -51,12 +51,14 @@ function Consequences(props) {
   // Need to double check on page ordering... there is a conclusions page, not sure 
   // where Consequences fits into this yet...
   const consequencesNew = {
-    "type": 'Consequences',
+    "name": 'Consequences',
+    "type": 'PLAIN',
     "order": 12,
     "body_text": " ",
   }
 
   const [type, setType] = useState(consequencesNew.type);
+  const [name, setName] = useState(consequencesNew.name);
   const [order, setOrder] = useState(consequencesNew.order);
   const [bodyText, setBodyText] = useState(consequencesNew.body_text);
 

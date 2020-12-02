@@ -35,7 +35,8 @@ function Reflections(props) {
   const classes = useStyles();
 
   const initialReflectionNew = {
-    "type": 'InitialReflection',
+    "name": 'InitialReflection',
+    "type": 'PLAIN',
     "order": 3,
     "body_text": " ",
   }
@@ -53,6 +54,7 @@ function Reflections(props) {
   }
 
   const [type, setType] = useState(initialReflectionNew.type);
+  const [name, setName] = useState(initialReflectionNew.name);
   const [order, setOrder] = useState(initialReflectionNew.order);
   const [bodyText, setBodyText] = useState(initialReflectionNew.body_text);
 
