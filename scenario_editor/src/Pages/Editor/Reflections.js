@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './PlayerResponses.css';
 import Nav from '../../Components/Nav'
 import Button from '@material-ui/core/Button';
@@ -11,57 +11,64 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import './Introduction.css';
 
+const useStyles = makeStyles((theme) => ({
 
-const useStateWithLocalStorage = localStorageKey => {
-  const [initialReflection, setInitialReflection] = React.useState(
-    localStorage.getItem(localStorageKey) || ''
-  );
+  multiText: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+  header: {
+    margin: theme.spacing(4)
+  },
+  root: {
+    margin: theme.spacing(1),
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    width: '100ch',
+  },
+}));
 
-  React.useEffect(() => {
-    localStorage.setItem(localStorageKey, initialReflection);
-  }, [initialReflection]);
+function Reflections(props) {
 
-  return [initialReflection, setInitialReflection];
-};
+  const classes = useStyles();
 
-class Reflections extends Component {
-
-  // const classes = useStyles();
-  constructor() {
-    super()
-    this.state = {
-      scenarioID: 3,
-      initial_reflection: localStorage.getItem("RS_SCENARIO__initialReflection"),
-    }
-
-    this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
-
+  const initialReflectionNew = {
+    "type": 'InitialReflection',
+    "order": 2,
+    "body_text": " ",
   }
-  handleEditorSubmit(event) {
-    // alert("Initial Reflection has been submitted")
-    const headers = {
-      'Authorization': `Bearer ${this.props.token}`,
-      'Accept': 'application/json'
+
+  function addReflection() {
+    const initialReflectionComplete = {
+      "type": type,
+      "order": order,
+      "body_text": bodyText,
     }
-    event.preventDefault();
-    // I THINK THIS IS HOW TO MAKE CALLS TO A PARTICULAR ID LETS GOOOO
-    axios.post('api/v1/simulation/' + this.state.scenarioID + '/initial-reflection', {
-      simulation_title: this.state.initial_reflection,
-    }, { headers: headers }).then(res => {
-      // debugger;
-      alert(`Simulation ID: ${res.data.simulation_id}`)
+    props.dispatch({
+      type: 'ADD_INITIAL_REFLECTION',
+      payload: { ...initialReflectionComplete }
     });
   }
 
+  const [type, setType] = useState(initialReflectionNew.type);
+  const [order, setOrder] = useState(initialReflectionNew.order);
+  const [bodyText, setBodyText] = useState(initialReflectionNew.body_text);
 
-  render() {
-    return (
-      <div >
-        <Nav />
+  const handleBodyChange = (body) => {
+    setBodyText(body);
+    console.log(bodyText);
+  };
 
+
+  return (
+    <div >
+      <Nav />
+      <div className={classes.root}>
         <div >
           <div>
-            <h1>Reflections</h1>
+            <h1>Initial Reflection</h1>
             <b1>
               Please choose the reflection to create below:
         </b1>
@@ -77,27 +84,35 @@ class Reflections extends Component {
 
         <div >
           <b2 className='text-editor'>
-            <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
-              height: 600,
+            <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
+              height: 250,
               width: '100%',
               //maxWidth: '1000px',
-              buttonList: buttonList.complex,
-              placeholder: "Insert your initial reflection summary here..."
+              buttonList: [
+                ['undo', 'redo'],
+                ['font', 'fontSize', 'formatBlock'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                '/', // Line break
+                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
+              ],
+              placeholder: "Insert your initial reflection text here..."
 
             }} />
 
           </b2>
           <b2>
-            <div className="second-body">
-              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
+            <div>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addReflection} >SAVE</Button>
             </div>
           </b2>
 
         </div>
       </div>
+    </div>
 
-    );
-  }
+  );
+
 }
 
 
