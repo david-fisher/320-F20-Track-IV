@@ -2,8 +2,6 @@ import React, { Component, useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import './Introduction.css';
 import Nav from '../../Components/Nav';
-// import React, { Component } from 'react';
-//import './Home.css';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -38,6 +36,34 @@ function Consequences(props) {
 
   const classes = useStyles();
 
+  function addConsequences() {
+    const consequencesComplete = {
+      "type": type,
+      "order": order,
+      "body_text": bodyText,
+    }
+    props.dispatch({
+      type: 'ADD_CONSEQUENCES',
+      payload: { ...consequencesComplete }
+    });
+  }
+
+  // Need to double check on page ordering...
+  const consequencesNew = {
+    "type": 'Consequences',
+    "order": 11,
+    "body_text": " ",
+  }
+
+  const [type, setType] = useState(consequencesNew.type);
+  const [order, setOrder] = useState(consequencesNew.order);
+  const [bodyText, setBodyText] = useState(consequencesNew.body_text);
+
+  const handleBodyChange = (body) => {
+    setBodyText(body);
+    console.log(bodyText);
+  };
+
   return (
     <div>
       <Nav />
@@ -46,14 +72,13 @@ function Consequences(props) {
           <h1>Consequences Page</h1>
         </div>
 
-        <b1 className="introduction-part">
+        <b1>
           Add/Edit Your Consequences Below:
         </b1>
         <div></div>
         <b2 className="text-editor">
-
-          <SunEditor name="my-editor" setOptions={{
-            height: 600,
+          <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
+            height: 250,
             width: '100%',
             //maxWidth: '1000px',
             buttonList: [
@@ -64,17 +89,17 @@ function Consequences(props) {
               ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
               ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
             ],
-            placeholder: "Insert your consequences here..."
-
+            placeholder: "Insert the consequences text here..."
           }} />
 
         </b2>
         <b2 className="second-body" >
           <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" >SAVE</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addConsequences} >SAVE</Button>
           </div>
           <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/dashboard">NEXT</Button>
+            {/* WILL LIKELY NEED TO MAKE THIS LEAD TO SOME FINAL "CREATE" PAGE */}
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
           </div>
           <div>
 
