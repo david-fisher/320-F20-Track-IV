@@ -36,34 +36,33 @@ const useStyles = makeStyles((theme) => ({
 
 function TaskAssignment(props) {
 
-  function addIntroduction() {
-    const introComplete = {
+  function addTaskAssignment() {
+    const taskComplete = {
       "type": type,
       "order": order,
       "body_text": bodyText,
     }
     props.dispatch({
-      type: 'ADD_INTRODUCTION',
-      payload: { ...introComplete }
+      type: 'ADD_TASK_ASSIGNMENT',
+      payload: { ...taskComplete }
     });
   }
 
-  const introNew = {
-    "type": 'Introduction',
-    "order": 0,
+  const taskNew =
+  {
+    "type": 'Task_Assignment',
+    "order": 1,
     "body_text": " ",
   }
 
-  const [type, setType] = useState(introNew.type);
-  const [order, setOrder] = useState(introNew.order);
-  const [bodyText, setBodyText] = useState(introNew.body_text);
+  const [type, setType] = useState(taskNew.type);
+  const [order, setOrder] = useState(taskNew.order);
+  const [bodyText, setBodyText] = useState(taskNew.body_text);
 
   const handleBodyChange = (body) => {
     setBodyText(body);
     console.log(bodyText);
   };
-
-
 
 
   return (
@@ -74,14 +73,14 @@ function TaskAssignment(props) {
           <h1>Project Task Assignment</h1>
         </div>
 
-        <b1 className="introduction-part">
+        <b1 >
           Add/Edit Your Task Assignment Below:
         </b1>
       </div>
       <div></div>
       <b2 className="text-editor">
 
-        <SunEditor name="my-editor" setOptions={{
+        <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
           height: 250,
           width: '100%',
           //maxWidth: '1000px',
@@ -100,7 +99,7 @@ function TaskAssignment(props) {
       </b2>
       <b2 className="second-body">
         <div>
-          <Button variant="contained" color="primary" aria-label="contained primary button group" >SAVE</Button>
+          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addTaskAssignment} >SAVE</Button>
         </div>
         <div>
           <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/introduction-hub">NEXT</Button>

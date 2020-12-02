@@ -1,9 +1,5 @@
 const initialPages =
-    [{
-        "type": '',
-        "order": 0,
-        "body_text": "",
-    }]
+    []
 
 
 const pagesReducer = (state = initialPages, action) => {
