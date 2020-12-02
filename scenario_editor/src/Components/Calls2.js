@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
 // import { baseURL } from '../../Constants/Config';
 
 const baseURL = 'http://8dc68c369534.ngrok.io'

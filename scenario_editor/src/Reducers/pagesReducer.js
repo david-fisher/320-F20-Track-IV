@@ -1,7 +1,6 @@
 const initialPages =
     []
 
-
 const pagesReducer = (state = initialPages, action) => {
 
     switch (action.type) {

@@ -68,11 +68,12 @@ function Introduction(props) {
     <div>
       <Nav />
       <div className={classes.root}>
-
-
         <div >
           <h1>Introduction Page</h1>
+
         </div>
+      </b2>
+    </div>
 
         <b1 className="introduction-part">
           Add/Edit Your Introduction Below:
@@ -110,8 +111,6 @@ function Introduction(props) {
 
   )
 }
-
-
 // class Introduction extends Component {
 
 //   // const classes = useStyles();
