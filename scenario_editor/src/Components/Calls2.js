@@ -1,84 +1,46 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-const baseURL = 'http://e5ac4bbde7ef.ngrok.io/api/v1'; // change this if different tunnel link
+// import { baseURL } from '../../Constants/Config';
 
+const baseURL = 'http://8dc68c369534.ngrok.io'
 let TOKEN = "abcdefghijklmnopqrstuvwxyz";
-let config = {
-headers: {
-    'Authorization': `Bearer ${TOKEN}`,
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Accept-Encoding': 'gzip, deflate, br'
-    }
-};
 
-class Calls extends Component{
-    constructor(props){
-        super(props);
-        this.getAuthenticatedInstructorDashboardSummary = this.getAuthenticatedInstructorDashboardSummary.bind(this);
-        this.createNewSimulation = this.createNewSimulation.bind(this);
-    }
-    getAuthenticatedInstructorDashboardSummary(){
-        axios
-            .get(baseURL + '/dashboard', config)
-            .then(res => {
-                let data = res.data;
-                this.setState({...data});
-            });
-    }
-
-    createNewSimulation(){
-        axios 
-            .post(baseURL + '/simulation', params, config)
-            .then(res => {
-                this.setState(prevState => {
-                    drafts: [...prevState.drafts, res.data]
-                });
-            });
-    }
-    
-    deleteSimulation(){
-        axios 
-            .delete(baseURL + `/simulation/${this.state.sim_id}`, config)
-            .then(res=> console.log(res.data));
-    }
-
-    startSimulation(){
-        axios
-            .post(baseURL + `/simulation/${this.state.sim_id}/start`, {/*array of uid*/},config)
-    }
-
-    closeSimulation(){
-        axios
-            .post(baseURL + `/simulation/${this.state.sim_id}/close`, {/*params*/},config)
-    }
-
-    getSimulationIntroduction(){
-        axios
-            .get(baseURL + `/simulation/${this.state.sim_id}/introduction`, config)
-            .then(res => {
-                this.setState(state => {
-                });
-            });
-    }
-
-    addSimulationIntialIntroduction(){
-        axios
-            .post(baseURL + ` /simulation/${this.state.sim_id}/introduction`, config)
-    }
-
-    getInitialReflection(){
-    }
-
-    getInitialReflectionResponses(){
-
-    }
-
-    getInitialAction(){
-
-    }
-
+// Universal fetch request using axios
+export default function universalFetch(
+    // setResponse, // should be the setState from a state set up like: const [state, setState] = useState({data: null, loading: false, error: true})
+    endpoint, // endpoint path
+    // onError, // optional function to run when call fails
+    // onSuccess, // optional function to run when the call is a success
+    options // set up like this options = { headers: {'Authorization': `token`} }
+) {
+    console.log('Fetch started');
+    // setResponse({
+    //     data: null,
+    //     loading: true,
+    //     error: null,
+    // });
+    axios
+        .get(`${baseURL}${endpoint}`, options)
+        .then((resp) => {
+            console.log('Response received');
+            console.log(resp);
+            // setResponse({
+            //     data: resp.data,
+            //     loading: false,
+            //     error: null,
+            // });
+            // onSuccess && onSuccess(resp.data);
+            return(resp.data);
+        })
+        .catch((err) => {
+            console.log(`Fetch failed with error ${err.message}`);
+            // setResponse({
+            //     data: null,
+            //     loading: false,
+            //     error: err.message,
+            // });
+            // onError && onError(err.message);
+            return(err.message)
+        });
 }
- 
-export default Calls;
