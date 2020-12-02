@@ -28,6 +28,27 @@ const pagesReducer = (state = initialPages, action) => {
                 return [...state, action.payload]
             }
             return state
+        case 'ADD_INITIAL_REFLECTION':
+            console.log(action.payload.name)
+            let initialReflectionIndex = state.findIndex(item => item.name == action.payload.name);
+            if (initialReflectionIndex === -1) {
+                return [...state, action.payload]
+            }
+            return state
+        case 'ADD_MIDDLE_REFLECTION':
+            console.log(action.payload.name)
+            let middleReflectionIndex = state.findIndex(item => item.name == action.payload.name);
+            if (middleReflectionIndex === -1) {
+                return [...state, action.payload]
+            }
+            return state
+        case 'ADD_FINAL_REFLECTION':
+            console.log(action.payload.name)
+            let finalReflectionIndex = state.findIndex(item => item.name == action.payload.name);
+            if (finalReflectionIndex === -1) {
+                return [...state, action.payload]
+            }
+            return state
         default:
             return state
     }
