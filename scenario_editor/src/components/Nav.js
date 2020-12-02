@@ -27,7 +27,7 @@ function Nav() {
               <li>Home</li>
             </Link>
             <Link to= "/introduction-hub">
-              <li>Introduction</li>
+              <li>Introduction Hub</li>
             </Link>
             <Link to= "/reflections" >
               <li>Reflections</li>

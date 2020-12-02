@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Introduction(props) {
 
+  const classes = useStyles();
+
   function addIntroduction() {
     const introComplete = {
       "type": type,
@@ -65,41 +67,50 @@ function Introduction(props) {
   return (
     <div>
       <Nav />
-      <div>
-        <h1>Introduction Page</h1>
-      </div>
+      <div className={classes.root}>
+        <div >
+          <h1>Introduction Page</h1>
 
-      <b1 className="introduction-part">
-        Add/Edit Your Introduction Below:
-      </b1>
-      <div></div>
-      <b2 className="text-editor">
-
-      {/* onChange={handleBodyChange} */}
-        <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
-          height: 600,
-          width: '100%',
-          //maxWidth: '1000px',
-          buttonList: buttonList.complex,
-          placeholder: "Insert your introduction text here..."
-
-        }} />
-
-      </b2>
-      <b2 className="second-body">
-        <div>
-          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addIntroduction} >SAVE</Button>
-        </div>
-        <div>
-          <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
         </div>
       </b2>
     </div>
 
+        <b1 className="introduction-part">
+          Add/Edit Your Introduction Below:
+      </b1>
+        <div></div>
+        <b2 className="text-editor">
+
+          <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
+            height: 250,
+            width: '100%',
+            //maxWidth: '1000px',
+            buttonList: [
+              ['undo', 'redo'],
+              ['font', 'fontSize', 'formatBlock'],
+              ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+              '/', // Line break
+              ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+              ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
+            ],
+            placeholder: "Insert your introduction text here..."
+
+          }} />
+
+        </b2>
+        <b2 className="second-body">
+          <div>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addIntroduction} >SAVE</Button>
+          </div>
+          <div>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
+          </div>
+        </b2>
+      </div>
+    </div>
+
   )
 }
-
-
 // class Introduction extends Component {
 
 //   // const classes = useStyles();
