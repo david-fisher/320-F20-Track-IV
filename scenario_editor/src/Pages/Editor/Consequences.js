@@ -36,42 +36,51 @@ const useStyles = makeStyles((theme) => ({
 
 function Consequences(props) {
 
-
+  const classes = useStyles();
 
   return (
     <div>
       <Nav />
-      <div>
-        <h1>Consequences Page</h1>
-      </div>
+      <div className={classes.root}>
+        <div>
+          <h1>Consequences Page</h1>
+        </div>
 
-      <b1 className="introduction-part">
-        Add/Edit Your Consequences Below:
+        <b1 className="introduction-part">
+          Add/Edit Your Consequences Below:
         </b1>
-      <div></div>
-      <b2 className="text-editor">
+        <div></div>
+        <b2 className="text-editor">
 
-        <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
-          height: 600,
-          width: '100%',
-          //maxWidth: '1000px',
-          buttonList: buttonList.complex,
-          placeholder: "Insert your consequences here..."
+          <SunEditor name="my-editor" setOptions={{
+            height: 600,
+            width: '100%',
+            //maxWidth: '1000px',
+            buttonList: [
+              ['undo', 'redo'],
+              ['font', 'fontSize', 'formatBlock'],
+              ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+              '/', // Line break
+              ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+              ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
+            ],
+            placeholder: "Insert your consequences here..."
 
-        }} />
+          }} />
 
-      </b2>
-      <b2 className="second-body" >
-        <div>
-          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
-        </div>
-        <div>
-          <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/dashboard">NEXT</Button>
-        </div>
-        <div>
+        </b2>
+        <b2 className="second-body" >
+          <div>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" >SAVE</Button>
+          </div>
+          <div>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/dashboard">NEXT</Button>
+          </div>
+          <div>
 
-        </div>
-      </b2>
+          </div>
+        </b2>
+      </div>
     </div>
   )
 }
