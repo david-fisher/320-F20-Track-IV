@@ -4,23 +4,28 @@ const initialPages =
 const pagesReducer = (state = initialPages, action) => {
 
 
-       // Let page = State.filter(item => item.type === currentType);
+    // Let page = State.filter(item => item.type === currentType);
     // If page is undefined
     // Doesn’t exist
     // Otherwise, update page
     switch (action.type) {
+
+        // Currently allows only ONE of each page to be added. 
+        // Need to find a way to update the page if it exists.
         case 'ADD_INTRODUCTION':
-            console.log(state)
-            let page = state.filter(item => item.type === 'Introduction');
-            // if (page === null){
-            //     state.concat(action.payload)
-            // }else{
-            //     // update page
-            // }
-            return state.concat(action.payload)
+            console.log(action.payload.type)
+            let introIndex = state.findIndex(item => item.type == action.payload.type);
+            if (introIndex === -1) {
+                return [...state, action.payload]
+            }
+            return state
         case 'ADD_TASK_ASSIGNMENT':
-            console.log(state)
-            return state.concat(action.payload)
+            console.log(action.payload.type)
+            let taskIndex = state.findIndex(item => item.type == action.payload.type);
+            if (taskIndex === -1) {
+                return [...state, action.payload]
+            }
+            return state
         default:
             return state
     }
