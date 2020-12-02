@@ -75,6 +75,7 @@ function Home() {
       </div>
       <div className={classes.buttonContainer} >
         <div>
+          <Link to="/new-scenario">
           <Button
             className={classes.optionButton}
           >
@@ -82,8 +83,10 @@ function Home() {
               Create a New Scenario
             </Link>
           </Button>{' '}
+          </Link>
         </div>
         <div>
+          <Link to="/dashboard">
           <Button
             className={classes.optionButton}
           >
@@ -91,6 +94,7 @@ function Home() {
               View/Edit Existing Scenarios
             </Link>
           </Button>
+          </Link>
         </div>
       </div>
     </div>
