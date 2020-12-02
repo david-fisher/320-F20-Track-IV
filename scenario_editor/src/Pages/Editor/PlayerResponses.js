@@ -62,9 +62,6 @@ function PlayerResponses() {
         </div>
       </div>
       <div className={classes.buttonContainer} >
-
-        {/* THIS IS TO CREATE A MULTIPLE CHOICE QUESTION. NOT NEEDED DUE TO THE FRONTEND PLAYER. */}
-        {/* <div>
           <Button
             className={classes.optionButton}
           >
@@ -72,8 +69,8 @@ function PlayerResponses() {
               Create Multiple Choice Response
             </Link>
           </Button>{' '}
-        </div> */}
         <div>
+          <Link to="/open-response">
           <Button
             className={classes.optionButton}
           >
@@ -81,6 +78,7 @@ function PlayerResponses() {
               Create Open-Ended Response
             </Link>
           </Button>
+          </Link>
         </div>
       </div>
     </div>

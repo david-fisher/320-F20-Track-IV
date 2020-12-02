@@ -1,4 +1,4 @@
-// I made this to test and understand sean's code.
+import React, {Component} from 'react';
 import axios from 'axios';
 // import { baseURL } from '../../Constants/Config';
 

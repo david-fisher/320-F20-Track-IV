@@ -97,9 +97,6 @@ function Introduction(props) {
     </div>
 
   )
-
-
-
 }
 
 
