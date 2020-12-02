@@ -72,15 +72,10 @@ function Introduction(props) {
           <h1>Introduction Page</h1>
 
         </div>
-      </b2>
-    </div>
 
-        <b1 className="introduction-part">
-          Add/Edit Your Introduction Below:
-      </b1>
+        <b1 className="introduction-part">Add/Edit Your Introduction Below:</b1>
         <div></div>
         <b2 className="text-editor">
-
           <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
             height: 250,
             width: '100%',
@@ -109,7 +104,7 @@ function Introduction(props) {
       </div>
     </div>
 
-  )
+  );
 }
 // class Introduction extends Component {
 
