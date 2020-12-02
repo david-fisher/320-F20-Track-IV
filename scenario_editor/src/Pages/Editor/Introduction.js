@@ -79,7 +79,14 @@ function Introduction(props) {
           height: 600,
           width: '100%',
           //maxWidth: '1000px',
-          buttonList: buttonList.complex,
+          buttonList: [
+            ['undo', 'redo'],
+            ['font', 'fontSize', 'formatBlock'],
+            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+            '/', // Line break
+            ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+            ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
+          ],
           placeholder: "Insert your introduction text here..."
 
         }} />
