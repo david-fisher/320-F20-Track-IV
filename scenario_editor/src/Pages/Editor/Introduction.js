@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import SunEditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import axios from 'axios';
-import { universalPost } from '../../Components/Calls'
+import { universalPost, universalFetch, universalDelete } from '../../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -73,32 +73,57 @@ function Introduction(props) {
     data: null
   })
 
-  const Component = () => {
-    useEffect(() => {
-      universalPost(
-        setFetchScenarioResponse,
-        `api/v1/simulation/${props.scenarios.id}/introduction`,
-        { 0: "body text" },
-        (resp) => { console.log(resp) },
-        (err) => { console.log(err) },
-        { headers: { "accept": "application/json" } }
-        )
-      return () => {
-        // What goes here? do we return something
-      }
-    }, [])
+  // univseralDelete `/api/v1/simulation/${0}`,
+  // universalFetch `/api/v1/simulation/${0}/initial-reflection`,
+  // universalFetch `/api/v1/simulation/${0}/initial-action`,
 
-    // "DEFAULT_HEADERS": {
-    //   "accept": "application/json"
-    // },
 
-    // function addIntroToDB() {
-    //   // universalPost(
-    //   //   ,
-    //   //   ""
-    //   // )
+  // useEffect(() => {
+  //   universalDelete(
+  //     setFetchScenarioResponse,
+  //     `/api/v1/simulation/${0}`,
+  //     // { 0: "body text" },
+  //     (resp) => { console.log(resp) },
+  //     (err) => { console.log(err) },
+  //     { headers: { "accept": "application/json" } }
+  //   )
+  //   return () => {
+  //     // What goes here? do we return something
+  //   }
+  // }, [])
 
-  }
+  // GET http://6e427b8e5e44.ngrok.io/api/v1/simulation/1/initial-action
+
+  // "DEFAULT_HEADERS": {
+  //   "accept": "application/json"
+  // },
+
+  // handleEditorSubmit(event) {
+  //   // alert("Content has been submitted")
+  //   const headers = {
+  //     'Authorization': `Bearer ${this.props.token}`,
+  //     'Accept': 'application/json'
+  //   }
+  //   event.preventDefault();
+  //   axios.post(`/api/v1/simulation/create`, {
+  //     simulation_title: this.state.scenario_title,
+  //     simulation_desc: this.state.scenario_desc,
+  //     simulation_introduction: this.state.contents,
+  //     simulation_ua: this.state.scenario_ua
+  //   }, {headers: headers}).then(res => {
+  //     // debugger;
+  //     alert(`Simulation ID: ${res.data.simulation_id}`)
+  //   });
+
+  //   this.props.dispatch({
+  //     type: 'ADD_SCENARIO',
+  //     payload: { id: this.state.scenarioID, title: this.state.contents }
+  //   });
+  //   this.setState({scenarioID: this.state.scenarioID + 1})
+  // }
+
+
+
 
   return (
     <div>

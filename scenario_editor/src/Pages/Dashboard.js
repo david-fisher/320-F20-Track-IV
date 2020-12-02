@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
     Container,
     Typography,
@@ -10,9 +10,9 @@ import Nav from '../Components/Nav';
 import { connect } from 'react-redux';
 import NavDashboard from '../Components/NavDashboard';
 import axios from 'axios';
-import universalFetch from '../Components/Calls2'
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
+import { universalPost, universalFetch, universalDelete } from '../Components/Calls'
 
 
 
@@ -57,26 +57,28 @@ const useStyles = makeStyles((theme) => ({
 
 // }
 
-let TOKEN = "abcdefghijklmnopqrstuvwxyz";
+// let TOKEN = "abcdefghijklmnopqrstuvwxyz";
 
-async function getScenariosFromServer() {
-    console.log("In getScenariosfromserver")
-    const headers = {
-        'Authorization': `Bearer ${TOKEN}`,
-        'Accept': 'application/json'
-    }
+// async function getScenariosFromServer() {
+//     console.log("In getScenariosfromserver")
+//     const headers = {
+//         'Authorization': `Bearer ${TOKEN}`,
+//         'Accept': 'application/json'
+//     }
 
-    const response = universalFetch('/api/v1/dashboard', headers)
+//     const response = universalFetch('/api/v1/dashboard', headers)
 
-    // Attempt to change the state in the store to the response from the universal API call
-    // this.props.dispatch({
-    //     type: 'LOAD_SCENARIOS',
-    //     payload: { response }
-    // });
+//     // Attempt to change the state in the store to the response from the universal API call
+//     // this.props.dispatch({
+//     //     type: 'LOAD_SCENARIOS',
+//     //     payload: { response }
+//     // });
 
-    console.log("THIS IS THE RESPONSE " + response)
-    return response
-}
+//     console.log("THIS IS THE RESPONSE " + response)
+//     return response
+// }
+
+
 
 class ScenarioGrid extends Component {
 
@@ -240,38 +242,63 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { data: null }
-    }
-    async componentDidMount() {
-        const headers = {
-            'Authorization': `Bearer ${this.props.token}`,
-            'Accept': 'application/json'
-        }
-        let res = await axios.get(`/api/v1/dashboard`, { headers: headers });
-        // debugger;
-        this.setState({ data: res.data });
-    }
-    render() {
-        return (
-            <div style={{
-                height: '100%',
-                width: '100%',
-                minHeight: '100vh',
-                backgroundColor: 'white',
-            }}>
+function Dashboard() {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { data: null }
+    // }
+    // async componentDidMount() {
+    //     const headers = {
+    //         'Authorization': `Bearer ${this.props.token}`,
+    //         'Accept': 'application/json'
+    //     }
+    //     let res = await axios.get(`/api/v1/dashboard`, { headers: headers });
+    //     // debugger;
+    //     this.setState({ data: res.data });
+    // }
 
-                <Nav />
+    // const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
+    //     loading: false,
+    //     error: null,
+    //     data: null
+    // })
 
-                <ScenarioGrid scenarios={this.state.data} />
+    // useEffect(() => {
+    //     universalFetch(
+    //         setFetchScenarioResponse,
+    //         `/api/v1/dashboard`,
+    //         // { 0: "body text" },
+    //         (resp) => { console.log(resp) },
+    //         (err) => { console.log(err) },
+    //         {
+    //             headers: {
+    //                 "accept": "application/json",
+    //             }
+    //         }
+    //     )
+    //     return () => {
+    //         // What goes here? do we return something
+    //     }
+    // }, [])
 
 
-            </div>
-        )
-    }
+    return (
+        <div style={{
+            height: '100%',
+            width: '100%',
+            minHeight: '100vh',
+            backgroundColor: 'white',
+        }}>
+
+            <Nav />
+
+            <ScenarioGrid />
+
+
+        </div>
+    )
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
