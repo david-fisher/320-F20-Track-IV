@@ -9,7 +9,7 @@ router.post(
   auth.isNotAuthenticated,
   (req, res, next) => {
     // TODO: Check SAML properties.
-    const userID = 0; // Temporary user ID before SAML is implelmented
+    const userID = parseInt(req.body.userID) || 0; // Temporary user ID before SAML is implelmented
     const token = jwt.sign(
       {
         role: "instructor",

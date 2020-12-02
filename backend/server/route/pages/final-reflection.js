@@ -8,7 +8,6 @@ const { createInvalidResponse } = require("../../utils");
 router
   .get("/", headers.areHeadersValid, auth.isAuthenticated, async (req, res) => {
     const { simulation_id: scenarioID } = req.params;
-
     try {
       const finalReflectionPageGroup = await db.pageGroup.finalReflection.getFinalReflectionPageGroup(
         scenarioID

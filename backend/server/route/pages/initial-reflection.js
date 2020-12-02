@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router = require("express").Router({ mergeParams: true });
 const db = require("../../db");
 
 const { auth, headers } = require("../../middleware");
@@ -8,7 +8,6 @@ const { createInvalidResponse } = require("../../utils");
 router
   .get("/", headers.areHeadersValid, auth.isAuthenticated, async (req, res) => {
     const { simulation_id: scenarioID } = req.params;
-
     try {
       const initialReflectionPageGroup = await db.pageGroup.initialReflection.getInitialReflectionPageGroup(
         scenarioID

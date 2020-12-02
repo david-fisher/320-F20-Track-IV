@@ -7,7 +7,6 @@ const getFinalReflectionPageGroup = async function (scenarioID) {
     scenarioID,
     order: pageOrder.FINAL_REFLECTION,
   })[0];
-
   return {
     [pageType.PLAIN]: page,
     [pageType.PROMPT]: await promptPages.getPromptsBy({ pageID: page.id }),
