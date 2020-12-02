@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 function TaskAssignment(props) {
 
+  const classes = useStyles();
+
   function addTaskAssignment() {
     const taskComplete = {
       "type": type,
@@ -66,9 +68,9 @@ function TaskAssignment(props) {
 
 
   return (
-    <div>
+    <div >
       <Nav />
-      <div>
+      <div className = {classes.root}>
         <div>
           <h1>Project Task Assignment</h1>
         </div>

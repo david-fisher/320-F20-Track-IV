@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Introduction(props) {
 
+  const classes = useStyles();
+
   function addIntroduction() {
     const introComplete = {
       "type": type,
@@ -65,7 +67,7 @@ function Introduction(props) {
   return (
     <div>
       <Nav />
-      <div>
+      <div className = {classes.root}>
         <h1>Introduction Page</h1>
       </div>
 

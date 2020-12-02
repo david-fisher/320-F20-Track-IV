@@ -34,114 +34,49 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class Consequences extends Component {
-
-  // const classes = useStyles();
-  constructor() {
-    super()
-    this.state = {
-      value: '',
-      scenarioID: 2,
-      contents: '',
-      scenario_title: localStorage.getItem("RS_SCENARIO__title"),
-      scenario_desc: localStorage.getItem("RS_SCENARIO__description"),
-      scenario_ua: localStorage.getItem("RS_SCENARIO__user_agreement"),
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEditorChange = this.handleEditorChange.bind(this);
-    this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value })
-  }
-
-  // If you'd like your changes to persist (stay in place after page refresh),
-  // you'd want to add your new posts to a database within your reducer function's action handlers.
-  handleSubmit(event) {
-    alert('Content submitted' /*+ this.state.value*/)
-    event.preventDefault()
-    this.props.dispatch({
-      type: 'ADD_SCENARIO',
-      payload: { id: this.state.scenarioID, title: this.state.value }
-    })
-
-    this.setState({ scenarioID: this.state.scenarioID + 1 })
-  }
-
-  handleEditorChange(event) {
-    this.setState({ contents: event })
-  }
-
-  // CHANGE THIS TO WORK WITH ThE DATABASE CALLS
-  handleEditorSubmit(event) {
-    // alert("Conclusions have been submitted to DB")
-    const headers = {
-      'Authorization': `Bearer ${this.props.token}`,
-      'Accept': 'application/json'
-    }
-    event.preventDefault();
-    axios.post(`/api/v1/simulation/create`, {
-      simulation_title: this.state.scenario_title,
-      simulation_desc: this.state.scenario_desc,
-      simulation_introduction: this.state.contents,
-      simulation_ua: this.state.scenario_ua
-    }, { headers: headers }).then(res => {
-      // debugger;
-      alert(`Simulation ID: ${res.data.simulation_id}`)
-    });
-
-    this.props.dispatch({
-      type: 'ADD_SCENARIO',
-      payload: { id: this.state.scenarioID, title: this.state.contents }
-    });
-    this.setState({ scenarioID: this.state.scenarioID + 1 })
-  }
+function Consequences(props) {
 
 
-  render() {
 
-    return (
+  return (
+    <div>
+      <Nav />
       <div>
-        <Nav />
-        <div>
-          <h1>Consequences Page</h1>
-        </div>
-
-        <b1 className="introduction-part">
-          Add/Edit Your Consequences Below:
-        </b1>
-        <div></div>
-        <b2 className="text-editor">
-
-          <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
-            height: 600,
-            width: '100%',
-            //maxWidth: '1000px',
-            buttonList: buttonList.complex,
-            placeholder: "Insert your consequences here..."
-
-          }} />
-
-        </b2>
-        <b2 className="second-body" >
-          <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
-          </div>
-          <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/dashboard">NEXT</Button>
-          </div>
-          <div>
-
-          </div>
-        </b2>
+        <h1>Consequences Page</h1>
       </div>
-    )
-  }
 
+      <b1 className="introduction-part">
+        Add/Edit Your Consequences Below:
+        </b1>
+      <div></div>
+      <b2 className="text-editor">
+
+        <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
+          height: 600,
+          width: '100%',
+          //maxWidth: '1000px',
+          buttonList: buttonList.complex,
+          placeholder: "Insert your consequences here..."
+
+        }} />
+
+      </b2>
+      <b2 className="second-body" >
+        <div>
+          <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
+        </div>
+        <div>
+          <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/dashboard">NEXT</Button>
+        </div>
+        <div>
+
+        </div>
+      </b2>
+    </div>
+  )
 }
+
+
 
 const mapStateToProps = state => {
   return { scenarios: state.scenarios, token: state.token }
