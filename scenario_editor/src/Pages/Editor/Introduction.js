@@ -75,7 +75,6 @@ function Introduction(props) {
       <div></div>
       <b2 className="text-editor">
 
-      {/* onChange={handleBodyChange} */}
         <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
           height: 600,
           width: '100%',
