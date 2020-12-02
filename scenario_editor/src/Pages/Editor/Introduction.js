@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import SunEditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import axios from 'axios';
+import { universalPost } from '../../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -33,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Introduction(props) {
+
+
+  // Look into custom hooks for fetching and setResponse
 
   const classes = useStyles();
 
@@ -63,6 +67,38 @@ function Introduction(props) {
     console.log(bodyText);
   };
 
+  const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
+    loading: false,
+    error: null,
+    data: null
+  })
+
+  const Component = () => {
+    useEffect(() => {
+      universalPost(
+        setFetchScenarioResponse,
+        `api/v1/simulation/${props.scenarios.id}/introduction`,
+        { 0: "body text" },
+        (resp) => { console.log(resp) },
+        (err) => { console.log(err) },
+        { headers: { "accept": "application/json" } }
+        )
+      return () => {
+        // What goes here? do we return something
+      }
+    }, [])
+
+    // "DEFAULT_HEADERS": {
+    //   "accept": "application/json"
+    // },
+
+    // function addIntroToDB() {
+    //   // universalPost(
+    //   //   ,
+    //   //   ""
+    //   // )
+
+  }
 
   return (
     <div>
@@ -99,6 +135,9 @@ function Introduction(props) {
           </div>
           <div>
             <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
+          </div>
+          <div>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={Component} >ADD INTRO TO DB</Button>
           </div>
         </b2>
       </div>
