@@ -35,8 +35,8 @@ function Nav() {
             <Link to= "/stakeholders">
               <li>Stakeholders </li>
             </Link>
-            <Link to= "/consequences">
-              <li>Consequences </li>
+            <Link to= "/conclusion">
+              <li>Conclusion </li>
             </Link>
             <Link to= "/dashboard">
               <li>Dashboard</li>

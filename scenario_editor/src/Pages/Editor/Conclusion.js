@@ -32,36 +32,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Consequences(props) {
+function Conclusion(props) {
 
   const classes = useStyles();
 
-  function addConsequences() {
-    const consequencesComplete = {
+  function addConclusion() {
+    const conclusionComplete = {
       "type": type,
       "name": name,
       "order": order,
       "body_text": bodyText,
     }
     props.dispatch({
-      type: 'ADD_CONSEQUENCES',
-      payload: { ...consequencesComplete }
+      type: 'ADD_CONCLUSION',
+      payload: { ...conclusionComplete }
     });
   }
 
   // Need to double check on page ordering... there is a conclusions page, not sure 
   // where Consequences fits into this yet...
-  const consequencesNew = {
-    "name": 'Consequences',
+  const conclusionNew = {
+    "name": 'Conclusion',
     "type": 'PLAIN',
     "order": 12,
     "body_text": " ",
   }
 
-  const [type, setType] = useState(consequencesNew.type);
-  const [name, setName] = useState(consequencesNew.name);
-  const [order, setOrder] = useState(consequencesNew.order);
-  const [bodyText, setBodyText] = useState(consequencesNew.body_text);
+  const [type, setType] = useState(conclusionNew.type);
+  const [name, setName] = useState(conclusionNew.name);
+  const [order, setOrder] = useState(conclusionNew.order);
+  const [bodyText, setBodyText] = useState(conclusionNew.body_text);
 
   const handleBodyChange = (body) => {
     setBodyText(body);
@@ -73,11 +73,11 @@ function Consequences(props) {
       <Nav />
       <div className={classes.root}>
         <div>
-          <h1>Consequences Page</h1>
+          <h1>Conclusion Page</h1>
         </div>
 
         <b1>
-          Add/Edit Your Consequences Below:
+          Add/Edit Your Conclusion Below:
         </b1>
         <div></div>
         <b2 className="text-editor">
@@ -93,17 +93,17 @@ function Consequences(props) {
               ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
               ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
             ],
-            placeholder: "Insert the consequences text here..."
+            placeholder: "Insert the conclusion text here..."
           }} />
 
         </b2>
         <b2 className="second-body" >
           <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addConsequences} >SAVE</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addConclusion} >SAVE</Button>
           </div>
           <div>
-            {/* WILL LIKELY NEED TO MAKE THIS LEAD TO SOME FINAL "CREATE" PAGE */}
-            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
+            {/* WILL LIKELY NEED TO MAKE THIS LEAD TO SOME FINAL "CREATE" PAGE ? */}
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/dashboard">NEXT</Button>
           </div>
           <div>
 
@@ -127,4 +127,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Consequences);
+export default connect(mapStateToProps, mapDispatchToProps)(Conclusion);

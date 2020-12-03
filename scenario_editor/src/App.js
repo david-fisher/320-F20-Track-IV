@@ -22,7 +22,8 @@ import Stakeholders from './Pages/Editor/Stakeholders';
 import Matrix from './Pages/Editor/Matrix';
 import MultipleChoice from './Pages/Editor/MultipleChoice';
 import OpenResponse from './Pages/Editor/OpenResponse';
-import Consequences from './Pages/Editor/Consequences';
+// import Consequences from './Pages/Editor/Conclusion';
+import Conclusion from './Pages/Editor/Conclusion';
 
 import { Provider } from 'react-redux'
 import store from './Store'
@@ -68,7 +69,8 @@ export default function App() {
           <Route path="/matrix" component={Matrix} />
           <Route path="/multiple-choice" component={MultipleChoice} />
           <Route path="/open-response" component={OpenResponse} />
-          <Route path="/consequences" component={Consequences} />
+          {/* <Route path="/consequences" component={Consequences} /> */}
+          <Route path="/conclusion" component={Conclusion} />
 
           <Route path="/dashboard" component={Dashboard} />
 
