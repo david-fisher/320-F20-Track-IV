@@ -139,7 +139,6 @@ function Introduction(props) {
           <SunEditor name="my-editor" value={introNew.body_text} onChange={handleBodyChange} setOptions={{
             height: 250,
             width: '100%',
-            //maxWidth: '1000px',
             buttonList: [
               ['undo', 'redo'],
               ['font', 'fontSize', 'formatBlock'],

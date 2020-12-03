@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     margin: theme.spacing(4)
-  }, 
+  },
   root: {
     margin: theme.spacing(1),
     marginTop: theme.spacing(4),
@@ -67,7 +67,7 @@ class ContinuePrompt extends Component {
   }
 
   handleEditorChange(event) {
-    this.setState({contents: event})
+    this.setState({ contents: event })
   }
 
   handleEditorSubmit(event) {
@@ -83,7 +83,7 @@ class ContinuePrompt extends Component {
       simulation_desc: this.state.scenario_desc,
       simulation_introduction: this.state.contents,
       simulation_ua: this.state.scenario_ua
-    }, {headers: headers}).then(res => {
+    }, { headers: headers }).then(res => {
       // debugger;
       alert(`Simulation ID: ${res.data.simulation_id}`)
     });
@@ -92,12 +92,12 @@ class ContinuePrompt extends Component {
       type: 'ADD_SCENARIO',
       payload: { id: this.state.scenarioID, title: this.state.contents }
     });
-    this.setState({scenarioID: this.state.scenarioID + 1})
+    this.setState({ scenarioID: this.state.scenarioID + 1 })
   }
 
 
   render() {
-    
+
     return (
       <div>
         <Nav />
@@ -112,10 +112,9 @@ class ContinuePrompt extends Component {
 
         <b2 className="text-editor">
 
-            <SunEditor name="continue-prompt" contents={this.state.value} onChange={this.handleEditorChange} setOptions = {{
-            height: 500,
+          <SunEditor name="continue-prompt" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
+            height: 250,
             width: '100%',
-            //maxWidth: '1000px',
             buttonList: [
               ['undo', 'redo'],
               ['font', 'fontSize', 'formatBlock'],
@@ -123,101 +122,58 @@ class ContinuePrompt extends Component {
               '/', // Line break
               ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
               ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
-          ],
-            placeholder: "Insert your introduction text here..."
+            ],
+            placeholder: "Insert your main text here..."
 
-          }}/>
+          }} />
 
         </b2>
-        <div className ="second-body">
-        
-        <TextField
-          id="Delay Prompt"
-          label="Delay Prompt"
-          style={{ margin: 8 }}
-          placeholder="Input your delay prompt here"
-          helperText="This prompt sends the reader to the stakeholder conversations!"
-          fullWidth 
-          variant = "outlined"
-          multiline
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        
-        <TextField
-          id="Go Ahead Prompt"
-          label="Go Ahead Prompt"
-          style={{ margin: 8 }}
-          placeholder="Input your delay prompt here"
-          helperText="This prompt skips the majority of conversations!"
-          fullWidth
-          variant = "outlined"
-          multiline
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
+        <div className="second-body">
+
+          <TextField
+            id="Delay Prompt"
+            label="Delay Prompt"
+            style={{ margin: 8 }}
+            placeholder="Input your delay prompt here"
+            helperText="This prompt sends the reader to the stakeholder conversations!"
+            fullWidth
+            variant="outlined"
+            multiline
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+
+          <TextField
+            id="Go Ahead Prompt"
+            label="Go Ahead Prompt"
+            style={{ margin: 8 }}
+            placeholder="Input your delay prompt here"
+            helperText="This prompt skips the majority of conversations!"
+            fullWidth
+            variant="outlined"
+            multiline
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
         </div>
         <b2 className="third-body" >
-        <div>
-          <Button type="editor-submit" title="SAVE" style={{backgroundColor:'#881c1c', color: "white"}} onClick={this.handleEditorSubmit}>SAVE</Button>
-        </div>
-        <div marginLeft='100px'>
-            <Button type="submit" title="NEXT" style={{backgroundColor:'#881c1c', color: "white" }} component={ Link } to="/introduction-hub">NEXT</Button>
-          </div>
-        <div>
-          {/**<form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-            <textarea rows='15' cols='75' value={this.state.value} onChange={this.handleChange} />
-          </form >
           <div>
-            <Button type="submit" onClick={this.handleSubmit}>SAVE</Button>
+            <Button type="editor-submit" title="SAVE" style={{ backgroundColor: '#881c1c', color: "white" }} onClick={this.handleEditorSubmit}>SAVE</Button>
           </div>
-          /*//*{/* className={classes.root} *//*}
-
-          <h4>
-            This is the local state value before it gets "posted": {" "}
-            {this.state.value}
-          </h4>
-
-          <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.posts.map(post => (
-              <li key={post.id}>{post.title}</li>
-            ))}
-          </h4>
-            */}
-          {/* <h4>
-            This is the local state value of suneditor before it gets "posted":
-            <SunEditor
-              disable={true}
-              setContents={this.state.contents}
-              showToolbar={false}
-               />
-          </h4> */}
-          {/* <h4>
-            This is a map of the "posts" in our redux store: {" "}
-            {this.props.scenarios.map(scenario => (
-              <li key={scenario.id}> <SunEditor
-                disable={true}
-                showToolbar={false}
-                setContents ={scenario.title}/> </li>
-            ))}
-          </h4> */}
-          {/* I want to be able to post something even if it's null at first, so when it changes it's there */}
-          {/* <h4>
-            This is the 3rd object stored in the store:: {" "}
-            {this.props.posts[2].title === null}
-          </h4> */}
-        </div>
+          <div marginLeft='100px'>
+            <Button type="submit" title="NEXT" style={{ backgroundColor: '#881c1c', color: "white" }} component={Link} to="/introduction-hub">NEXT</Button>
+          </div>
+          <div>
+          </div>
         </b2>
       </div>
 
     )
   }
-
 }
 
 const mapStateToProps = state => {
@@ -229,9 +185,5 @@ const mapDispatchToProps = dispatch => {
     dispatch
   }
 }
-
-// The connect function takes another function as an argument: mapStateToProps.
-// mapStateToProps determines what state from our store we want to pull into our component.
-// In this case, we're specifying to only pull our state's posts property.
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContinuePrompt);

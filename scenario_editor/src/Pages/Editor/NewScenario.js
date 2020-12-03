@@ -128,7 +128,7 @@ function NewScenario(props) {
       <div className={classes.root}>
         <div>
           <Button
-            component={Link} to="/user-agreement"
+            component={Link} to="/introduction-hub"
             variant="contained"
             color="primary"
             href="#contained-buttons"
