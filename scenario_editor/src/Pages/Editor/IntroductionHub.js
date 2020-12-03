@@ -52,7 +52,7 @@ function IntroductionHub(props) {
   // const { data } = props;
   // const { scenarioID, name, due_date, description, additional_data, status } = data;
 
-  // console.log("Props in intro hub: "+ scenarioID)
+  console.log("Props in intro hub: "+ props.scenarioData)
 
   return (
   <div >

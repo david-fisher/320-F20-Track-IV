@@ -2,8 +2,6 @@ import React, { Component, useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import './Introduction.css';
 import Nav from '../../Components/Nav';
-// import React, { Component } from 'react';
-//import './Home.css';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -35,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Introduction(props) {
 
-  console.log("PROPS IN INTRODUCTION: " + JSON.stringify(props.items))
+  // console.log("PROPS IN INTRODUCTION: " + JSON.stringify(props))
 
   // Look into custom hooks for fetching and setResponse
 
@@ -140,7 +138,7 @@ function Introduction(props) {
         <b1 className="introduction-part">Add/Edit Your Introduction Below:</b1>
         <div></div>
         <b2 className="text-editor">
-          <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
+          <SunEditor name="my-editor" value={introNew.body_text} onChange={handleBodyChange} setOptions={{
             height: 250,
             width: '100%',
             //maxWidth: '1000px',
@@ -177,7 +175,7 @@ const mapStateToProps = state => {
   // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
   // return { scenarios: state.scenarios, token: state.token }
   const { items } = state
-  console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
+  // console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
   return { items: state.scenarioData }
 }
 

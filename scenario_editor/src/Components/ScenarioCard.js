@@ -132,7 +132,7 @@ const mapStateToProps = state => {
   // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
   // return { scenarios: state.scenarios, token: state.token }
   const { items } = state
-  console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
+  // console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
   return { items: state.scenarioData }
 }
 
