@@ -38,6 +38,16 @@ function Introduction(props) {
   // Look into custom hooks for fetching and setResponse
 
   const classes = useStyles();
+  const introNew = {
+    "name": 'Introduction',
+    "type": 'PLAIN',
+    "order": 1,
+    "body_text": " ",
+  }
+
+  // const [introData, setIntroData] = useState(JSON.parse(localStorage.getItem("RS__introData") || introNew));
+
+  
 
   function addIntroduction() {
     const introComplete = {
@@ -52,12 +62,6 @@ function Introduction(props) {
     });
   }
 
-  const introNew = {
-    "name": 'Introduction',
-    "type": 'PLAIN',
-    "order": 1,
-    "body_text": " ",
-  }
 
   const [type, setType] = useState(introNew.type);
   const [name, setName] = useState(introNew.name);
