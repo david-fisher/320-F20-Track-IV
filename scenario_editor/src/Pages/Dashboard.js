@@ -7,8 +7,8 @@ import {
 import ScenarioCard from '../Components/ScenarioCard'
 import { makeStyles } from '@material-ui/core/styles';
 import Nav from '../Components/Nav';
+import '../Components/Nav.css';
 import { connect } from 'react-redux';
-import NavDashboard from '../Components/NavDashboard';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';

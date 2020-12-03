@@ -121,7 +121,7 @@
 
 import React, { Component, useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import NavDashboard from '../../Components/NavDashboard'
+import Nav from '../../Components/Nav'
 // import React, { Component } from 'react';
 //import './Home.css';
 import Button from '@material-ui/core/Button';
@@ -220,7 +220,7 @@ class UserAgreement extends Component {
   render() {
     return (
       <div>
-        <NavDashboard />
+        <Nav/>
         <h1>User Agreement Page</h1>
 
 
