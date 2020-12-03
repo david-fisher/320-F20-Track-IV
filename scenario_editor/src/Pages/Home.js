@@ -85,7 +85,8 @@ function Home(props) {
         <div>
           <Link to="/new-scenario">
             <Button
-              onClick={resetStates}
+            // Resets the redux store states to their initial values, used for testing
+              // onClick={resetStates}
               className={classes.optionButton}
             >
               <Link to="/new-scenario">
