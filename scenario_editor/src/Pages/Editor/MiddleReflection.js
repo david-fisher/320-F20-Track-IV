@@ -41,9 +41,10 @@ function FinalReflection(props) {
     "body_text": " ",
   }
 
-  function addReflection() {
+  function addMiddleReflection() {
     const middleReflectionComplete = {
       "type": type,
+      "name": name,
       "order": order,
       "body_text": bodyText,
     }
@@ -105,7 +106,10 @@ function FinalReflection(props) {
           </b2>
           <b2>
             <div>
-              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addReflection} >SAVE</Button>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addMiddleReflection} >SAVE</Button>
+            </div>
+            <div>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/stakeholders">NEXT</Button>
             </div>
           </b2>
         </div>

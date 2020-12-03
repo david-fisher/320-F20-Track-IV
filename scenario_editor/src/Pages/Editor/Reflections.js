@@ -44,6 +44,7 @@ function Reflections(props) {
   function addReflection() {
     const initialReflectionComplete = {
       "type": type,
+      "name": name,
       "order": order,
       "body_text": bodyText,
     }
@@ -106,6 +107,9 @@ function Reflections(props) {
           <b2>
             <div>
               <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addReflection} >SAVE</Button>
+            </div>
+            <div>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/stakeholders">NEXT</Button>
             </div>
           </b2>
 

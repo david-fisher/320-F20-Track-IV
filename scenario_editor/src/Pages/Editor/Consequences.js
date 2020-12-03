@@ -39,6 +39,7 @@ function Consequences(props) {
   function addConsequences() {
     const consequencesComplete = {
       "type": type,
+      "name": name,
       "order": order,
       "body_text": bodyText,
     }

@@ -21,7 +21,8 @@ const scenarioReducer = (state = initialScenario, action) => {
         // Might work?
         case 'UPDATE_SCENARIO':
             console.log(action.payload.type)
-            return [...state, action.payload]
+            
+            return action.payload
 
         default:
             return state
