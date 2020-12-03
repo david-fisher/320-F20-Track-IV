@@ -17,6 +17,9 @@ router.post(
       simulation_introduction,
     } = req.body;
 
+    // Create Scenario
+    // 
+
     let scenario;
     try {
       const fortnightAway = new Date(Date.now() + 12096e5);

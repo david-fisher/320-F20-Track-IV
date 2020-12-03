@@ -1,7 +1,6 @@
 const passport = require("passport");
 const SamlStrategy = require('passport-saml').Strategy;
 const db = require("./db")
-const constants = require("./constants");
 require("dotenv").config();
 
 module.exports = {

@@ -6,12 +6,12 @@ const question = require("../question");
 const mcqOption = require("../mcq_option");
 
 const getInitialActionPageGroup = async function (scenarioID) {
-  const page = await pages.getPagesBy({
+  const page = (await pages.getPagesBy({
     scenarioID,
     order: pageOrder.INIT_ACTION,
-  })[0];
+  }))[0];
   const mcq = await mcqPages.getMcq(page.id);
-  const quest = await question.getQuestionsBy({ mcqID: mcq.id })[0];
+  const quest = (await question.getQuestionsBy({ mcqID: mcq.page_id }))[0];
   const mcqOptions = await mcqOption.getMcqOptionsBy({ questionID: quest.id });
 
   return {

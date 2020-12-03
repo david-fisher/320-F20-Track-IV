@@ -8,6 +8,9 @@ backend/server/node_modules
 backend/server/node_modules/
 backend/server/node_modules/*
 
+backend/ngrok
+backend/.DS_STORE
+
 backend/.env
 backend/.env*
 

@@ -18,6 +18,7 @@ const response = require("./response");
 const conversationChoices = require("./conversation_choices");
 const mcqResponse = require("./mcq_response");
 const promptResponse = require("./prompt_response");
+const pageGroup = require("./page-group");
 
 module.exports = {
   scenario,
@@ -40,4 +41,5 @@ module.exports = {
   conversationChoices,
   mcqResponse,
   promptResponse,
+  pageGroup
 };

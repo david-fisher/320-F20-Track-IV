@@ -11,7 +11,7 @@ const getPromptsBy = async function ({ pageID = null }) {
   let argsPos = 1;
 
   queryValues.push({
-    name: "page_id",
+    name: "id",
     value: pageID,
     pos: pageID ? argsPos++ : 0,
   });
