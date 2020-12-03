@@ -18,19 +18,25 @@ const useStyles = makeStyles((theme) => ({
 
 function ScenarioCard(props) {
   const classes = useStyles();
-  const { data } = props;
-  const { scenarioID, name, due_date, description, additional_data, status } = data;
+  const data = props.data;
+  // console.log("PROPS: " + JSON.stringify(data))
+  const { id, name, due_date, description, additional_data, status } = data;
 
   function updateScenarioData() {
+
+    // let testID = data.findIndex(item => item.id == 0)
+    // console.log("props data: " + JSON.stringify(data))
+    // console.log(testID)
+
     const scenarioData = {
-      "id": scenarioID,
+      "id": id,
       "name": name,
       "due_date": due_date,
       "description": description,
       "additional_data": additional_data,
       "status": status,
     }
-    console.log("scenarioData in ScenarioCard: "+ JSON.stringify(scenarioData));
+    console.log("scenarioData in ScenarioCard: " + JSON.stringify(scenarioData));
     props.dispatch({
       type: 'UPDATE_SCENARIO',
       payload: { ...scenarioData }
@@ -39,13 +45,13 @@ function ScenarioCard(props) {
 
   return (
     <Grid
-      key={scenarioID}
+      key={id}
       item
       xs
     >
       <Card raised='true' className={classes.root}>
         <CardActionArea component={Link} to={{
-          pathname: "/new-scenario/" + data.scenarioID,
+          pathname: "/new-scenario/" + id,
           scenarioData: data
         }}>
           <CardContent>
@@ -63,7 +69,7 @@ function ScenarioCard(props) {
 
           {/* NEED: To make the Scenario Data in the redux store update with the correct metadata when Edit is clicked */}
           <Button size="small" color="primary" onClick={updateScenarioData} component={Link} to={{
-            pathname: "/introduction-hub/" + data.scenarioID,
+            pathname: "/introduction-hub/" + id,
             scenarioData: data
           }}>
             Edit
@@ -73,7 +79,7 @@ function ScenarioCard(props) {
           </Button>
 
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/data/" + data.scenarioID,
+            pathname: "/data/" + id,
             scenarioData: data
           }}>
             Data

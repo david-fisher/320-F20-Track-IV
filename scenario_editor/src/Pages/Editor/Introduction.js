@@ -81,20 +81,19 @@ function Introduction(props) {
   // universalFetch `/api/v1/simulation/${0}/initial-reflection`,
   // universalFetch `/api/v1/simulation/${0}/initial-action`,
 
-
-  // useEffect(() => {
-  //   universalDelete(
-  //     setFetchScenarioResponse,
-  //     `/api/v1/simulation/${0}`,
-  //     // { 0: "body text" },
-  //     (resp) => { console.log(resp) },
-  //     (err) => { console.log(err) },
-  //     { headers: { "accept": "application/json" } }
-  //   )
-  //   return () => {
-  //     // What goes here? do we return something
-  //   }
-  // }, [])
+  useEffect(() => {
+    universalFetch(
+      setFetchScenarioResponse,
+      `/api/v1/simulation/${0}/introduction`,
+      // { 0: "body text" },
+      (resp) => { console.log(resp) },
+      (err) => { console.log(err) },
+      { headers: { "accept": "application/json", "Authentication": "abcdefghijklmnopqrstuvwxyz" } }
+    )
+    return () => {
+      // What goes here? do we return something
+    }
+  }, [])
 
   // GET http://6e427b8e5e44.ngrok.io/api/v1/simulation/1/initial-action
 

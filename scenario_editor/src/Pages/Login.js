@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import { universalPost, universalFetch, universalDelete } from '../Components/Calls'
 
 
 // POST /api/v1/auth/login/callback
@@ -49,25 +50,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function sendLogInToServer(event, history){
-  event.preventDefault();
-  axios.get(`/api/v1/auth/login`).then(res => {
-    let token = res.data.token;
-    history.push({
-      pathname: "/home",
-      state: {
-        token
-      }
-    });
-  });
-  history.push({
-    pathname: "/home"
-  });
-}
+// function sendLogInToServer(event, history) {
+//   event.preventDefault();
+//   axios.get(`/api/v1/auth/login/callback`).then(res => {
+//     let token = res.data.token;
+//     history.push({
+//       pathname: "/home",
+//       state: {
+//         token
+//       }
+//     });
+//   });
+// history.push({
+//   pathname: "/home"
+// });
+// }
+
+
+
+
+
 
 export default function SignIn() {
   const history = useHistory();
   const classes = useStyles();
+
+  const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
+    loading: false,
+    error: null,
+    data: null
+  })
+
+  useEffect(() => {
+    universalFetch(
+      setFetchScenarioResponse,
+      `/api/v1/auth/login/callback`,
+      // { 0: "body text" },
+      (resp) => { console.log(resp) },
+      (err) => { console.log(err) },
+      { headers: { "accept": "application/json", "Authentication": "abcdefghijklmnopqrstuvwxyz" } }
+    )
+    return () => {
+      // What goes here? do we return something
+    }
+  }, [])
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -76,7 +103,10 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Login
           </Typography>
-        <form className={classes.form} noValidate onSubmit={(event) => {sendLogInToServer(event, history)}}>
+        {/* <form className={classes.form} noValidate onSubmit={(event) => { sendLogInToServer(event, history) }}> */}
+        <form className={classes.form} noValidate onClick={history.push({
+          pathname: "/home"
+        })}>
           <TextField
             //type="email"
             variant="outlined"
@@ -115,6 +145,6 @@ export default function SignIn() {
       <Box mt={8}>
         <Login />
       </Box>
-    </Container>
+    </Container >
   );
 }

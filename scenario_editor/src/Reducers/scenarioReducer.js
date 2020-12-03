@@ -1,10 +1,13 @@
+// An ID should be returned by the backend according to conversation
+let nextScenarioID = 1;
+
 const initialScenario = {
-    "id": 0,
-    "name": '',
-    "due_date": '12-12-2020',
-    "description": '',
-    "additional_data": "",
-    "status": 'DRAFT',
+    // "id": nextScenarioID,
+    // "name": '',
+    // "due_date": '12-12-2020',
+    // "description": '',
+    // "additional_data": "",
+    // "status": 'DRAFT',
 }
 
 // "id": 0,

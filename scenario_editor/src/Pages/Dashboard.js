@@ -114,13 +114,18 @@ class ScenarioGrid extends Component {
             open: openScenarios || [{ "id": 2, "name": 'title2', "due_date": '12-12-2020', "description": 'desc', "additional_data": 'does this show', "status": 'OPEN' }],
             closed: closedScenarios || [{ "id": 3, "name": 'title3', "due_date": '12-12-2020', "description": 'desc', "additional_data": '', "status": 'CLOSED' }]
         });
+
+
     }
 
     // Potentially don't need vars draft, open, and closed anymore
     render() {
-        let draftScenarios = this.state.draft.map(data =>
-            <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} closed={data.closed} />
+        let draftScenarios = this.state.draft.map(data => {
+            console.log(data);
+            return <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} closed={data.closed} />
+        }
         );
+        // console.log("draftScenarios: " + JSON.stringify(this.state.open.findIndex(item => item.id == 2)))
         let openScenarios = this.state.open.map(data =>
             <ScenarioCard data={data} key={data.id} draft={data.draft} open={data.open} closed={data.closed} />
         );
