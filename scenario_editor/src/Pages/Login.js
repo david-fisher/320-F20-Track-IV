@@ -50,21 +50,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// function sendLogInToServer(event, history) {
-//   event.preventDefault();
-//   axios.get(`/api/v1/auth/login/callback`).then(res => {
-//     let token = res.data.token;
-//     history.push({
-//       pathname: "/home",
-//       state: {
-//         token
-//       }
-//     });
-//   });
-// history.push({
-//   pathname: "/home"
-// });
-// }
+function sendLogInToServer(event, history) {
+  event.preventDefault();
+  axios.get(`/api/v1/auth/login/callback`).then(res => {
+    let token = res.data.token;
+    history.push({
+      pathname: "/home",
+      state: {
+        token
+      }
+    });
+  });
+history.push({
+  pathname: "/home"
+});
+}
 
 
 
@@ -75,25 +75,25 @@ export default function SignIn() {
   const history = useHistory();
   const classes = useStyles();
 
-  const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
-    loading: false,
-    error: null,
-    data: null
-  })
+  // const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
+  //   loading: false,
+  //   error: null,
+  //   data: null
+  // })
 
-  useEffect(() => {
-    universalFetch(
-      setFetchScenarioResponse,
-      `/api/v1/auth/login/callback`,
-      // { 0: "body text" },
-      (resp) => { console.log(resp) },
-      (err) => { console.log(err) },
-      { headers: { "accept": "application/json", "Authentication": "abcdefghijklmnopqrstuvwxyz" } }
-    )
-    return () => {
-      // What goes here? do we return something
-    }
-  }, [])
+  // useEffect(() => {
+  //   universalFetch(
+  //     setFetchScenarioResponse,
+  //     `/api/v1/auth/login/callback`,
+  //     // { 0: "body text" },
+  //     (resp) => { console.log(resp) },
+  //     (err) => { console.log(err) },
+  //     { headers: { "accept": "application/json", "Authentication": "abcdefghijklmnopqrstuvwxyz" } }
+  //   )
+  //   return () => {
+  //     // What goes here? do we return something
+  //   }
+  // }, [])
 
 
   return (
@@ -103,10 +103,10 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Login
           </Typography>
-        {/* <form className={classes.form} noValidate onSubmit={(event) => { sendLogInToServer(event, history) }}> */}
-        <form className={classes.form} noValidate onClick={history.push({
+        <form className={classes.form} noValidate onSubmit={(event) => { sendLogInToServer(event, history) }}>
+        {/* <form className={classes.form} noValidate onClick={history.push({
           pathname: "/home"
-        })}>
+        })}> */}
           <TextField
             //type="email"
             variant="outlined"

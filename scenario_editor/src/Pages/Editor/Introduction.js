@@ -47,7 +47,6 @@ function Introduction(props) {
 
   // const [introData, setIntroData] = useState(JSON.parse(localStorage.getItem("RS__introData") || introNew));
 
-  
 
   function addIntroduction() {
     const introComplete = {
