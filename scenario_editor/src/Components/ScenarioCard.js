@@ -14,14 +14,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   }
 }));
-
-
 
 function ScenarioCard(props) {
   const classes = useStyles();
@@ -60,10 +57,7 @@ function ScenarioCard(props) {
       payload: { ...scenarioData }
     });
 
-
   }
-
-
 
   return (
     <Grid
