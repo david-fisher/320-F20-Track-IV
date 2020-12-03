@@ -3,7 +3,7 @@ const { httpStatusCode } = require("../constant");
 const { createInvalidResponse } = require("../utils");
 
 exports.isAuthenticated = (req, res, next) => {
-  // if (process.env.NODE_ENV === "dev") return next();
+  if (process.env.NODE_ENV === "dev") return next();
 
   if (
     !req.headers.hasOwnProperty("Authorization") &&
@@ -27,7 +27,7 @@ exports.isAuthenticated = (req, res, next) => {
 };
 
 exports.isNotAuthenticated = (req, res, next) => {
-  // if (process.env.NODE_ENV === "dev") return next();
+  if (process.env.NODE_ENV === "dev") return next();
 
   if (
     !req.headers.hasOwnProperty("Authorization") &&
