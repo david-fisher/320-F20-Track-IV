@@ -104,7 +104,7 @@ function Reflections(props) {
             }} />
 
           </b2>
-          <b2>
+          <b2 className="second-body">
             <div>
               <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addReflection} >SAVE</Button>
             </div>
