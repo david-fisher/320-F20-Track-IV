@@ -1,15 +1,11 @@
 import React, { Component, useState, useEffect } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import './Introduction.css';
 import Nav from '../../Components/Nav';
-// import React, { Component } from 'react';
-//import './Home.css';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-
-import Suneditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
 import axios from 'axios';

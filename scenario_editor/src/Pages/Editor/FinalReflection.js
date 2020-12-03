@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import SunEditor, { buttonList } from 'suneditor-react';
+import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import { connect } from 'react-redux';
 import axios from 'axios';

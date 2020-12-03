@@ -13,7 +13,7 @@ import Introduction from './Pages/Editor/Introduction';
 import TaskAssignment from './Pages/Editor/TaskAssignment';
 import ContinuePrompt from './Pages/Editor/Continue-Prompt';
 //End of Intro Page Links
-import PlayerResponses from './Pages/Editor/PlayerResponses';
+// import PlayerResponses from './Pages/Editor/PlayerResponses';
 import Reflections from './Pages/Editor/Reflections';
 import MiddleReflection from './Pages/Editor/MiddleReflection';
 import FinalReflection from './Pages/Editor/FinalReflection';
@@ -27,7 +27,6 @@ import Conclusion from './Pages/Editor/Conclusion';
 
 import { Provider } from 'react-redux'
 import store from './Store'
-
 
 // This is how you customize the MaterialUI standard 
 const theme = createMuiTheme({
@@ -60,7 +59,7 @@ export default function App() {
           <Route path="/introduction-text" component={Introduction} />
           <Route path="/task-assignment" component={TaskAssignment} />
           <Route path="/continue-prompt" component={ContinuePrompt} />
-          <Route path="/player-responses" component={PlayerResponses} />
+          {/* <Route path="/player-responses" component={PlayerResponses} /> */}
           <Route path="/reflections" component={Reflections} />
           <Route path="/middle-reflection" component={MiddleReflection} />
           <Route path="/final-reflection" component={FinalReflection} />
@@ -71,18 +70,7 @@ export default function App() {
           <Route path="/open-response" component={OpenResponse} />
           {/* <Route path="/consequences" component={Consequences} /> */}
           <Route path="/conclusion" component={Conclusion} />
-
           <Route path="/dashboard" component={Dashboard} />
-
-          {/* This Route will be how we are able to edit individual scenarios in the future
-      Have not gotten to implementing the functionality fully yet, but, in essence,
-      when the user clicks on a scenario to "Edit", the user will be routed to "/editor/:id", where :id will
-      be the ID of the scenario that was clicked. 
-      */}
-          <Route path="/editor/:id" render={(props) => (
-            <Editor {...props} />
-          )} />
-
         </Router>
       </Provider>
     </ThemeProvider>

@@ -1,4 +1,3 @@
-import Nav from '../../Components/Nav'
 import React, { useEffect } from 'react';
 import FirstPage from '@material-ui/icons/FirstPage';
 import Search from '@material-ui/icons/Search';
@@ -17,7 +16,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import TextField from '@material-ui/core/TextField';
 
-import MaterialTable, { MTableBodyRow } from "material-table";
+import MaterialTable from "material-table";
 import { Button } from '@material-ui/core';
 
 
@@ -25,8 +24,6 @@ import { Button } from '@material-ui/core';
 
 export default function Matrix() {
   const { useState } = React;
-
-  
 
   const initialColumns = [
     {
@@ -48,13 +45,11 @@ export default function Matrix() {
   function handleChange(event) {
     console.log(event.target.value)
     setIssue(event.target.value);
-    // console.log(issue)
   }
 
-  function handleAddIssue (){
+  function handleAddIssue() {
     console.log("IN HANDLEADDISSUE: " + issue)
     setColumns(columns.concat({ title: issue, field: issue, type: 'numeric' }));
-    // event.preventDefault();
     console.log(columns.length)
   };
 
@@ -81,10 +76,10 @@ export default function Matrix() {
     ThirdStateCheck: Remove,
     ViewColumn: ViewColumn
   };
- 
 
 
-   
+
+
 
   // [
   //   { title: 'Name', field: 'name', backgroundColor: ' #881c1c' },
@@ -197,16 +192,6 @@ export default function Matrix() {
               }, 1000)
             }),
         }}
-        // cellEditable={{
-        //   onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-        //     return new Promise((resolve, reject) => {
-        //       console.log('newValue: ' + newValue);
-        //       setTimeout(resolve, 1000);
-        //     });
-        //   }
-        // }}
-
-
         icons={tableIcons}
       />
     </div >

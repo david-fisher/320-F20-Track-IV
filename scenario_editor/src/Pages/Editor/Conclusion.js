@@ -5,9 +5,6 @@ import Nav from '../../Components/Nav';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import TextField from '@material-ui/core/TextField';
-
-import Suneditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
 import axios from 'axios';

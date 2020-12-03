@@ -1,6 +1,3 @@
-// ********************************************
-// UPDATED. Could be structured better but NOT NEEDED at the moment
-// ********************************************
 import React, { Component, useEffect } from 'react';
 import Nav from '../Components/NavHome'
 import Button from '@material-ui/core/Button';
@@ -39,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: '3px',
     fontSize: '20px',
     backgroundColor: '#881c1c',
-    //maxWidth: '800px'
     width: '500px',
     height: '200px'
   },
@@ -56,7 +52,6 @@ function Home(props) {
       payload: {}
     });
   }
-
 
   useEffect(() => {
     token = location.state ? location.state.token : null;
