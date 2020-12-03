@@ -21,7 +21,7 @@ const pagesReducer = (state = initialPages, action) => {
                 return [...state, action.payload]
             }
             return state
-        case 'ADD_CONSEQUENCES':
+        case 'ADD_CONCLUSION':
             console.log(action.payload.name)
             let consequencesIndex = state.findIndex(item => item.name == action.payload.name);
             if (consequencesIndex === -1) {
