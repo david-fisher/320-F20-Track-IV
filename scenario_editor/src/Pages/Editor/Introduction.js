@@ -13,9 +13,9 @@ import SunEditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import axios from 'axios';
 import { universalPost, universalFetch, universalDelete } from '../../Components/Calls'
+import scenarioReducer from '../../Reducers/scenarioReducer';
 
 const useStyles = makeStyles((theme) => ({
-
   multiText: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Introduction(props) {
 
+  console.log("PROPS IN INTRODUCTION: " + JSON.stringify(props.items))
 
   // Look into custom hooks for fetching and setResponse
 
@@ -43,6 +44,7 @@ function Introduction(props) {
   function addIntroduction() {
     const introComplete = {
       "type": type,
+      "name": name,
       "order": order,
       "body_text": bodyText,
     }
@@ -53,12 +55,14 @@ function Introduction(props) {
   }
 
   const introNew = {
-    "type": 'Introduction',
-    "order": 0,
+    "name": 'Introduction',
+    "type": 'PLAIN',
+    "order": 1,
     "body_text": " ",
   }
 
   const [type, setType] = useState(introNew.type);
+  const [name, setName] = useState(introNew.name);
   const [order, setOrder] = useState(introNew.order);
   const [bodyText, setBodyText] = useState(introNew.body_text);
 
@@ -150,7 +154,6 @@ function Introduction(props) {
               ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
             ],
             placeholder: "Insert your introduction text here..."
-
           }} />
 
         </b2>
@@ -170,6 +173,24 @@ function Introduction(props) {
 
   );
 }
+
+const mapStateToProps = state => {
+  // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
+  // return { scenarios: state.scenarios, token: state.token }
+  const { items } = state
+  console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
+  return { items: state.scenarioData }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Introduction);
+
+
 // class Introduction extends Component {
 
 //   // const classes = useStyles();
@@ -277,14 +298,3 @@ function Introduction(props) {
 
 // }
 
-const mapStateToProps = state => {
-  return { scenarios: state.scenarios, token: state.token }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Introduction);

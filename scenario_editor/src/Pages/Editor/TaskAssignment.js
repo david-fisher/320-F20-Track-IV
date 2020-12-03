@@ -52,12 +52,14 @@ function TaskAssignment(props) {
 
   const taskNew =
   {
-    "type": 'Task_Assignment',
-    "order": 1,
+    "name": 'TaskAssignment',
+    "type": 'PLAIN',
+    "order": 2,
     "body_text": " ",
   }
 
   const [type, setType] = useState(taskNew.type);
+  const [name, setName] = useState(taskNew.name);
   const [order, setOrder] = useState(taskNew.order);
   const [bodyText, setBodyText] = useState(taskNew.body_text);
 

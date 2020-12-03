@@ -8,7 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,10 +16,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ScenarioCard(props) {
+function ScenarioCard(props) {
   const classes = useStyles();
   const { data } = props;
   const { scenarioID, name, due_date, description, additional_data, status } = data;
+
+  function updateScenarioData() {
+    const scenarioData = {
+      "id": scenarioID,
+      "name": name,
+      "due_date": due_date,
+      "description": description,
+      "additional_data": additional_data,
+      "status": status,
+    }
+    console.log("scenarioData in ScenarioCard: "+ JSON.stringify(scenarioData));
+    props.dispatch({
+      type: 'UPDATE_SCENARIO',
+      payload: { ...scenarioData }
+    });
+  }
 
   return (
     <Grid
@@ -44,7 +60,9 @@ export default function ScenarioCard(props) {
         <CardActions>
           {/* THIS SENDS THE DATA FROM THE PROPER SCENARIO TO THE INTRO-HUB. SAME GOES WITH RESULTS.
           MAKE SURE THAT THE DATA IS PROPERLY HANDLED / PASSED DOWN IN THE FUTURE PAGES. */}
-          <Button size="small" color="primary" component={Link} to={{
+
+          {/* NEED: To make the Scenario Data in the redux store update with the correct metadata when Edit is clicked */}
+          <Button size="small" color="primary" onClick={updateScenarioData} component={Link} to={{
             pathname: "/introduction-hub/" + data.scenarioID,
             scenarioData: data
           }}>
@@ -65,3 +83,19 @@ export default function ScenarioCard(props) {
     </Grid>
   );
 }
+
+const mapStateToProps = state => {
+  // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
+  // return { scenarios: state.scenarios, token: state.token }
+  const { items } = state
+  console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
+  return { items: state.scenarioData }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScenarioCard);

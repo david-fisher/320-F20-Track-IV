@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
     marginLeft: theme.spacing(4),
     width: '100ch',
-},
+  },
   header: {
     marginTop: theme.spacing(1),
     textAlign: 'center',
@@ -45,10 +45,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Home() {
+function Home(props) {
   const location = useLocation();
   const dispatch = useDispatch();
   let token;
+
+  function resetStates() {
+    props.dispatch({
+      type: 'RESET_DATA',
+      payload: {}
+    });
+  }
+
 
   useEffect(() => {
     token = location.state ? location.state.token : null;
@@ -76,24 +84,26 @@ function Home() {
       <div className={classes.buttonContainer} >
         <div>
           <Link to="/new-scenario">
-          <Button
-            className={classes.optionButton}
-          >
-            <Link to="/new-scenario">
-              Create a New Scenario
+            <Button
+            // Resets the redux store states to their initial values, used for testing
+              // onClick={resetStates}
+              className={classes.optionButton}
+            >
+              <Link to="/new-scenario">
+                Create a New Scenario
             </Link>
-          </Button>{' '}
+            </Button>{' '}
           </Link>
         </div>
         <div>
           <Link to="/dashboard">
-          <Button
-            className={classes.optionButton}
-          >
-            <Link to="/dashboard">
-              View/Edit Existing Scenarios
+            <Button
+              className={classes.optionButton}
+            >
+              <Link to="/dashboard">
+                View/Edit Existing Scenarios
             </Link>
-          </Button>
+            </Button>
           </Link>
         </div>
       </div>
@@ -102,19 +112,15 @@ function Home() {
   );
 }
 
-// const mapStateToProps = state => {
-//   return { scenarios: state.scenarios }
-// }
-//
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     dispatch
-//   }
-// }
+const mapStateToProps = state => {
+  // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
+  return { state }
+}
 
-// The connect function takes another function as an argument: mapStateToProps.
-// mapStateToProps determines what state from our store we want to pull into our component.
-// In this case, we're specifying to only pull our state's posts property.
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Home);
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

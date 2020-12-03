@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './PlayerResponses.css';
 import Nav from '../../Components/Nav'
 import Button from '@material-ui/core/Button';
@@ -11,55 +11,67 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import './Introduction.css';
 
-const useStateWithLocalStorage = localStorageKey => {
-  const [initialReflection, setInitialReflection] = React.useState(
-    localStorage.getItem(localStorageKey) || ''
-  );
+const useStyles = makeStyles((theme) => ({
 
-  React.useEffect(() => {
-    localStorage.setItem(localStorageKey, initialReflection);
-  }, [initialReflection]);
+  multiText: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+  header: {
+    margin: theme.spacing(4)
+  },
+  root: {
+    margin: theme.spacing(1),
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    width: '100ch',
+  },
+}));
 
-  return [initialReflection, setInitialReflection];
-};
+function FinalReflection(props) {
 
-class FinalReflection extends Component {
+  const classes = useStyles();
 
-  // const classes = useStyles();
-  constructor() {
-    super()
-    this.state = {
-      scenarioID: 3,
-      initial_reflection: localStorage.getItem("RS_SCENARIO__middleReflection"),
-    }
-
-    this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
-
+  const middleReflectionNew = {
+    "name": 'MiddleReflection',
+    "type": 'PLAIN',
+    "order": 7,
+    "body_text": " ",
   }
-  handleEditorSubmit(event) {
-    // alert("Initial Reflection has been submitted")
-    const headers = {
-      'Authorization': `Bearer ${this.props.token}`,
-      'Accept': 'application/json'
+
+  function addMiddleReflection() {
+    const middleReflectionComplete = {
+      "type": type,
+      "name": name,
+      "order": order,
+      "body_text": bodyText,
     }
-    event.preventDefault();
-    // I THINK THIS IS HOW TO MAKE CALLS TO A PARTICULAR ID LETS GOOOO
-    axios.post('api/v1/simulation/' + this.state.scenarioID + '/additional-reflection', {
-      simulation_title: this.state.initial_reflection,
-    }, { headers: headers }).then(res => {
-      // debugger;
-      alert(`Simulation ID: ${res.data.simulation_id}`)
+    props.dispatch({
+      type: 'ADD_MIDDLE_REFLECTION',
+      payload: { ...middleReflectionComplete }
     });
   }
 
+  const [type, setType] = useState(middleReflectionNew.type);
+  const [name, setName] = useState(middleReflectionNew.name);
+  const [order, setOrder] = useState(middleReflectionNew.order);
+  const [bodyText, setBodyText] = useState(middleReflectionNew.body_text);
 
-  render() {
-    return (
-      <div >
-        <Nav />
+  const handleBodyChange = (body) => {
+    setBodyText(body);
+    console.log(bodyText);
+  };
+
+
+  return (
+    <div >
+      <Nav />
+      <div className={classes.root}>
         <div >
           <div >
-            <h1>Reflections</h1>
+            <h1>Middle Reflection</h1>
             <b1>
               Please choose the reflection to create below:
         </b1>
@@ -74,26 +86,38 @@ class FinalReflection extends Component {
         </div>
 
         <div >
-          <div className='text-editor'>
-            <SunEditor name="my-editor" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
-              height: 600,
+          <b2 className='text-editor'>
+            <SunEditor name="my-editor" onChange={handleBodyChange} setOptions={{
+              height: 250,
               width: '100%',
               //maxWidth: '1000px',
-              buttonList: buttonList.complex,
-              placeholder: "Insert your middle reflection summary here..."
+              buttonList: [
+                ['undo', 'redo'],
+                ['font', 'fontSize', 'formatBlock'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                '/', // Line break
+                ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
+              ],
+              placeholder: "Insert your middle reflection text here..."
 
             }} />
+
+          </b2>
+          <b2 className="second-body">
             <div>
-              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={this.handleEditorSubmit}>SAVE</Button>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addMiddleReflection} >SAVE</Button>
             </div>
-          </div>
+            <div>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/stakeholders">NEXT</Button>
+            </div>
+          </b2>
         </div>
       </div>
+    </div>
 
-    );
-  }
+  );
 }
-
 
 const mapStateToProps = state => {
   return { scenarios: state.scenarios, token: state.token }

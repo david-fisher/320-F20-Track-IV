@@ -45,9 +45,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function IntroductionHub() {
+function IntroductionHub(props) {
 
   const classes = useStyles();
+
+  // const { data } = props;
+  // const { scenarioID, name, due_date, description, additional_data, status } = data;
+
+  // console.log("Props in intro hub: "+ scenarioID)
+
   return (
   <div >
       <Nav />

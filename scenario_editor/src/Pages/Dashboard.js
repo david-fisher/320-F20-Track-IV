@@ -14,11 +14,6 @@ import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { universalPost, universalFetch, universalDelete } from '../Components/Calls'
 
-
-
-// Instead of using .css files, we stylize our stuff using "useStyles" and "makeStyles", functions of materialUI
-// Very similar to .css files, just slightly different format.
-// To see how they are assigned to differnt elements on this page, look for "className={classes.someTextHere}"
 const useStyles = makeStyles((theme) => ({
     page: {
         height: '100%',
@@ -83,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
 class ScenarioGrid extends Component {
 
 
+    // This scenario grid should be created out of the response returned from an axios call to /dashboard
+
     constructor(props) {
         super(props);
 
@@ -93,9 +90,7 @@ class ScenarioGrid extends Component {
         let draftScenarios = this.scenarios.drafts;
         let closedScenarios = this.scenarios.closed;
         let openScenarios = this.scenarios.open;
-        // let draftScenarios = this.scenarios.filter(data => (data.status === false));
-        // let openScenarios = this.scenarios.filter(data => (data.draft === true && data.open === true));
-        // let closedScenarios = this.scenarios.filter(data => (data.draft === true && data.open === false));
+
         this.state = {
             draft: draftScenarios || [],
             open: openScenarios || [],
@@ -120,8 +115,6 @@ class ScenarioGrid extends Component {
             closed: closedScenarios || [{ "id": 3, "name": 'title3', "due_date": '12-12-2020', "description": 'desc', "additional_data": '', "status": 'CLOSED' }]
         });
     }
-
-
 
     // Potentially don't need vars draft, open, and closed anymore
     render() {
@@ -165,12 +158,6 @@ class ScenarioGrid extends Component {
                         spacing={2}
                         direction="row"
                     >
-                        {/* "draftScenarios", below in brackets, acts like a component
-                  (not sure if it is or isn't one, beyond my level of understanding).
-                  But since it is currently comprised of a bunch of ScenarioCards that were
-                  assigned to it in our above code, it displays all the ScenarioCards inside "draftScenarios"
-                  and uses the styles found in the ScenarioCard.js file
-                  */}
                         {draftScenarios}
                     </Grid>
                 </div>
@@ -180,7 +167,7 @@ class ScenarioGrid extends Component {
                 }}>
                     <Typography variant="h4">
                         Open Scenarios:
-              </Typography>
+                    </Typography>
                     <Grid
                         container
                         spacing={2}
@@ -192,7 +179,6 @@ class ScenarioGrid extends Component {
                             flexDirection: 'column'
                         }}
                     >
-                        {/* Same as draftScenarios above */}
                         {openScenarios}
                     </Grid>
                 </div>
@@ -214,48 +200,17 @@ class ScenarioGrid extends Component {
                         spacing={2}
                         direction="row"
                     >
-                        {/* Same as draftScenarios above */}
                         {closedScenarios}
                     </Grid>
 
                 </div>
-                {/* <div>
-                    <Button variant="contained" color="primary" aria-label="contained primary button group">
-                        <Link to="/new-scenario">
-                            Create a New Scenario
-                        </Link>
-                    </Button>{' '}
-                </div> */}
             </Container>
 
         );
     }
 }
 
-const mapStateToProps = state => {
-    return { scenarios: state.scenarios, token: state.token }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        dispatch
-    }
-}
-
-function Dashboard() {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { data: null }
-    // }
-    // async componentDidMount() {
-    //     const headers = {
-    //         'Authorization': `Bearer ${this.props.token}`,
-    //         'Accept': 'application/json'
-    //     }
-    //     let res = await axios.get(`/api/v1/dashboard`, { headers: headers });
-    //     // debugger;
-    //     this.setState({ data: res.data });
-    // }
+function Dashboard(props) {
 
     // const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
     //     loading: false,
@@ -281,7 +236,6 @@ function Dashboard() {
     //     }
     // }, [])
 
-
     return (
         <div style={{
             height: '100%',
@@ -289,16 +243,21 @@ function Dashboard() {
             minHeight: '100vh',
             backgroundColor: 'white',
         }}>
-
             <Nav />
-
             <ScenarioGrid />
-
-
         </div>
     )
 }
 
+const mapStateToProps = state => {
+    return { scenarios: state.scenarios, token: state.token }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        dispatch
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
