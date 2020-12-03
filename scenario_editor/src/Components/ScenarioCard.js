@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +9,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,25 +21,39 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+
+// const [state, setState] = React.useState({
+//   age: '',
+//   name: 'hai',
+// });
+
+
+
 function ScenarioCard(props) {
   const classes = useStyles();
-  const data = props.data;
+  // const data = props.data;
   // console.log("PROPS: " + JSON.stringify(data))
-  const { id, name, due_date, description, additional_data, status } = data;
+  // const { id, name, due_date, description, additional_data, status } = data;
+
+  const [data, setData] = useState(props.data);
+
+  const handleChange = (event) => {
+    console.log(data.status);
+    data.status = event.target.value;
+    console.log(data.status);
+
+  };
 
   function updateScenarioData() {
 
-    // let testID = data.findIndex(item => item.id == 0)
-    // console.log("props data: " + JSON.stringify(data))
-    // console.log(testID)
-
     const scenarioData = {
-      "id": id,
-      "name": name,
-      "due_date": due_date,
-      "description": description,
-      "additional_data": additional_data,
-      "status": status,
+      "id": data.id,
+      "name": data.name,
+      "due_date": data.due_date,
+      "description": data.description,
+      "additional_data": data.additional_data,
+      "status": data.status,
     }
     console.log("scenarioData in ScenarioCard: " + JSON.stringify(scenarioData));
     props.dispatch({
@@ -45,21 +64,21 @@ function ScenarioCard(props) {
 
   return (
     <Grid
-      key={id}
+      key={data.id}
       item
       xs
     >
       <Card raised='true' className={classes.root}>
         <CardActionArea component={Link} to={{
-          pathname: "/new-scenario/" + id,
+          pathname: "/new-scenario/" + data.id,
           scenarioData: data
         }}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {name}
+              {data.name}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {description}
+              {data.description}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -69,7 +88,7 @@ function ScenarioCard(props) {
 
           {/* NEED: To make the Scenario Data in the redux store update with the correct metadata when Edit is clicked */}
           <Button size="small" color="primary" onClick={updateScenarioData} component={Link} to={{
-            pathname: "/introduction-hub/" + id,
+            pathname: "/introduction-hub/" + data.id,
             scenarioData: data
           }}>
             Edit
@@ -79,11 +98,27 @@ function ScenarioCard(props) {
           </Button>
 
           <Button size="small" color="primary" component={Link} to={{
-            pathname: "/data/" + id,
+            pathname: "/data/" + data.id,
             scenarioData: data
           }}>
             Data
           </Button>
+          <FormControl className={classes.formControl}>
+            <NativeSelect
+              className={classes.selectEmpty}
+              // value={data.status}
+              onChange={handleChange}
+              inputProps={data.status}
+            >
+              {/* value={data.status} */}
+              <option value={data.status} disabled>
+              </option>
+              <option value={'draft'}>Draft</option>
+              <option value={'open'}>Open</option>
+              <option value={'closed'}>Closed</option>
+            </NativeSelect>
+            <FormHelperText>Condition</FormHelperText>
+          </FormControl>
         </CardActions>
       </Card>
     </Grid>
