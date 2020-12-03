@@ -1,18 +1,12 @@
 
 import React, { Component, useState, useEffect } from 'react';
-import Input from '@material-ui/core/Input';
 import {
-  fade,
-  ThemeProvider,
   withStyles,
   makeStyles,
-  createMuiTheme,
 } from '@material-ui/core/styles';
 import { TextField } from "@material-ui/core";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from "material-ui/RaisedButton";
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 export default class Form extends React.Component {
@@ -30,7 +24,7 @@ export default class Form extends React.Component {
     this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
   }
   handleEditorChange(event) {
-    this.setState({contents: event})
+    this.setState({ contents: event })
   }
 
   handleEditorSubmit(event) {
@@ -45,7 +39,7 @@ export default class Form extends React.Component {
       simulation_desc: this.state.scenario_desc,
       simulation_introduction: this.state.contents,
       simulation_ua: this.state.scenario_ua
-    }, {headers: headers}).then(res => {
+    }, { headers: headers }).then(res => {
       // debugger;
       alert(`Simulation ID: ${res.data.simulation_id}`)
     });
@@ -71,38 +65,39 @@ export default class Form extends React.Component {
     e.preventDefault();
     this.props.onSubmit(this.state);
     this.setState({
-      ORquestion:"",
+      ORquestion: "",
     });
   };
   render() {
     return (
-       <MuiThemeProvider>
-      <form>
+      <MuiThemeProvider>
+        <form>
           {/* <Grid item 
           //xs={10}
           justify='center'> */}
-      <TextField 
-          name="ORquestion"
-          multiline
-          fullWidth
-          id="ORquestion" 
-          label="Open Response Question" 
-          variant="outlined" 
-          placeholder='Enter open response question here'
-          value={this.state.ORquestion}
-          onChange={e => this.change(e)}
-          style={{
+          <TextField
+            name="ORquestion"
+            multiline
+            fullWidth
+            id="ORquestion"
+            label="Open Response Question"
+            variant="outlined"
+            placeholder='Enter open response question here'
+            value={this.state.ORquestion}
+            onChange={e => this.change(e)}
+            style={{
               width: 1000
               //alignItems:'center'
             }}
-          rows={18}
-          //margin="normal"
-              InputLabelProps={{
-              shrink: true }}
+            rows={18}
+            //margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
           />
           {/* </Grid> */}
           < br />
-        {/* <TextField
+          {/* <TextField
           name="response"
           id="responses"
           label="Question Responses"
@@ -122,31 +117,29 @@ export default class Form extends React.Component {
           }}
           /> */}
           <br />
-          <p> </p>
-        <center>
-        <Button
-        variant="outlined"
-        style={{ 
-        backgroundColor:'#881c1c',
-        color: 'white',
-        marginRight: 100
-        }}
-        //onClick={e => this.onSubmit(e)}>
-        onClick={e => this.handleEditorSubmit(e)}>
-          Add Response
+          <center>
+            <Button
+              variant="outlined"
+              style={{
+                backgroundColor: '#881c1c',
+                color: 'white',
+                marginRight: 100
+              }}
+              onClick={e => this.handleEditorSubmit(e)}>
+              Add Response
           </Button>
 
-          <Button  
-            variant="contained" 
-            color="primary" 
-            href="#contained-buttons"
-            size='medium'  
+            <Button
+              variant="contained"
+              color="primary"
+              href="#contained-buttons"
+              size='medium'
             >
-            Submit
+              Submit
           </Button>
           </center>
-      </form>
-       </MuiThemeProvider>
+        </form>
+      </MuiThemeProvider>
     );
   }
 }
