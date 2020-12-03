@@ -24,25 +24,25 @@ const useStateWithLocalStorage = localStorageKey => {
   return [value2, setValue2];
 };
 const useStateWithLocalStorage3 = localStorageKey => {
-  const [value3, setValue3] = React.useState(
+  const [descValue, setdescValue] = React.useState(
     localStorage.getItem(localStorageKey) || ''
   );
 
   React.useEffect(() => {
-    localStorage.setItem(localStorageKey, value3);
-  }, [value3]);
+    localStorage.setItem(localStorageKey, descValue);
+  }, [descValue]);
 
-  return [value3, setValue3];
+  return [descValue, setDescValue];
 };
 
 const NewScenario = () => {
   // const history = useHistory();
 
   const [value2, setValue2] = useStateWithLocalStorage('RS_SCENARIO__title');
-  const [value3, setValue3] = useStateWithLocalStorage('RS_SCENARIO__description');
+  const [descValue, setDescValue] = useStateWithLocalStorage('RS_SCENARIO__description');
 
   const onChange2 = event => setValue2(event.target.value);
-  const onChange3 = event => setValue3(event.target.value);
+  const onChange3 = event => setDescValue(event.target.value);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -81,7 +81,7 @@ const NewScenario = () => {
             label="Scenario Description"
             variant="outlined"
             placeholder='Enter scenario description here'
-            value={value3}
+            value={descValue}
             onChange={onChange3}
             style={{
               marginTop: 75}}
