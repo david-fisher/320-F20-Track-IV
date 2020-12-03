@@ -60,9 +60,9 @@ function sendLogInToServer(event, history){
       }
     });
   });
-  // history.push({
-  //   pathname: "/home"
-  // });
+  history.push({
+    pathname: "/home"
+  });
 }
 
 export default function SignIn() {
