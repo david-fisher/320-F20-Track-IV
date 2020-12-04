@@ -3,10 +3,10 @@ const pages = require("../pages");
 const conversationTaskPages = require("../conversation_task");
 
 const getConversationPageGroup = async function (scenarioID) {
-  const page = await pages.getPagesBy({
+  const page = (await pages.getPagesBy({
     scenarioID,
     order: pageOrder.CONVERSATION,
-  })[0];
+  }))[0];
   const convTask = await conversationTaskPages.getConversationTask(page.id);
 
   return {

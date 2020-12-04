@@ -26,9 +26,9 @@ const getPromptsBy = async function ({ pageID = null }) {
   return rows;
 };
 
-const createPrompt = async function (pageID, prompt) {
-  const query = "INSERT INTO prompt VALUES($1, $2, DEFAULT) RETURNING *";
-  const { rows } = await pool.query(query, [pageID, prompt]);
+const createPrompt = async function (pageID, prompt, promptNum) {
+  const query = "INSERT INTO prompt VALUES($1, $2, $3) RETURNING *";
+  const { rows } = await pool.query(query, [pageID, prompt, promptNum]);
   return rows.length > 0 ? rows[0] : null;
 };
 

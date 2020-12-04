@@ -12,45 +12,49 @@ router.post(
   auth.isAuthenticated,
   async (req, res) => {
     const {
-      simulation_title,
-      simulation_desc,
-      simulation_introduction,
+      name: simulation_title,
+      description: simulation_desc,
+      due_date: due_date_string,
+      status,
+      additional_data
     } = req.body;
-
-    // Create Scenario
-    // 
 
     let scenario;
     try {
-      const fortnightAway = new Date(Date.now() + 12096e5);
+      const due_date = new Date(due_date_string);
+
       scenario = await db.scenario.createScenario(
         simulation_title,
-        fortnightAway,
+        due_date,
         simulation_desc,
-        "DRAFT",
-        "<additional data>"
+        status || "DRAFT",
+        additional_data || "<additional data>"
       );
+      await db.partof.createConnectionOfScenarioAndCourse(scenario.id, 1);
+      res.json({
+          success: true,
+          simulation_id: scenario.id,
+      });
     } catch (error) {
       res.status(httpStatusCode.failed.BAD_REQUEST);
       return res.json(createInvalidResponse(error.message));
     }
-
-    try {
-      await db.pageGroup.intro.createIntroPageGroup(
-        scenario.id,
-        simulation_introduction
-      );
-      db.partof.createConnectionOfScenarioAndCourse(scenario.id, 3); // TODO: 3 must be changed to real course id
-
-      res.status(httpStatusCode.success.CREATED);
-      res.json({
-        success: true,
-        simulation_id: scenario.id,
-      });
-    } catch (error) {
-      res.status(httpStatusCode.failed.BAD_REQUEST);
-      res.json(createInvalidResponse(error.message));
-    }
+    // try {
+    //   await db.pageGroup.intro.createIntroPageGroup(
+    //     scenario.id,
+    //     simulation_introduction
+    //   );
+    //   db.partof.createConnectionOfScenarioAndCourse(scenario.id, 3); // TODO: 3 must be changed to real course id
+    //
+    //   res.status(httpStatusCode.success.CREATED);
+    //   res.json({
+    //     success: true,
+    //     simulation_id: scenario.id,
+    //   });
+    // } catch (error) {
+    //   res.status(httpStatusCode.failed.BAD_REQUEST);
+    //   res.json(createInvalidResponse(error.message));
+    // }
   }
 );
 

@@ -7,7 +7,7 @@ const getInitialReflectionPageGroup = async function (scenarioID) {
     scenarioID,
     order: pageOrder.INITIAL_REFLECTION,
   }))[0];
-  
+
   return {
     [pageType.PLAIN]: page,
     [pageType.PROMPT]: await promptPages.getPromptsBy({ pageID: page.id }),
@@ -31,7 +31,7 @@ const createInitialReflectionPageGroup = async function (
   return {
     [pageType.PLAIN]: page,
     [pageType.PROMPT]: await Promise.all(
-      prompts.map((prompt) => promptPages.createPrompt(page.id, prompt))
+      prompts.map((prompt, ind) => promptPages.createPrompt(page.id, prompt, ind+1))
     ),
     [pageType.MCQ]: null,
     [pageType.CONV]: null,

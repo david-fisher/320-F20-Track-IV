@@ -3,10 +3,10 @@ const pages = require("../pages");
 
 const getSummaryPageGroup = async function (scenarioID) {
   return {
-    [pageType.PLAIN]: await pages.getPagesBy({
+    [pageType.PLAIN]: (await pages.getPagesBy({
       scenarioID,
       order: pageOrder.SUMMARY,
-    })[0],
+    }))[0],
     [pageType.PROMPT]: null,
     [pageType.MCQ]: null,
     [pageType.CONV]: null,

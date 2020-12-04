@@ -42,6 +42,7 @@ const getPagesBy = async function ({
 
 const createPage = async function (order, type, bodyText, scenarioID) {
   // returns ID of newly created page. If already exists, throw error.
+  // console.log(scenarioID);
   const pages = await getPagesBy({ order, type, scenarioID });
 
   if (pages.length > 0) {

@@ -3,10 +3,10 @@ const pages = require("../pages");
 
 const getConclusionPageGroup = async function (scenarioID) {
   return {
-    [pageType.PLAIN]: await pages.getPagesBy({
+    [pageType.PLAIN]: (await pages.getPagesBy({
       scenarioID,
       order: pageOrder.CONCLUSION,
-    })[0],
+    }))[0],
     [pageType.PROMPT]: null,
     [pageType.MCQ]: null,
     [pageType.CONV]: null,

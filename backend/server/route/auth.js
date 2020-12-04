@@ -3,13 +3,33 @@ const express = require("express");
 const { auth, headers } = require("../middleware");
 const router = express.Router();
 
+const ACCOUNTS = {
+  'instructor1@umass.edu': 'GoUMass!'
+}
+
+const UIDS = {
+  'instructor1@umass.edu': 4
+}
+
 router.post(
   "/login/callback",
   headers.areHeadersValid,
   auth.isNotAuthenticated,
   (req, res, next) => {
     // TODO: Check SAML properties.
-    const userID = parseInt(req.body.userID) || 0; // Temporary user ID before SAML is implelmented
+    let userID = -1; // Temporary user ID before SAML is implelmented
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if(ACCOUNTS[email] && ACCOUNTS[email] === password){
+      userID = UIDS[email];
+    }else{
+      res.status(401);
+      res.json({"error": "Invalid auth credentials."});
+      return;
+    }
+
     const token = jwt.sign(
       {
         role: "instructor",

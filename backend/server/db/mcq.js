@@ -5,9 +5,9 @@ const getMcq = async function (pageID) {
   const { rows } = await pool.query(query, [pageID]);
   return rows.length > 0 ? rows[0] : null;
 };
-const createMcq = async function (pageID, content) {
-  const query = "INSERT INTO mcq VALUES($1, $2) RETURNING *";
-  const { rows } = await pool.query(query, [pageID, content]);
+const createMcq = async function (pageID) {
+  const query = "INSERT INTO mcq VALUES($1) RETURNING *";
+  const { rows } = await pool.query(query, [pageID]);
   return rows.length > 0 ? rows[0] : null;
 };
 

@@ -27,6 +27,7 @@ const getQuestionsBy = async function ({ mcqID = null }) {
 };
 
 const createQuestion = async function (mcqID, question) {
+  console.log("WHEE");
   const query = "INSERT INTO question VALUES(DEFAULT, $1, $2) RETURNING *";
   const { rows } = await pool.query(query, [question, mcqID]); // watch out for order of values!
   return rows.length > 0 ? rows[0] : null;

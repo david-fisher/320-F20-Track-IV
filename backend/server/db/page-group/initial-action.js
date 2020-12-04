@@ -34,13 +34,16 @@ const createInitialActionPageGroup = async function (
   questionContent,
   mcqOptionContents
 ) {
+  // console.log(pageOrder.INIT_ACTION, pageType.MCQ, text, scenarioID);
   const page = await pages.createPage(
     pageOrder.INIT_ACTION,
     pageType.MCQ,
     text,
     scenarioID
   );
-  const mcq = await mcqPages.createMcq(page.id, mcqContent);
+  // console.log(page.id, mcqContent);
+  const mcq = await mcqPages.createMcq(page.id);
+  // console.log(mcq.id, questionContent);
   const quest = await question.createQuestion(mcq.id, questionContent);
   const mcqOptions = await Promise.all(
     mcqOptionContents.map((option) =>
@@ -51,7 +54,7 @@ const createInitialActionPageGroup = async function (
   return {
     [pageType.PLAIN]: page,
     [pageType.PROMPT]: await Promise.all(
-      prompts.map((prompt) => promptPages.createPrompt(page.id, prompt))
+      prompts.map((prompt, ind) => promptPages.createPrompt(page.id, prompt, ind+1))
     ),
     [pageType.MCQ]: {
       mcq,

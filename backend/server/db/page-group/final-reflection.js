@@ -3,10 +3,10 @@ const pages = require("../pages");
 const promptPages = require("../prompt");
 
 const getFinalReflectionPageGroup = async function (scenarioID) {
-  const page = await pages.getPagesBy({
+  const page = (await pages.getPagesBy({
     scenarioID,
     order: pageOrder.FINAL_REFLECTION,
-  })[0];
+  }))[0];
   return {
     [pageType.PLAIN]: page,
     [pageType.PROMPT]: await promptPages.getPromptsBy({ pageID: page.id }),

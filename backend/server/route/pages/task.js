@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router = require("express").Router({ mergeParams: true });
 const db = require("../../db");
 
 const { auth, headers } = require("../../middleware");
@@ -37,6 +37,7 @@ router
       }
 
       try {
+        console.log(scenarioID);
         const taskPageGroup = await db.pageGroup.task.createTaskPageGroup(
           scenarioID,
           bodyText
