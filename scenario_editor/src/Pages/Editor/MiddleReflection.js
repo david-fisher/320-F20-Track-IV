@@ -34,6 +34,37 @@ function FinalReflection(props) {
 
   const classes = useStyles();
 
+  function addMiddleReflection(history) {
+    const middleComplete = {
+      "body_text": bodyText,
+      "prompts": [q1, q2],
+      "content": "",
+      "question": "",
+      "options": [
+        q1,
+        q2
+      ]
+    }
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/middle-reflection`, { "body_text": initialComplete.body_text, "prompts": initialComplete.prompts }, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      props.dispatch({
+        type: 'ADD_MIDDLE_REFLECTION',
+        payload: { ...middleComplete }
+      });
+      history.push({
+        pathname: "/stakeholders",
+      });
+    }).catch(err => {
+      console.log(err);
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
+    })
+  }
+
+
   const middleReflectionNew = {
     "name": 'MiddleReflection',
     "type": 'PLAIN',
@@ -41,18 +72,18 @@ function FinalReflection(props) {
     "body_text": " ",
   }
 
-  function addMiddleReflection() {
-    const middleReflectionComplete = {
-      "type": type,
-      "name": name,
-      "order": order,
-      "body_text": bodyText,
-    }
-    props.dispatch({
-      type: 'ADD_MIDDLE_REFLECTION',
-      payload: { ...middleReflectionComplete }
-    });
-  }
+  // function addMiddleReflection() {
+  //   const middleReflectionComplete = {
+  //     "type": type,
+  //     "name": name,
+  //     "order": order,
+  //     "body_text": bodyText,
+  //   }
+  //   props.dispatch({
+  //     type: 'ADD_MIDDLE_REFLECTION',
+  //     payload: { ...middleReflectionComplete }
+  //   });
+  // }
 
   const [type, setType] = useState(middleReflectionNew.type);
   const [name, setName] = useState(middleReflectionNew.name);
