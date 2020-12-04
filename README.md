@@ -3,7 +3,8 @@
 This track is the integration between Rebel Scrum (front end) and Backend Babes (backend) for the scenario editor in the Ethics Simulator application. After starting the application locally, you can navigate to localhost:3000 in order to test and play around with the website. Most of the website is functional: You can create a scenario and edit them accordingly. 
 
 The front end and backend use the axios library to handle API calls. The repository here contains scripts for the front-end of the scenario editors. These were created in React.
-
+ 
+The branch used in the demo was `rs-int-v3-cleaned`
 
 ## Cloning Instructions
 
