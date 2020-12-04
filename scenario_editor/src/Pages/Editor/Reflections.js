@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import './PlayerResponses.css';
 import Nav from '../../Components/Nav'
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,8 @@ import 'suneditor/dist/css/suneditor.min.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import './Introduction.css';
-
+import { baseURL } from '../../Components/Calls'
+import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
 
   multiText: {
@@ -34,11 +35,62 @@ function Reflections(props) {
 
   const classes = useStyles();
 
+  useEffect(() => {
+    axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      console.log(res)
+    });
+
+    // if (!response) {
+
+    //   console.log("RESPONSE: " + response)
+    //   // console.log("CUR PAGE: "+props.pages.)
+    //   props.dispatch({
+    //     type: 'ADD_INTRODUCTION',
+    //     payload: { response }
+    //   });
+    // }
+  }, [])
+
+  function addInitialReflection(history) {
+    const introComplete = {
+      "type": type,
+      "name": name,
+      "order": order,
+      "body_text": bodyText,
+    }
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/introduction`, { "body_text": introComplete.body_text }, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      // runs the "type" aka function ADD_INTRODUCTION in pagesReducer.
+      props.dispatch({
+        type: 'ADD_INITIAL_REFLECTION',
+        payload: { ...introComplete }
+      });
+      history.push({
+        pathname: "/reflections",
+      });
+    }).catch(err => {
+      console.log(err);
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
+    })
+  }
+
+
+
   const initialReflectionNew = {
     "name": 'InitialReflection',
     "type": 'PLAIN',
     "order": 3,
     "body_text": " ",
+    "questions": [" "],
   }
 
   function addReflection() {
@@ -47,6 +99,7 @@ function Reflections(props) {
       "name": name,
       "order": order,
       "body_text": bodyText,
+      "questions": questionsText,
     }
     props.dispatch({
       type: 'ADD_INITIAL_REFLECTION',
@@ -58,6 +111,7 @@ function Reflections(props) {
   const [name, setName] = useState(initialReflectionNew.name);
   const [order, setOrder] = useState(initialReflectionNew.order);
   const [bodyText, setBodyText] = useState(initialReflectionNew.body_text);
+  const [questionsText, setQuestionsText] = useState(initialReflectionNew.body_text);
 
   const handleBodyChange = (body) => {
     setBodyText(body);
@@ -104,9 +158,40 @@ function Reflections(props) {
             }} />
 
           </b2>
+          <div className="second-body">
+
+            <TextField
+              id="Delay Prompt"
+              label="Delay Prompt"
+              style={{ margin: 8 }}
+              placeholder="Input your delay prompt here"
+              helperText="This prompt sends the reader to the stakeholder conversations!"
+              fullWidth
+              variant="outlined"
+              multiline
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              id="Go Ahead Prompt"
+              label="Go Ahead Prompt"
+              style={{ margin: 8 }}
+              placeholder="Input your delay prompt here"
+              helperText="This prompt skips the majority of conversations!"
+              fullWidth
+              variant="outlined"
+              multiline
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
           <b2 className="second-body">
             <div>
-              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addReflection} >SAVE</Button>
+              <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addInitialReflection} >SAVE</Button>
             </div>
             <div>
               <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/stakeholders">NEXT</Button>

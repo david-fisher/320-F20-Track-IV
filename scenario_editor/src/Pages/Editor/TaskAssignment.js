@@ -102,7 +102,7 @@ function TaskAssignment(props) {
           <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addTaskAssignment} >SAVE</Button>
         </div>
         <div>
-          <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/introduction-hub">NEXT</Button>
+          <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/user-agreement">NEXT</Button>
         </div>
         <div>
         </div>

@@ -35,17 +35,38 @@ function Introduction(props) {
   const classes = useStyles();
 
   // {props.scenarioData.id}
-  let response = axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/introduction`)
-  if (response != null){
 
-    console.log("RESPONSE: "+response)
-    // console.log("CUR PAGE: "+props.pages.)
-    props.dispatch({
-      type: 'ADD_INTRODUCTION',
-      payload: { response }
-    });  
+  const introNew = {
+    "name": 'Introduction',
+    "type": 'PLAIN',
+    "order": 1,
+    "body_text": " ",
   }
-  
+
+
+  // Error: Page specified with order, type, and scenario already exists.
+  useEffect(() => {
+    axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/introduction`, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      console.log(res)
+    });
+
+    // if (!response) {
+
+    //   console.log("RESPONSE: " + response)
+    //   // console.log("CUR PAGE: "+props.pages.)
+    //   props.dispatch({
+    //     type: 'ADD_INTRODUCTION',
+    //     payload: { response }
+    //   });
+    // }
+  }, [])
+
+
 
   function addIntroduction(history) {
     const introComplete = {
@@ -70,7 +91,7 @@ function Introduction(props) {
       });
     }).catch(err => {
       console.log(err);
-      alert(`Error: ${err.response.data.explanation}`);
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
     })
   }
 
@@ -87,12 +108,7 @@ function Introduction(props) {
   //   });
   // }
 
-  const introNew = {
-    "name": 'Introduction',
-    "type": 'PLAIN',
-    "order": 1,
-    "body_text": " ",
-  }
+  
 
   const [type, setType] = useState(introNew.type);
   const [name, setName] = useState(introNew.name);
@@ -171,7 +187,7 @@ function Introduction(props) {
         <b1 className="introduction-part">Add/Edit Your Introduction Below:</b1>
         <div></div>
         <b2 className="text-editor">
-          <SunEditor name="my-editor" value={introNew.body_text} onChange={handleBodyChange} setOptions={{
+          <SunEditor name="my-editor" setContents={introNew.body_text} onChange={handleBodyChange} setOptions={{
             height: 250,
             width: '100%',
             buttonList: [
@@ -191,7 +207,7 @@ function Introduction(props) {
             <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addIntroduction} >SAVE</Button>
           </div>
           <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/task-assignment">NEXT</Button>
           </div>
           <div>
             {/* <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={Component} >ADD INTRO TO DB</Button> */}

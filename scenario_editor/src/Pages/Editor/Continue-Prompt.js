@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
 import axios from 'axios';
+import { baseURL } from '../../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
   multiText: {
@@ -29,153 +30,145 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class ContinuePrompt extends Component {
+function ContinuePrompt(props) {
 
-  // const classes = useStyles();
-  constructor() {
-    super()
-    this.state = {
-      value: '',
-      scenarioID: 2,
-      contents: '',
-      scenario_title: localStorage.getItem("RS_SCENARIO__title"),
-      scenario_desc: localStorage.getItem("RS_SCENARIO__description"),
-      scenario_ua: localStorage.getItem("RS_SCENARIO__user_agreement"),
+  const classes = useStyles();
+
+  const [summary, setSummary] = useState("Here is a summary of the current situation. As a player, you get to choose to either speak with stakeholders about your dilemma, or go ahead without learning more.");
+  const [opt1, setOpt1] = useState("Talk to stakeholders.");
+  const [opt2, setOpt2] = useState("Continue without talking to stakeholders.");
+
+
+
+  const continuePromptNew = {
+    "summary": "",
+    "questions": [
+      {
+        "question": "",
+        "choices": [
+          "",
+          ""
+        ]
+      },]
+  }
+
+  const handleBodyChange = (body) => {
+    setSummary(body);
+    // console.log(bodyText);
+  };
+
+  function addInitialAction(history) {
+
+    const continuePromptData = {
+      "body_text": summary,
+      "prompts": [],
+      "content": "This is a multiple choice question.",
+      "question": "What initial action will you take?",
+      "options": [
+        opt1,
+        opt2
+      ]
     }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEditorChange = this.handleEditorChange.bind(this);
-    this.handleEditorSubmit = this.handleEditorSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value })
-  }
-
-  // If you'd like your changes to persist (stay in place after page refresh),
-  // you'd want to add your new posts to a database within your reducer function's action handlers.
-  handleSubmit(event) {
-    alert('Content submitted' /*+ this.state.value*/)
-    event.preventDefault()
-    this.props.dispatch({
-      type: 'ADD_SCENARIO',
-      payload: { id: this.state.scenarioID, title: this.state.value }
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-action`, continuePromptData, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      // runs the "type" aka function ADD_INTRODUCTION in pagesReducer.
+      props.dispatch({
+        type: 'ADD_INITIAL_ACTION',
+        payload: { ...continuePromptData }
+      });
+      history.push({
+        pathname: "/reflections",
+      });
+    }).catch(err => {
+      console.log(err);
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
     })
-
-    this.setState({ scenarioID: this.state.scenarioID + 1 })
   }
 
-  handleEditorChange(event) {
-    this.setState({ contents: event })
-  }
-
-  handleEditorSubmit(event) {
-    // alert("Content has been submitted")
-    // Have to again change the editor submit to include the two text fields
-    const headers = {
-      'Authorization': `Bearer ${this.props.token}`,
-      'Accept': 'application/json'
-    }
-    event.preventDefault();
-    axios.post(`/api/v1/simulation/create`, {
-      simulation_title: this.state.scenario_title,
-      simulation_desc: this.state.scenario_desc,
-      simulation_introduction: this.state.contents,
-      simulation_ua: this.state.scenario_ua
-    }, { headers: headers }).then(res => {
-      // debugger;
-      alert(`Simulation ID: ${res.data.simulation_id}`)
-    });
-
-    this.props.dispatch({
-      type: 'ADD_SCENARIO',
-      payload: { id: this.state.scenarioID, title: this.state.contents }
-    });
-    this.setState({ scenarioID: this.state.scenarioID + 1 })
-  }
-
-
-  render() {
-
-    return (
+  return (
+    <div>
+      <Nav />
       <div>
-        <Nav />
-        <div>
-          <h1>Delay or Go Ahead Prompt</h1>
-        </div>
+        <h1>Delay or Go Ahead Prompt</h1>
+      </div>
 
-        <b1 className="introduction-part">
-          Add/Edit your prompt and choices below:
+      <b1 className="introduction-part">
+        Add/Edit your prompt and choices below:
         </b1>
 
 
-        <b2 className="text-editor">
+      <b2 className="text-editor">
 
-          <SunEditor name="continue-prompt" contents={this.state.value} onChange={this.handleEditorChange} setOptions={{
-            height: 250,
-            width: '100%',
-            buttonList: [
-              ['undo', 'redo'],
-              ['font', 'fontSize', 'formatBlock'],
-              ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-              '/', // Line break
-              ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
-              ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
-            ],
-            placeholder: "Insert your main text here..."
+        <SunEditor name="continue-prompt" onChange={handleBodyChange} setOptions={{
+          height: 250,
+          width: '100%',
+          buttonList: [
+            ['undo', 'redo'],
+            ['font', 'fontSize', 'formatBlock'],
+            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+            '/', // Line break
+            ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+            ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
+          ],
+          placeholder: "Insert your main text here..."
 
-          }} />
+        }} />
 
-        </b2>
-        <div className="second-body">
+      </b2>
+      <div className="second-body">
 
-          <TextField
-            id="Delay Prompt"
-            label="Delay Prompt"
-            style={{ margin: 8 }}
-            placeholder="Input your delay prompt here"
-            helperText="This prompt sends the reader to the stakeholder conversations!"
-            fullWidth
-            variant="outlined"
-            multiline
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+        <TextField
+          id="Delay Prompt"
+          label="Delay Prompt"
+          style={{ margin: 8 }}
+          placeholder="Input your delay prompt here"
+          helperText="This prompt sends the reader to the stakeholder conversations!"
+          fullWidth
+          variant="outlined"
+          multiline
+          margin="normal"
+          onChange={e => setOpt1(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
 
-          <TextField
-            id="Go Ahead Prompt"
-            label="Go Ahead Prompt"
-            style={{ margin: 8 }}
-            placeholder="Input your delay prompt here"
-            helperText="This prompt skips the majority of conversations!"
-            fullWidth
-            variant="outlined"
-            multiline
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </div>
-        <b2 className="third-body" >
-          <div>
-            <Button type="editor-submit" title="SAVE" style={{ backgroundColor: '#881c1c', color: "white" }} onClick={this.handleEditorSubmit}>SAVE</Button>
-          </div>
-          <div marginLeft='100px'>
-            <Button type="submit" title="NEXT" style={{ backgroundColor: '#881c1c', color: "white" }} component={Link} to="/introduction-hub">NEXT</Button>
-          </div>
-        </b2>
+        <TextField
+          id="Go Ahead Prompt"
+          label="Go Ahead Prompt"
+          style={{ margin: 8 }}
+          placeholder="Input your delay prompt here"
+          helperText="This prompt skips the majority of conversations!"
+          fullWidth
+          variant="outlined"
+          multiline
+          margin="normal"
+          onChange={e => setOpt2(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
       </div>
+      <b2 className="third-body" >
+        <div>
+          <Button type="editor-submit" title="SAVE" style={{ backgroundColor: '#881c1c', color: "white" }} onClick={addInitialAction}>SAVE</Button>
+        </div>
+        <div marginLeft='100px'>
+          <Button type="submit" title="NEXT" style={{ backgroundColor: '#881c1c', color: "white" }} component={Link} to="/reflections">NEXT</Button>
+        </div>
+      </b2>
+    </div>
 
-    )
-  }
+  )
 }
 
+
 const mapStateToProps = state => {
-  return { scenarios: state.scenarios, token: state.token }
+  return { scenarioData: state.scenarioData, token: state.token, pageData: state.pages }
 }
 
 const mapDispatchToProps = dispatch => {
