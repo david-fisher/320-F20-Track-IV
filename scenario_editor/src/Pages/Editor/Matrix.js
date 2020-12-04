@@ -18,19 +18,27 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import MaterialTable from "material-table";
 import { Button } from '@material-ui/core';
+import Suneditor, { buttonList } from 'suneditor-react';
 
+import AddComment from '@material-ui/icons/AddComment';
+import Modal from '@material-ui/core/Modal';
+
+import SimpleModal from '../../Components/Conversation-Modal';
+import SunEditor from 'suneditor-react';
 
 
 
 function Matrix() {
+
   const { useState } = React;
 
   const initialColumns = [
-    {
-      title: 'Name', field: 'name', backgroundColor: ' #881c1c'
-    },
+    { title: 'Name', field: 'name', backgroundColor: ' #881c1c' },
     { title: 'Description', field: 'description' },
+
   ];
+
+  const [open, setOpen] = React.useState(false);
 
   const [columns, setColumns] = useState(initialColumns);
 
@@ -41,6 +49,11 @@ function Matrix() {
   //   setIssue(text);
   //   console.log(issue)
   // }
+
+
+  function handleClick(event) {
+    alert()
+  }
 
   function handleChange(event) {
     console.log(event.target.value)
@@ -99,6 +112,7 @@ function Matrix() {
     {
       name: 'Kokichi',
       description: 'Expert on Cognition medications',
+      conversation: 'poggers',
       publicSafety: 0,
       userHealth: 0,
       careerBuilding: 0,
@@ -112,6 +126,7 @@ function Matrix() {
     {
       name: 'Raisa',
       description: 'Neurology/cognition researcher',
+      conversation: 'poggers',
       publicSafety: 0,
       userHealth: 0,
       careerBuilding: 0,
@@ -124,6 +139,8 @@ function Matrix() {
     }
   ]);
 
+
+  const [convo, setConvo] = useState(" ");
 
   return (
 
@@ -141,6 +158,11 @@ function Matrix() {
         columns={columns}
 
         data={data}
+        actions={[{
+          icon: AddComment,
+          tooltip: "Edit this stakeholder's conversation",
+          onClick: (event, rowData) => (alert(rowData.conversation))
+        }]}
         options={{
           headerStyle: {
             backgroundColor: '#881c1c',
@@ -194,7 +216,24 @@ function Matrix() {
         }}
         icons={tableIcons}
       />
+      <div>
+        <SunEditor name="my-editor" value={convo} setOptions={{
+          height: 250,
+          width: '100%',
+          buttonList: [
+            ['undo', 'redo'],
+            ['font', 'fontSize', 'formatBlock'],
+            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+            '/', // Line break
+            ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+            ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview']
+          ],
+          placeholder: "Insert your introduction text here..."
+        }} />
+      </div>
     </div >
+
+
 
 
   )
