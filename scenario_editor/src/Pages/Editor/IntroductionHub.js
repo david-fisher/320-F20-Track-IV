@@ -4,6 +4,7 @@ import Nav from '../../Components/Nav'
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
     borderStyle: 'solid',
     borderWidth: '3px',
     fontSize: '20px',
-    backgroundColor: '#881c1c', 
+    backgroundColor: '#881c1c',
     Width: '300px',
     maxWidth: '800px',
     minWidth: '200px',
     Height: '150px'
-    
+
   },
 }));
 
@@ -52,7 +53,8 @@ function IntroductionHub(props) {
   // const { data } = props;
   // const { scenarioID, name, due_date, description, additional_data, status } = data;
 
-  console.log("Props in intro hub: "+ props.scenarioData)
+  console.log("Props in intro hub:", props.scenarioData)
+
 
   return (
   <div >
@@ -73,7 +75,7 @@ function IntroductionHub(props) {
               className={classes.optionButton}
             >
               <Link to="/introduction-text" stlye ={{textDecoration: 'none', color: '#C0C0C0'}}>
-              Introduction Text 
+              Introduction Text
               </Link>
             </Button>{' '}
             </Link>
@@ -83,9 +85,9 @@ function IntroductionHub(props) {
             <Button
               className={classes.optionButton}
             >
-           
+
               Project Task Assignment
-            
+
             </Button>
             </Link>
         </div>
@@ -119,4 +121,14 @@ function IntroductionHub(props) {
   );
 }
 
-export default IntroductionHub;
+const mapStateToProps = state => {
+  return { scenarioData: state.scenarioData }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IntroductionHub);

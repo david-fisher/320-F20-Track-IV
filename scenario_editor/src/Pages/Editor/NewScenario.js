@@ -18,7 +18,7 @@ import axios from 'axios';
 
 
 function NewScenario(props) {
-  function addScenario() {
+  function addScenario(history) {
     const createdScenario = {
       "name": name,
       "due_date": selectedDate,
@@ -31,10 +31,13 @@ function NewScenario(props) {
         'Authorization': `Bearer ${props.token}`
       }
     }).then(res => {
-      console.log(res.data);
+      // console.log(res.data.simulation_id);
       props.dispatch({
-        type: 'UPDATE_SCENARIO',
-        payload: { ...createdScenario }
+        type: 'UPDATE_SCENARIO_ID',
+        payload: res.data.simulation_id
+      });
+      history.push({
+        pathname: "/introduction-hub",
       });
     }).catch(err => {
       console.log(err);
@@ -76,6 +79,8 @@ function NewScenario(props) {
       width: '100ch',
     },
   }));
+
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -149,7 +154,7 @@ function NewScenario(props) {
               marginLeft: 1100,
               //marginBottom: 100
             }}
-            onClick={addScenario}
+            onClick={()=>addScenario(history)}
           >
             Submit
           </Button>

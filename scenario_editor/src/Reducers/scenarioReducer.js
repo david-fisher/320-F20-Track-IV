@@ -2,7 +2,7 @@
 let nextScenarioID = 1;
 
 const initialScenario = {
-    // "id": nextScenarioID,
+    "id": -1,
     // "name": '',
     // "due_date": '12-12-2020',
     // "description": '',
@@ -24,9 +24,10 @@ const scenarioReducer = (state = initialScenario, action) => {
         // Might work?
         case 'UPDATE_SCENARIO':
             console.log(action.payload.type)
-            
-            return action.payload
 
+            return action.payload
+        case 'UPDATE_SCENARIO_ID':
+            return {...state, id: action.payload}
         default:
             return state
     }
