@@ -118,7 +118,7 @@ function UserAgreement(props) {
         </b2>
         <b2 className="second-body">
           <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addUserAgreement}>SAVE</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addUA}>SAVE</Button>
           </div>
           <div>
             <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addUserAgreement} component={Link} to="/continue-prompt">NEXT</Button>
