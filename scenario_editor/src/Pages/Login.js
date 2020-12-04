@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { universalPost, universalFetch, universalDelete } from '../Components/Calls'
 import { connect } from 'react-redux';
+import { baseURL } from '../Components/Calls';
 
 // POST /api/v1/auth/login/callback
 // The HTTP header is Authorization: bearer [token]
@@ -103,7 +104,7 @@ function SignIn(props) {
     data.email = 'instructor1@umass.edu';
     data.password = 'GoUMass!';
     console.log(event)
-    axios.post(`http://15db5c4398d8.ngrok.io/api/v1/auth/login/callback`, data, {
+    axios.post(`${baseURL}/api/v1/auth/login/callback`, data, {
       "headers": {
         Accept: 'application/json'
       }
