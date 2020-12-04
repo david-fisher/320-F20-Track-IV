@@ -25,6 +25,7 @@ import Modal from '@material-ui/core/Modal';
 
 import SimpleModal from '../../Components/Conversation-Modal';
 import SunEditor from 'suneditor-react';
+import { useRef } from "react";
 
 
 
@@ -38,8 +39,12 @@ function Matrix() {
 
   ];
 
+  const editorRef = useRef();
+
   const [open, setOpen] = React.useState(false);
 
+  const[foo,setConvo] = useState('mycontents');
+ 
   const [columns, setColumns] = useState(initialColumns);
 
   const [issue, setIssue] = useState("initial");
@@ -51,8 +56,8 @@ function Matrix() {
   // }
 
 
-  function handleClick(event) {
-    alert()
+  function handleBodyChange(body) {
+    setConvo(body)
   }
 
   function handleChange(event) {
@@ -140,7 +145,6 @@ function Matrix() {
   ]);
 
 
-  const [convo, setConvo] = useState(" ");
 
   return (
 
@@ -161,7 +165,7 @@ function Matrix() {
         actions={[{
           icon: AddComment,
           tooltip: "Edit this stakeholder's conversation",
-          onClick: (event, rowData) => (alert(rowData.conversation))
+          onClick: (event, rowData) => (setConvo(rowData.conversation))
         }]}
         options={{
           headerStyle: {
@@ -217,7 +221,7 @@ function Matrix() {
         icons={tableIcons}
       />
       <div>
-        <SunEditor name="my-editor" value={convo} setOptions={{
+        <SunEditor name="my-editor" ref={editorRef} setContents={foo} onChange={handleBodyChange} setOptions={{
           height: 250,
           width: '100%',
           buttonList: [
