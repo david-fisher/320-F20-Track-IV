@@ -15,14 +15,14 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import TextField from '@material-ui/core/TextField';
-
+import { connect } from 'react-redux';
 import MaterialTable from "material-table";
 import { Button } from '@material-ui/core';
 
 
 
 
-export default function Matrix() {
+function Matrix() {
   const { useState } = React;
 
   const initialColumns = [
@@ -200,3 +200,19 @@ export default function Matrix() {
   )
 }
 
+const mapStateToProps = state => {
+  // console.log("STATE: " + JSON.stringify(state))
+  return {
+    scenarioData: state.scenarioReducer,
+    pages: state.pagesReducer,
+    stakeholders: state.stakeholdersReducer,
+    token: state.tokenReducer
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Matrix);
