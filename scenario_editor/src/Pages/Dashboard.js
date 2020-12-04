@@ -97,6 +97,21 @@ class ScenarioGrid extends Component {
             closed: closedScenarios || []
         };
     }
+    componentWillMount(){
+      axios.get(`http://75877d2fa0a2.ngrok.io/api/v1/dashboard`, {
+        "headers": {
+          Accept: 'application/json',
+          Authorization: `Bearer ${this.props.token}`
+        }
+      }).then(res => {
+        console.log(res.data);
+        this.setState({
+          draft: res.data.drafts,
+          open: res.data.open,
+          closed: res.data.closed
+        });
+      });
+    }
     componentWillReceiveProps(nextProps) {
         this.scenarios = nextProps.scenarios || {};
         if (!this.scenarios) {
@@ -223,33 +238,31 @@ function Dashboard(props) {
         data: null
     })
 
-    useEffect(() => {
-        axios.get(`http://75877d2fa0a2.ngrok.io/api/v1/dashboard`, {
-          "headers": {
-            Accept: 'application/json',
-            Authorization: `Bearer ${props.token}`
-          }
-        }).then(res => {
-          console.log(res.data);
-
-
-        });
-        // universalFetch(
-        //     setFetchScenarioResponse,
-        //     `/api/v1/dashboard`,
-        //     // { 0: "body text" },
-        //     (resp) => { console.log(resp) },
-        //     (err) => { console.log(err) },
-        //     {
-        //         headers: {
-        //             "accept": "application/json",
-        //         }
-        //     }
-        // )
-        return () => {
-            // What goes here? do we return something
-        }
-    }, [])
+    // useEffect(() => {
+    //     axios.get(`http://75877d2fa0a2.ngrok.io/api/v1/dashboard`, {
+    //       "headers": {
+    //         Accept: 'application/json',
+    //         Authorization: `Bearer ${props.token}`
+    //       }
+    //     }).then(res => {
+    //       console.log(res.data);
+    //     });
+    //     // universalFetch(
+    //     //     setFetchScenarioResponse,
+    //     //     `/api/v1/dashboard`,
+    //     //     // { 0: "body text" },
+    //     //     (resp) => { console.log(resp) },
+    //     //     (err) => { console.log(err) },
+    //     //     {
+    //     //         headers: {
+    //     //             "accept": "application/json",
+    //     //         }
+    //     //     }
+    //     // )
+    //     return () => {
+    //         // What goes here? do we return something
+    //     }
+    // }, [])
 
     return (
         <div style={{
