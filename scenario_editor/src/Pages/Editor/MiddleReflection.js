@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import './PlayerResponses.css';
 import Nav from '../../Components/Nav'
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import SunEditor from 'suneditor-react';
+import SunEditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import './Introduction.css';
-
+import { baseURL } from '../../Components/Calls'
+import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
 
   multiText: {
@@ -30,9 +31,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FinalReflection(props) {
+function MiddleReflection(props) {
 
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, {
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Authorization': `Bearer ${props.token}`
+  //     }
+  //   }).then(res => {
+  //     console.log(res)
+  //   });
+  //
+  //   // if (!response) {
+  //
+  //   //   console.log("RESPONSE: " + response)
+  //   //   // console.log("CUR PAGE: "+props.pages.)
+  //   //   props.dispatch({
+  //   //     type: 'ADD_INTRODUCTION',
+  //   //     payload: { response }
+  //   //   });
+  //   // }
+  // }, [])
 
   function addMiddleReflection(history) {
     const middleComplete = {
@@ -53,7 +75,7 @@ function FinalReflection(props) {
     }).then(res => {
       props.dispatch({
         type: 'ADD_MIDDLE_REFLECTION',
-        payload: { ...middleComplete }
+        payload: { ...initialComplete }
       });
       history.push({
         pathname: "/stakeholders",
@@ -64,44 +86,34 @@ function FinalReflection(props) {
     })
   }
 
-
   const middleReflectionNew = {
-    "name": 'MiddleReflection',
-    "type": 'PLAIN',
-    "order": 7,
-    "body_text": " ",
+    "body_text": "",
+    "prompts": [],
+    "content": "",
+    "question": "",
+    "options": [
+    ]
   }
 
-  // function addMiddleReflection() {
-  //   const middleReflectionComplete = {
-  //     "type": type,
-  //     "name": name,
-  //     "order": order,
-  //     "body_text": bodyText,
-  //   }
-  //   props.dispatch({
-  //     type: 'ADD_MIDDLE_REFLECTION',
-  //     payload: { ...middleReflectionComplete }
-  //   });
-  // }
 
   const [type, setType] = useState(middleReflectionNew.type);
   const [name, setName] = useState(middleReflectionNew.name);
   const [order, setOrder] = useState(middleReflectionNew.order);
   const [bodyText, setBodyText] = useState(middleReflectionNew.body_text);
+  const [q1, setQ1] = useState(middleReflectionNew.body_text);
+  const [q2, setQ2] = useState(middleReflectionNew.body_text);
 
   const handleBodyChange = (body) => {
     setBodyText(body);
-    console.log(bodyText);
+    // console.log(bodyText);
   };
-
 
   return (
     <div >
       <Nav />
       <div className={classes.root}>
         <div >
-          <div >
+          <div>
             <h1>Middle Reflection</h1>
             <b1>
               Please choose the reflection to create below:
@@ -135,6 +147,38 @@ function FinalReflection(props) {
             }} />
 
           </b2>
+          <div className="second-body">
+            <TextField
+              id="Reflection Question"
+              label="Reflection Question"
+              style={{ margin: 8 }}
+              placeholder="Input your Reflection Question here"
+              // helperText="This prompt sends the reader to the stakeholder conversations!"
+              fullWidth
+              variant="outlined"
+              multiline
+              margin="normal"
+              onChange={e => setQ1(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              id="Extra Reflection Question"
+              label="Extra Reflection Question"
+              style={{ margin: 8 }}
+              placeholder="Input your Reflection Question here"
+              // helperText="This prompt skips the majority of conversations!"
+              fullWidth
+              variant="outlined"
+              multiline
+              margin="normal"
+              onChange={e => setQ2(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
           <b2 className="second-body">
             <div>
               <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addMiddleReflection} >SAVE</Button>
@@ -143,15 +187,18 @@ function FinalReflection(props) {
               <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/stakeholders">NEXT</Button>
             </div>
           </b2>
+
         </div>
       </div>
     </div>
 
   );
+
 }
 
+
 const mapStateToProps = state => {
-  return { scenarios: state.scenarios, token: state.token }
+  return { scenarioData: state.scenarioData, token: state.token, pageData: state.pages }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -159,7 +206,4 @@ const mapDispatchToProps = dispatch => {
     dispatch
   }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(FinalReflection);
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(MiddleReflection);
