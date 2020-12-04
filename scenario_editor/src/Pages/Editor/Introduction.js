@@ -10,6 +10,7 @@ import 'suneditor/dist/css/suneditor.min.css';
 import axios from 'axios';
 import { universalPost, universalFetch, universalDelete } from '../../Components/Calls'
 import scenarioReducer from '../../Reducers/scenarioReducer';
+import { baseURL } from '../../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
   multiText: {
@@ -35,18 +36,45 @@ function Introduction(props) {
 
   const classes = useStyles();
 
-  function addIntroduction() {
+  function addIntroduction(history) {
     const introComplete = {
       "type": type,
       "name": name,
       "order": order,
       "body_text": bodyText,
     }
-    props.dispatch({
-      type: 'ADD_INTRODUCTION',
-      payload: { ...introComplete }
-    });
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/introduction`, { "body_text": introComplete.body_text }, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      // console.log(res.data.simulation_id);
+      props.dispatch({
+        type: 'ADD_INTRODUCTION',
+        payload: { ...introComplete }
+      });
+      history.push({
+        pathname: "/reflections",
+      });
+    }).catch(err => {
+      console.log(err);
+      alert(`Error: ${err.response.data.explanation}`);
+    })
   }
+
+  // function addIntroduction() {
+  //   const introComplete = {
+  //     "type": type,
+  //     "name": name,
+  //     "order": order,
+  //     "body_text": bodyText,
+  //   }
+  //   props.dispatch({
+  //     type: 'ADD_INTRODUCTION',
+  //     payload: { ...introComplete }
+  //   });
+  // }
 
   const introNew = {
     "name": 'Introduction',
@@ -65,29 +93,29 @@ function Introduction(props) {
     console.log(bodyText);
   };
 
-  const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
-    loading: false,
-    error: null,
-    data: null
-  })
+  // const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
+  //   loading: false,
+  //   error: null,
+  //   data: null
+  // })
 
   // univseralDelete `/api/v1/simulation/${0}`,
   // universalFetch `/api/v1/simulation/${0}/initial-reflection`,
   // universalFetch `/api/v1/simulation/${0}/initial-action`,
 
-  useEffect(() => {
-    universalFetch(
-      setFetchScenarioResponse,
-      `/api/v1/simulation/${0}/introduction`,
-      // { 0: "body text" },
-      (resp) => { console.log(resp) },
-      (err) => { console.log(err) },
-      { headers: { "accept": "application/json", "Authentication": "abcdefghijklmnopqrstuvwxyz" } }
-    )
-    return () => {
-      // What goes here? do we return something
-    }
-  }, [])
+  // useEffect(() => {
+  //   universalFetch(
+  //     setFetchScenarioResponse,
+  //     `/api/v1/simulation/${0}/introduction`,
+  //     // { 0: "body text" },
+  //     (resp) => { console.log(resp) },
+  //     (err) => { console.log(err) },
+  //     { headers: { "accept": "application/json" } }
+  //   )
+  //   return () => {
+  //     // What goes here? do we return something
+  //   }
+  // }, [])
 
   // GET http://6e427b8e5e44.ngrok.io/api/v1/simulation/1/initial-action
 
@@ -118,8 +146,6 @@ function Introduction(props) {
   //   });
   //   this.setState({scenarioID: this.state.scenarioID + 1})
   // }
-
-
 
 
   return (
@@ -157,7 +183,7 @@ function Introduction(props) {
             <Button variant="contained" color="primary" aria-label="contained primary button group" component={Link} to="/reflections">NEXT</Button>
           </div>
           <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={Component} >ADD INTRO TO DB</Button>
+            {/* <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={Component} >ADD INTRO TO DB</Button> */}
           </div>
         </b2>
       </div>
@@ -167,11 +193,7 @@ function Introduction(props) {
 }
 
 const mapStateToProps = state => {
-  // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
-  // return { scenarios: state.scenarios, token: state.token }
-  const { items } = state
-  // console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
-  return { items: state.scenarioData }
+  return { scenarioData: state.scenarioData, token: state.token }
 }
 
 const mapDispatchToProps = dispatch => {

@@ -13,7 +13,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { universalPost, universalFetch, universalDelete } from '../Components/Calls'
-import {baseURL} from '../Components/Calls'
+import { baseURL } from '../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
     page: {
@@ -98,20 +98,20 @@ class ScenarioGrid extends Component {
             closed: closedScenarios || []
         };
     }
-    componentWillMount(){
-      axios.get(`${baseURL}/api/v1/dashboard`, {
-        "headers": {
-          Accept: 'application/json',
-          Authorization: `Bearer ${this.props.token}`
-        }
-      }).then(res => {
-        console.log(res.data);
-        this.setState({
-          draft: res.data.drafts,
-          open: res.data.open,
-          closed: res.data.closed
+    componentWillMount() {
+        axios.get(`${baseURL}/api/v1/dashboard`, {
+            "headers": {
+                Accept: 'application/json',
+                Authorization: `Bearer ${this.props.token}`
+            }
+        }).then(res => {
+            console.log(res.data);
+            this.setState({
+                draft: res.data.drafts,
+                open: res.data.open,
+                closed: res.data.closed
+            });
         });
-      });
     }
     componentWillReceiveProps(nextProps) {
         this.scenarios = nextProps.scenarios || {};
@@ -273,14 +273,13 @@ function Dashboard(props) {
             backgroundColor: 'white',
         }}>
             <Nav />
-            <ScenarioGrid token={props.token} scenarios={props.scenarios}/>
+            <ScenarioGrid token={props.token} scenarios={props.scenarios} />
         </div>
     )
 }
 
 const mapStateToProps = state => {
-  // console.log(state);
-    return { scenarios: state.scenarios, token: state.token }
+    return { scenarioData: state.scenarioData, token: state.token }
 }
 
 const mapDispatchToProps = dispatch => {
