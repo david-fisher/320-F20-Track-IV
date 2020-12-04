@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import './Introduction.css';
 import Nav from '../../Components/Nav';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
 import axios from 'axios';
+import { baseURL } from '../../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -34,16 +35,54 @@ function TaskAssignment(props) {
 
   const classes = useStyles();
 
-  function addTaskAssignment() {
-    const taskComplete = {
+  // Error: Page specified with order, type, and scenario already exists.
+  useEffect(() => {
+    axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/task`, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      console.log(res)
+    });
+
+    // if (!response) {
+
+    //   console.log("RESPONSE: " + response)
+    //   // console.log("CUR PAGE: "+props.pages.)
+    //   props.dispatch({
+    //     type: 'ADD_INTRODUCTION',
+    //     payload: { response }
+    //   });
+    // }
+  }, [])
+
+  function addTaskAssignment(history) {
+    const taskAssignmentComplete = {
       "type": type,
+      "name": name,
       "order": order,
       "body_text": bodyText,
     }
-    props.dispatch({
-      type: 'ADD_TASK_ASSIGNMENT',
-      payload: { ...taskComplete }
-    });
+    console.log(props.scenarioData.id)
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/task`, { "body_text": taskAssignmentComplete.body_text }, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      // runs the "type" aka function ADD_INTRODUCTION in pagesReducer.
+      props.dispatch({
+        type: 'ADD_TASK_ASSIGNMENT',
+        payload: { ...taskAssignmentComplete }
+      });
+      history.push({
+        pathname: "/user-agreement",
+      });
+    }).catch(err => {
+      console.log(err);
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
+    })
   }
 
   const taskNew =
@@ -68,7 +107,7 @@ function TaskAssignment(props) {
   return (
     <div >
       <Nav />
-      <div className = {classes.root}>
+      <div className={classes.root}>
         <div>
           <h1>Project Task Assignment</h1>
         </div>
@@ -113,7 +152,7 @@ function TaskAssignment(props) {
 }
 
 const mapStateToProps = state => {
-  return { scenarios: state.scenarios, token: state.token }
+  return { scenarioData: state.scenarioData, token: state.token, pageData: state.pages }
 }
 
 const mapDispatchToProps = dispatch => {

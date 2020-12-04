@@ -10,6 +10,7 @@ import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
 import axios from 'axios';
 import { baseURL } from '../../Components/Calls'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 const useStyles = makeStyles((theme) => ({
   multiText: {
@@ -41,15 +42,12 @@ function ContinuePrompt(props) {
 
 
   const continuePromptNew = {
-    "summary": "",
-    "questions": [
-      {
-        "question": "",
-        "choices": [
-          "",
-          ""
-        ]
-      },]
+    "body_text": "",
+    "prompts": [],
+    "content": "",
+    "question": "",
+    "options": [
+    ]
   }
 
   const handleBodyChange = (body) => {
@@ -93,13 +91,18 @@ function ContinuePrompt(props) {
     <div>
       <Nav />
       <div>
-        <h1>Delay or Go Ahead Prompt</h1>
+        <h1>Delay or Go Ahead Initial Action</h1>
       </div>
 
       <b1 className="introduction-part">
         Add/Edit your prompt and choices below:
         </b1>
-
+      <div display="flex" flex-direction="center" align-items="center" >
+        <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+          <Button component={Link} to={'/continue-prompt'}>Initial Action</Button>
+          <Button component={Link} to='/final-prompt'>Final Action</Button>
+        </ButtonGroup>
+      </div>
 
       <b2 className="text-editor">
 

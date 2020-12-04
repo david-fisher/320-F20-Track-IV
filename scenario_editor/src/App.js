@@ -12,6 +12,7 @@ import IntroductionHub from './Pages/Editor/IntroductionHub';
 import Introduction from './Pages/Editor/Introduction';
 import TaskAssignment from './Pages/Editor/TaskAssignment';
 import ContinuePrompt from './Pages/Editor/Continue-Prompt';
+import FinalAction from './Pages/Editor/FinalAction';
 //End of Intro Page Links
 // import PlayerResponses from './Pages/Editor/PlayerResponses';
 import Reflections from './Pages/Editor/Reflections';
@@ -59,6 +60,7 @@ export default function App() {
           <Route path="/introduction-text" component={Introduction} />
           <Route path="/task-assignment" component={TaskAssignment} />
           <Route path="/continue-prompt" component={ContinuePrompt} />
+          <Route path="/final-prompt" component={FinalAction} />
           {/* <Route path="/player-responses" component={PlayerResponses} /> */}
           <Route path="/reflections" component={Reflections} />
           <Route path="/middle-reflection" component={MiddleReflection} />

@@ -83,6 +83,15 @@ const pagesReducer = (state = initialPages, action) => {
                 return [state[initialActionIndex], action.payload]
             }
             return state
+        case 'ADD_FINAL_ACTION':
+            console.log("Added to store: " + action.payload.name)
+            let finalActionIndex = state.findIndex(item => item.name == action.payload.name);
+            if (finalActionIndex === -1) {
+                return [...state, action.payload]
+            } else {
+                return [state[finalActionIndex], action.payload]
+            }
+            return state
         default:
             return state
     }

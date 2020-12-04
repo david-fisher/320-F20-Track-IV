@@ -161,11 +161,11 @@ function Reflections(props) {
           <div className="second-body">
 
             <TextField
-              id="Delay Prompt"
-              label="Delay Prompt"
+              id="Reflection Question"
+              label="Reflection Question"
               style={{ margin: 8 }}
-              placeholder="Input your delay prompt here"
-              helperText="This prompt sends the reader to the stakeholder conversations!"
+              placeholder="Input your Reflection Question here"
+              // helperText="This prompt sends the reader to the stakeholder conversations!"
               fullWidth
               variant="outlined"
               multiline
@@ -175,11 +175,11 @@ function Reflections(props) {
               }}
             />
             <TextField
-              id="Go Ahead Prompt"
-              label="Go Ahead Prompt"
+              id="Extra Reflection Question"
+              label="Extra Reflection Question"
               style={{ margin: 8 }}
-              placeholder="Input your delay prompt here"
-              helperText="This prompt skips the majority of conversations!"
+              placeholder="Input your Reflection Question here"
+              // helperText="This prompt skips the majority of conversations!"
               fullWidth
               variant="outlined"
               multiline
