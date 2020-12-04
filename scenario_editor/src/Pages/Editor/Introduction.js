@@ -33,8 +33,6 @@ function Introduction(props) {
 
   // console.log("PROPS IN INTRODUCTION: " + JSON.stringify(props))
 
-  // Look into custom hooks for fetching and setResponse
-
   const classes = useStyles();
 
   function addIntroduction() {

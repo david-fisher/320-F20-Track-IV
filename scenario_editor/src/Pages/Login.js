@@ -9,13 +9,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { universalPost, universalFetch, universalDelete } from '../Components/Calls'
-
+import { connect } from 'react-redux';
 
 // POST /api/v1/auth/login/callback
-// The HTTP header is Authentication: bearer [token]
+// The HTTP header is Authorization: bearer [token]
 // Any endpoint that needs authentication needs this header
-
-
 
 function Login() {
   return (
@@ -50,23 +48,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function sendLogInToServer(event, history) {
-  event.preventDefault();
-  // POST 
-  axios.post(`/api/v1/auth/login/callback`, event).then(res => {
-    let token = res.data.token;
-    history.push({
-      pathname: "/home",
-      state: {
-        token
-      }
-    });
-  });
-history.push({
-  pathname: "/home"
-});
-}
 
+// email: instructor1@umass.edu
+// pass: GoUMass!
 
 // function sendLogInToServer(username, password) {
 
@@ -95,11 +79,49 @@ history.push({
 
 // }
 
-export default function SignIn() {
+function SignIn(props) {
   const history = useHistory();
   const classes = useStyles();
 
+  const [email, setEmail] = useState()
+  const [pass, setPassword] = useState()
 
+  function handleEmailChange(emailText) {
+    setEmail(emailText.target.value);
+    console.log(email);
+  }
+
+  function handlePasswordChange(passText) {
+    setPassword(passText.target.value);
+    console.log(pass);
+  }
+
+
+  function sendLogInToServer(event, data, history) {
+    event.preventDefault();
+    // POST 
+    console.log(event)
+    axios.post(`http://75877d2fa0a2.ngrok.io/api/v1/auth/login/callback`, data, {
+      "headers": {
+        Accept: 'application/json'
+      }
+    }).then(res => {
+      let token = res.data.token;
+      props.dispatch({
+        type: 'ADD_TOKEN',
+        payload: { "token": token }
+      });
+      history.push({
+        pathname: "/home",
+        state: {
+          token
+        }
+      });
+    });
+    history.push({
+      pathname: "/home"
+    });
+  }
 
 
   return (
@@ -109,12 +131,12 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Login
           </Typography>
-        <form className={classes.form} noValidate onSubmit={(event) => { sendLogInToServer(event, history) }}>
+        <form className={classes.form} noValidate onSubmit={(event) => { sendLogInToServer(event, { "email": email, "password": pass }, history) }}>
           {/* <form className={classes.form} noValidate onClick={history.push({
           pathname: "/home"
         })}> */}
           <TextField
-            //type="email"
+            type="email"
             variant="outlined"
             margin="normal"
             required
@@ -124,6 +146,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            // inputRef={node => this.state.emailField = node}
+            onChange={handleEmailChange}
           />
           <TextField
             type='password'
@@ -136,6 +160,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            // inputRef={node => this.state.passwordField = node}
+            onChange={handlePasswordChange}
           />
           <Button
             type="submit"
@@ -154,3 +180,19 @@ export default function SignIn() {
     </Container >
   );
 }
+
+const mapStateToProps = state => {
+  // console.log("STATE IN INTRO MAP TO PROPS: " + state.id)
+  // return { scenarios: state.scenarios, token: state.token }
+  const { items } = state
+  // console.log("STATE IN mapStateToProps: " + JSON.stringify(state))
+  return { items: state.scenarioData }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

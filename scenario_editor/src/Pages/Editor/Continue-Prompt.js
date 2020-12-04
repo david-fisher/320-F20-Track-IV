@@ -167,8 +167,6 @@ class ContinuePrompt extends Component {
           <div marginLeft='100px'>
             <Button type="submit" title="NEXT" style={{ backgroundColor: '#881c1c', color: "white" }} component={Link} to="/introduction-hub">NEXT</Button>
           </div>
-          <div>
-          </div>
         </b2>
       </div>
 
