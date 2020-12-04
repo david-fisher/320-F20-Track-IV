@@ -156,14 +156,16 @@ function Matrix() {
         }
         }
         editable={{
-          onColumnAdd: newColumn =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                setColumns([...columns, newColumn]);
-                resolve();
-              }, 1000)
-              console.log(columns)
-            }),
+          // DONT NEED THIS \/
+          // onColumnAdd: newColumn =>
+          //   new Promise((resolve, reject) => {
+          //     setTimeout(() => {
+          //       setColumns([...columns, newColumn]);
+          //       resolve();
+          //     }, 1000)
+          //     console.log(columns)
+          //   }),
+          // DONT NEED THIS /\
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
