@@ -30,6 +30,7 @@ function Matrix() {
       title: 'Name', field: 'name', backgroundColor: ' #881c1c'
     },
     { title: 'Description', field: 'description' },
+    { title: 'Conversation', field: 'conversation' },
   ];
 
   const [columns, setColumns] = useState(initialColumns);
@@ -99,6 +100,7 @@ function Matrix() {
     {
       name: 'Kokichi',
       description: 'Expert on Cognition medications',
+      conversation: 'Hello Im a person',
       publicSafety: 0,
       userHealth: 0,
       careerBuilding: 0,
@@ -112,6 +114,7 @@ function Matrix() {
     {
       name: 'Raisa',
       description: 'Neurology/cognition researcher',
+      conversation: 'Hi guy!',
       publicSafety: 0,
       userHealth: 0,
       careerBuilding: 0,
