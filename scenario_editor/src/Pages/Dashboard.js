@@ -13,6 +13,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { universalPost, universalFetch, universalDelete } from '../Components/Calls'
+import {baseURL} from '../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
     page: {
@@ -98,7 +99,7 @@ class ScenarioGrid extends Component {
         };
     }
     componentWillMount(){
-      axios.get(`http://75877d2fa0a2.ngrok.io/api/v1/dashboard`, {
+      axios.get(`${baseURL}/api/v1/dashboard`, {
         "headers": {
           Accept: 'application/json',
           Authorization: `Bearer ${this.props.token}`
@@ -124,11 +125,11 @@ class ScenarioGrid extends Component {
         // let draftScenarios = this.scenarios.filter(data => (data.status === false));
         // let openScenarios = this.scenarios.filter(data => (data.draft === true && data.open === true));
         // let closedScenarios = this.scenarios.filter(data => (data.draft === true && data.open === false));
-        this.setState({
-            draft: draftScenarios || [{ "id": 1, "name": 'title1', "due_date": '12-12-2020', "description": 'desc', "additional_data": '', "status": 'DRAFT' }],
-            open: openScenarios || [{ "id": 2, "name": 'title2', "due_date": '12-12-2020', "description": 'desc', "additional_data": 'does this show', "status": 'OPEN' }],
-            closed: closedScenarios || [{ "id": 3, "name": 'title3', "due_date": '12-12-2020', "description": 'desc', "additional_data": '', "status": 'CLOSED' }]
-        });
+        // this.setState({
+        //     draft: draftScenarios || [{ "id": 1, "name": 'title1', "due_date": '12-12-2020', "description": 'desc', "additional_data": '', "status": 'DRAFT' }],
+        //     open: openScenarios || [{ "id": 2, "name": 'title2', "due_date": '12-12-2020', "description": 'desc', "additional_data": 'does this show', "status": 'OPEN' }],
+        //     closed: closedScenarios || [{ "id": 3, "name": 'title3', "due_date": '12-12-2020', "description": 'desc', "additional_data": '', "status": 'CLOSED' }]
+        // });
 
 
     }
