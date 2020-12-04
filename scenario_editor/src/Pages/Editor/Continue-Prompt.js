@@ -51,6 +51,7 @@ function ContinuePrompt(props) {
   }
 
   const handleBodyChange = (body) => {
+    // console.log(body);
     setSummary(body);
     // console.log(bodyText);
   };
@@ -59,7 +60,7 @@ function ContinuePrompt(props) {
 
     const continuePromptData = {
       "body_text": summary,
-      "prompts": [],
+      "prompts": [opt1, opt2],
       "content": "This is a multiple choice question.",
       "question": "What initial action will you take?",
       "options": [

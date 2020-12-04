@@ -35,31 +35,31 @@ function Reflections(props) {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, {
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${props.token}`
-      }
-    }).then(res => {
-      console.log(res)
-    });
-
-    // if (!response) {
-
-    //   console.log("RESPONSE: " + response)
-    //   // console.log("CUR PAGE: "+props.pages.)
-    //   props.dispatch({
-    //     type: 'ADD_INTRODUCTION',
-    //     payload: { response }
-    //   });
-    // }
-  }, [])
+  // useEffect(() => {
+  //   axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, {
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Authorization': `Bearer ${props.token}`
+  //     }
+  //   }).then(res => {
+  //     console.log(res)
+  //   });
+  //
+  //   // if (!response) {
+  //
+  //   //   console.log("RESPONSE: " + response)
+  //   //   // console.log("CUR PAGE: "+props.pages.)
+  //   //   props.dispatch({
+  //   //     type: 'ADD_INTRODUCTION',
+  //   //     payload: { response }
+  //   //   });
+  //   // }
+  // }, [])
 
   function addInitialReflection(history) {
     const initialComplete = {
-      "body_text": "",
-      "prompts": [],
+      "body_text": bodyText,
+      "prompts": [q1, q2],
       "content": "",
       "question": "",
       "options": [
@@ -67,7 +67,7 @@ function Reflections(props) {
         q2
       ]
     }
-    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, { "body_text": initialComplete.body_text }, {
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, { "body_text": initialComplete.body_text, "prompts": initialComplete.prompts }, {
       headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${props.token}`
@@ -105,7 +105,7 @@ function Reflections(props) {
 
   const handleBodyChange = (body) => {
     setBodyText(body);
-    console.log(bodyText);
+    // console.log(bodyText);
   };
 
   return (
