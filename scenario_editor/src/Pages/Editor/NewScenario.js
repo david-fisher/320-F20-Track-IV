@@ -40,8 +40,7 @@ function NewScenario(props) {
         pathname: "/introduction-hub",
       });
     }).catch(err => {
-      console.log(err);
-      alert(`Error: ${err.response.data.explanation}`);
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
     })
   }
 

@@ -289,4 +289,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(Introduction);
 // }
 
 // }
-
