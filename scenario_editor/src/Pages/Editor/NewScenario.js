@@ -13,30 +13,39 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { baseURL } from '../../Components/Calls';
+import axios from 'axios';
 
 
 function NewScenario(props) {
-
   function addScenario() {
-
     const createdScenario = {
-      "id": 1,
       "name": name,
       "due_date": selectedDate,
       "description": description,
       "additional_data": additionalData,
       "status": status,
     }
-    props.dispatch({
-      type: 'UPDATE_SCENARIO',
-      payload: { ...createdScenario }
-    });
+    axios.post(`${baseURL}/api/v1/simulation/create`, createdScenario, {headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      console.log(res.data);
+      props.dispatch({
+        type: 'UPDATE_SCENARIO',
+        payload: { ...createdScenario }
+      });
+    }).catch(err => {
+      console.log(err);
+      alert(`Error: ${err.response.data.explanation}`);
+    })
   }
 
   const newScenario = {
     "id": 1,
     "name": '',
-    "due_date": '2020-12-01',
+    "due_date": new Date(),
     "description": '',
     "additional_data": '',
     "status": 'DRAFT',
@@ -128,7 +137,7 @@ function NewScenario(props) {
       <div className={classes.root}>
         <div>
           <Button
-            component={Link} to="/introduction-hub"
+
             variant="contained"
             color="primary"
             href="#contained-buttons"
