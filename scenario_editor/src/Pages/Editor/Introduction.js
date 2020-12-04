@@ -34,6 +34,19 @@ function Introduction(props) {
 
   const classes = useStyles();
 
+  // {props.scenarioData.id}
+  let response = axios.get(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/introduction`)
+  if (response != null){
+
+    console.log("RESPONSE: "+response)
+    // console.log("CUR PAGE: "+props.pages.)
+    props.dispatch({
+      type: 'ADD_INTRODUCTION',
+      payload: { response }
+    });  
+  }
+  
+
   function addIntroduction(history) {
     const introComplete = {
       "type": type,
@@ -47,7 +60,7 @@ function Introduction(props) {
         'Authorization': `Bearer ${props.token}`
       }
     }).then(res => {
-      // console.log(res.data.simulation_id);
+      // runs the "type" aka function ADD_INTRODUCTION in pagesReducer.
       props.dispatch({
         type: 'ADD_INTRODUCTION',
         payload: { ...introComplete }
@@ -191,7 +204,7 @@ function Introduction(props) {
 }
 
 const mapStateToProps = state => {
-  return { scenarioData: state.scenarioData, token: state.token }
+  return { scenarioData: state.scenarioData, token: state.token, pageData: state.pages }
 }
 
 const mapDispatchToProps = dispatch => {
