@@ -63,8 +63,8 @@ function Reflections(props) {
       "content": "",
       "question": "",
       "options": [
-        opt1,
-        opt2
+        q1,
+        q2
       ]
     }
     axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, { "body_text": initialComplete.body_text }, {
@@ -159,7 +159,7 @@ function Reflections(props) {
               variant="outlined"
               multiline
               margin="normal"
-              onChange={e => setQ2(e.target.value)}
+              onChange={e => setQ1(e.target.value)}
               InputLabelProps={{
                 shrink: true,
               }}
