@@ -1,124 +1,3 @@
-// import React from 'react';
-// //import './Introduction.css';
-// import Nav from '../../Components/Nav'
-// import {Link} from 'react-router-dom';
-// import TextField from '@material-ui/core/TextField';
-// import { makeStyles } from '@material-ui/core/styles';
-// import Button from '@material-ui/core/Button';
-// import axios from 'axios';
-
-
-// const useStateWithLocalStorage = localStorageKey => {
-//   const [value, setValue] = React.useState(
-//     localStorage.getItem(localStorageKey) || ''
-//   );
-
-//   React.useEffect(() => {
-//     localStorage.setItem(localStorageKey, value);
-//   }, [value]);
-
-//   return [value, setValue];
-// };
-
-// const UserAgreement = () => {
-//   const [value, setValue] = useStateWithLocalStorage(
-//     'RS_SCENARIO__user_agreement'
-//   );
-
-//   const onChange = event => setValue(event.target.value);
-//   const onSubmit = event => { const headers = {
-//     'Authorization': `Bearer ${this.props.token}`,
-//     'Accept': 'application/json'
-//   }
-//   event.preventDefault();
-//   axios.post(`http://4acf3d2e295e.ngrok.io/api/v1/simulation/create`, {
-//     simulation_title: this.state.scenario_title,
-//     simulation_desc: this.state.scenario_desc,
-//     simulation_introduction: this.state.contents,
-//     simulation_ua: this.state.scenario_ua
-//   }, {headers: headers}).then(res => {
-//     // debugger;
-//     alert(`Simulation ID: ${res.data.simulation_id}`)
-//   });
-//   }
-//   const useStyles = makeStyles((theme) => ({
-//     root: {
-//         margin: theme.spacing(1),
-//         marginTop: theme.spacing(4),
-//         marginLeft: theme.spacing(4),
-//         width: '100ch',
-//     },
-//   }));
-
-//     const classes = useStyles();
-
-//     return (
-
-//       <div>
-//          <Nav/>
-//          <form className={classes.root} noValidate autoComplete="off">
-//          <h1>  User Agreement </h1>
-//          {/* <b1>  Scenario Title:</b1> */}
-
-//              <TextField
-//               multiline
-//               fullWidth
-//               id="userAgreement"
-//               label="User Agreement"
-//               variant="outlined"
-//               placeholder='Enter user agreement here'
-//               value={value}
-//               onChange={onChange}
-//               style={{
-//                 marginTop: 50}}
-//               rows={20}
-//               margin="normal"
-//                   InputLabelProps={{
-//                     shrink: true }}
-//               />
-//            </form>
-
-
-//             <div className={classes.root}>
-//             <div>
-//             <Button
-//             component={ Link } to="/introduction"
-//             variant="contained"
-//             color="primary"
-//             href="#contained-buttons"
-//             size='medium'
-//             alignItems='right'
-//             style={{
-//               //marginTop: 10,
-//               //marginRight: 100,
-//               marginLeft: 1100,
-//               //marginBottom: 100
-//             }}
-
-//             >
-//             Submit
-//           </Button>
-
-//             </div>
-
-//        </div>
-//        </div>
-
-//     );
-//   };
-//   export default UserAgreement;
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { Component, useState, useEffect } from 'react';
 import { makeStyles, } from '@material-ui/core/styles';
 import Nav from '../../Components/Nav'
@@ -129,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import 'suneditor/dist/css/suneditor.min.css';
 import SunEditor from 'suneditor-react';
 import axios from 'axios';
+import { baseURL } from '../../Components/Calls'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -150,6 +30,34 @@ const useStyles = makeStyles((theme) => ({
 function UserAgreement(props) {
 
   const classes = useStyles();
+
+  function addUA(history) {
+    const userAgreeComplete = {
+      "type": type,
+      "name": name,
+      "order": order,
+      "body_text": bodyText,
+    }
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/user-agreement`, { "body_text": userAgreeComplete.body_text }, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      // console.log(res.data.simulation_id);
+      props.dispatch({
+        type: 'ADD_USER_AGREEMENT',
+        payload: { ...userAgreeComplete }
+      });
+      history.push({
+        pathname: "/continue-prompt",
+      });
+    }).catch(err => {
+      console.log(err);
+      alert(`Error: ${err.response.data.explanation}`);
+    })
+  }
+
 
   function addUserAgreement() {
     const uaComplete = {
@@ -210,7 +118,7 @@ function UserAgreement(props) {
         </b2>
         <b2 className="second-body">
           <div>
-            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addUserAgreement}>SAVE</Button>
+            <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addUA}>SAVE</Button>
           </div>
           <div>
             <Button variant="contained" color="primary" aria-label="contained primary button group" onClick={addUserAgreement} component={Link} to="/continue-prompt">NEXT</Button>
