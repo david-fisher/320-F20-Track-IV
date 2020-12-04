@@ -75,7 +75,7 @@ function MiddleReflection(props) {
     }).then(res => {
       props.dispatch({
         type: 'ADD_MIDDLE_REFLECTION',
-        payload: { ...initialComplete }
+        payload: { ...middleComplete }
       });
       history.push({
         pathname: "/stakeholders",
