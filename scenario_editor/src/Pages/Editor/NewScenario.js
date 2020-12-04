@@ -26,7 +26,8 @@ function NewScenario(props) {
       "additional_data": additionalData,
       "status": status,
     }
-    axios.post(`${baseURL}/api/v1/simulation/create`, createdScenario, {headers: {
+    axios.post(`${baseURL}/api/v1/simulation/create`, createdScenario, {
+      headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${props.token}`
       }
@@ -128,7 +129,7 @@ function NewScenario(props) {
               format="MM/dd/yyyy"
               margin="normal"
               id="date-picker-inline"
-              label="Date picker inline"
+              label="Due Date: "
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
@@ -153,7 +154,7 @@ function NewScenario(props) {
               marginLeft: 1100,
               //marginBottom: 100
             }}
-            onClick={()=>addScenario(history)}
+            onClick={() => addScenario(history)}
           >
             Submit
           </Button>

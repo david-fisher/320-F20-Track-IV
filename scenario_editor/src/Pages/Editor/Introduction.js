@@ -32,8 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Introduction(props) {
 
-  // console.log("PROPS IN INTRODUCTION: " + JSON.stringify(props))
-
   const classes = useStyles();
 
   function addIntroduction(history) {

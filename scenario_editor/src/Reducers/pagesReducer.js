@@ -49,6 +49,13 @@ const pagesReducer = (state = initialPages, action) => {
                 return [...state, action.payload]
             }
             return state
+        case 'ADD_USER_AGREEMENT':
+            console.log(action.payload.name)
+            let userAgreeIndex = state.findIndex(item => item.name == action.payload.name);
+            if (userAgreeIndex === -1) {
+                return [...state, action.payload]
+            }
+            return state
         default:
             return state
     }
