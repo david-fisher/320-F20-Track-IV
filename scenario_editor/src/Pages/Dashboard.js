@@ -83,7 +83,7 @@ class ScenarioGrid extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props)
+        console.log(this.props);
 
         this.scenarios = this.props.scenarios || {};
 
@@ -217,29 +217,39 @@ class ScenarioGrid extends Component {
 
 function Dashboard(props) {
 
-    // const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
-    //     loading: false,
-    //     error: null,
-    //     data: null
-    // })
+    const [fetchIntroductionResponse, setFetchScenarioResponse] = useState({
+        loading: false,
+        error: null,
+        data: null
+    })
 
-    // useEffect(() => {
-    //     universalFetch(
-    //         setFetchScenarioResponse,
-    //         `/api/v1/dashboard`,
-    //         // { 0: "body text" },
-    //         (resp) => { console.log(resp) },
-    //         (err) => { console.log(err) },
-    //         {
-    //             headers: {
-    //                 "accept": "application/json",
-    //             }
-    //         }
-    //     )
-    //     return () => {
-    //         // What goes here? do we return something
-    //     }
-    // }, [])
+    useEffect(() => {
+        axios.get(`http://75877d2fa0a2.ngrok.io/api/v1/dashboard`, {
+          "headers": {
+            Accept: 'application/json',
+            Authorization: `Bearer ${props.token}`
+          }
+        }).then(res => {
+          console.log(res.data);
+
+
+        });
+        // universalFetch(
+        //     setFetchScenarioResponse,
+        //     `/api/v1/dashboard`,
+        //     // { 0: "body text" },
+        //     (resp) => { console.log(resp) },
+        //     (err) => { console.log(err) },
+        //     {
+        //         headers: {
+        //             "accept": "application/json",
+        //         }
+        //     }
+        // )
+        return () => {
+            // What goes here? do we return something
+        }
+    }, [])
 
     return (
         <div style={{
@@ -249,12 +259,13 @@ function Dashboard(props) {
             backgroundColor: 'white',
         }}>
             <Nav />
-            <ScenarioGrid />
+            <ScenarioGrid token={props.token} scenarios={props.scenarios}/>
         </div>
     )
 }
 
 const mapStateToProps = state => {
+  // console.log(state);
     return { scenarios: state.scenarios, token: state.token }
 }
 
@@ -265,4 +276,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-

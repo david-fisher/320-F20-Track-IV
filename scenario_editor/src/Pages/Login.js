@@ -99,7 +99,9 @@ function SignIn(props) {
 
   function sendLogInToServer(event, data, history) {
     event.preventDefault();
-    // POST 
+    // POST
+    data.email = 'instructor1@umass.edu';
+    data.password = 'GoUMass!';
     console.log(event)
     axios.post(`http://75877d2fa0a2.ngrok.io/api/v1/auth/login/callback`, data, {
       "headers": {
