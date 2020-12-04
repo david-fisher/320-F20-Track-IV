@@ -45,7 +45,7 @@ function FinalReflection(props) {
         q2
       ]
     }
-    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/middle-reflection`, { "body_text": initialComplete.body_text, "prompts": initialComplete.prompts }, {
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/middle-reflection`, { "body_text": middleComplete.body_text, "prompts": middleComplete.prompts }, {
       headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${props.token}`

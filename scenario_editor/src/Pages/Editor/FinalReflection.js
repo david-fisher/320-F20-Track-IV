@@ -34,6 +34,36 @@ function FinalReflection(props) {
 
   const classes = useStyles();
 
+  function addMiddleReflection(history) {
+    const finalComplete = {
+      "body_text": bodyText,
+      "prompts": [q1, q2],
+      "content": "",
+      "question": "",
+      "options": [
+        q1,
+        q2
+      ]
+    }
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/final-reflection`, { "body_text": initialComplete.body_text, "prompts": initialComplete.prompts }, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      props.dispatch({
+        type: 'ADD_FINAL_REFLECTION',
+        payload: { ...finalComplete }
+      });
+      history.push({
+        pathname: "/stakeholders",
+      });
+    }).catch(err => {
+      console.log(err);
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
+    })
+  }
+
   const finalReflectionNew = {
     "name": 'FinalReflection',
     "type": 'PLAIN',
