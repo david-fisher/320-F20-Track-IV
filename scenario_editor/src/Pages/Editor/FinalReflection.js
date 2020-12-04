@@ -75,7 +75,7 @@ function FinalReflection(props) {
     }).then(res => {
       props.dispatch({
         type: 'ADD_FINAL_REFLECTION',
-        payload: { ...initialComplete }
+        payload: { ...finalComplete }
       });
       history.push({
         pathname: "/stakeholders",
