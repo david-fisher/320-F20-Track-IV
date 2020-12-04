@@ -26,6 +26,8 @@ In Command Prompt or terminal, call psql -U postgres -f [full filepath to databa
 
 To sign a user up and return an AUTH token, use `POST api/user/signup`
 Users have have an email associated with them, as a string.
+
+Further backend information is located under the `backend` directory.
 ## Connecting to the Database
 run `npm install all` within the directory containing package.json (currently scenario_editor) to install all dependencies for the pg package, which is the library used to communicate between the PostgreSQL database and the react.js app, as well as all other dependencies outlined in the package_lock.json file
 
