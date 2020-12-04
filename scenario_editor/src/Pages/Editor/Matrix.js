@@ -147,7 +147,7 @@ function Matrix() {
         options={{
           headerStyle: {
             backgroundColor: '#881c1c',
-            color: 'black',
+            color: 'white',
             width: 20
           },
           cellStyle: {
