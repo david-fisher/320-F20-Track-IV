@@ -57,25 +57,28 @@ function Reflections(props) {
   }, [])
 
   function addInitialReflection(history) {
-    const introComplete = {
-      "type": type,
-      "name": name,
-      "order": order,
-      "body_text": bodyText,
+    const initialComplete = {
+      "body_text": "",
+      "prompts": [],
+      "content": "",
+      "question": "",
+      "options": [
+        opt1,
+        opt2
+      ]
     }
-    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/introduction`, { "body_text": introComplete.body_text }, {
+    axios.post(`${baseURL}/api/v1/simulation/${props.scenarioData.id}/initial-reflection`, { "body_text": initialComplete.body_text }, {
       headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${props.token}`
       }
     }).then(res => {
-      // runs the "type" aka function ADD_INTRODUCTION in pagesReducer.
       props.dispatch({
         type: 'ADD_INITIAL_REFLECTION',
-        payload: { ...introComplete }
+        payload: { ...initialComplete }
       });
       history.push({
-        pathname: "/reflections",
+        pathname: "/stakeholders",
       });
     }).catch(err => {
       console.log(err);
@@ -83,41 +86,27 @@ function Reflections(props) {
     })
   }
 
-
-
   const initialReflectionNew = {
-    "name": 'InitialReflection',
-    "type": 'PLAIN',
-    "order": 3,
-    "body_text": " ",
-    "questions": [" "],
+    "body_text": "",
+    "prompts": [],
+    "content": "",
+    "question": "",
+    "options": [
+    ]
   }
 
-  function addReflection() {
-    const initialReflectionComplete = {
-      "type": type,
-      "name": name,
-      "order": order,
-      "body_text": bodyText,
-      "questions": questionsText,
-    }
-    props.dispatch({
-      type: 'ADD_INITIAL_REFLECTION',
-      payload: { ...initialReflectionComplete }
-    });
-  }
 
   const [type, setType] = useState(initialReflectionNew.type);
   const [name, setName] = useState(initialReflectionNew.name);
   const [order, setOrder] = useState(initialReflectionNew.order);
   const [bodyText, setBodyText] = useState(initialReflectionNew.body_text);
-  const [questionsText, setQuestionsText] = useState(initialReflectionNew.body_text);
+  const [q1, setQ1] = useState(initialReflectionNew.body_text);
+  const [q2, setQ2] = useState(initialReflectionNew.body_text);
 
   const handleBodyChange = (body) => {
     setBodyText(body);
     console.log(bodyText);
   };
-
 
   return (
     <div >
@@ -170,6 +159,7 @@ function Reflections(props) {
               variant="outlined"
               multiline
               margin="normal"
+              onChange={e => setQ2(e.target.value)}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -184,6 +174,7 @@ function Reflections(props) {
               variant="outlined"
               multiline
               margin="normal"
+              onChange={e => setQ2(e.target.value)}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -208,7 +199,7 @@ function Reflections(props) {
 
 
 const mapStateToProps = state => {
-  return { scenarios: state.scenarios, token: state.token }
+  return { scenarioData: state.scenarioData, token: state.token, pageData: state.pages }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -217,5 +208,3 @@ const mapDispatchToProps = dispatch => {
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Reflections);
-
-
