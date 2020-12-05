@@ -11,11 +11,11 @@
 
 .text-editor{
   margin-top: 4%;
-  margin-left: 12%;
-  margin-right: 12%;
-  margin-bottom: 4%;
+  margin-left: 14%;
+  margin-right: 14%;
+  margin-bottom: 5%;
   display: flex;
-  width: '100%';
+  width: '%100';
   justify-content: space-around;
   align-items: center;
   border: 5px solid #881c1c;
@@ -23,10 +23,19 @@
 }
 
 .second-body{
+
+    margin-left: 14%;
+    margin-right: 14%;
+    display:flex;
+      
+}
+
+.third-body{
   margin-bottom: 10%;
-  margin-left: 12%;
-  margin-right: 12%;
+  margin-left: 14%;
+  margin-right: 14%;
   display:flex;
+    
 }
 
 .introduction-part{

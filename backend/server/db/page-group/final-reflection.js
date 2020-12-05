@@ -30,7 +30,7 @@ const createFinalReflectionPageGroup = async function (
   return {
     [pageType.PLAIN]: page,
     [pageType.PROMPT]: await Promise.all(
-      prompts.map((prompt) => promptPages.createPrompt(page.id, prompt))
+      prompts.map((prompt, id) => promptPages.createPrompt(page.id, prompt, id+1))
     ),
     [pageType.MCQ]: null,
     [pageType.CONV]: null,

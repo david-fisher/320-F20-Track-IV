@@ -8,7 +8,7 @@ There are 3 members of the stack. Front-end (Rebel Scrum), Back-end (Backend Bab
 ### Clone repo
 
 ```
-git clone --single-branch --branch backend-babes https://github.com/david-fisher/320-F20-Track-IV.git
+git clone https://github.com/david-fisher/320-F20-Track-IV.git
 ```
 
 

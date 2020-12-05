@@ -1,4 +1,3 @@
-//import React from 'react';
 import React, { Component } from 'react';
 import './PlayerResponses.css';
 import Nav from '../../Components/Nav'
@@ -6,13 +5,17 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
+
+// PlayerResponses.js will become Reflections.js
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(4),
     marginTop: theme.spacing(4),
     marginLeft: theme.spacing(4),
     width: '100ch',
-},
+  },
   header: {
     margin: theme.spacing(4)
   },
@@ -47,7 +50,7 @@ function PlayerResponses() {
 
   const classes = useStyles();
   return (
-  <div >
+    <div >
       <Nav />
       <div className={classes.header}>
 
@@ -59,23 +62,23 @@ function PlayerResponses() {
         </div>
       </div>
       <div className={classes.buttonContainer} >
-        <div>
           <Button
             className={classes.optionButton}
           >
             <Link to="/multiple-choice">
-            Create Multiple Choice Response
+              Create Multiple Choice Response
             </Link>
           </Button>{' '}
-        </div>
         <div>
+          <Link to="/open-response">
           <Button
             className={classes.optionButton}
           >
             <Link to="/open-response">
-            Create Open-Ended Response
+              Create Open-Ended Response
             </Link>
           </Button>
+          </Link>
         </div>
       </div>
     </div>
@@ -84,3 +87,5 @@ function PlayerResponses() {
 }
 
 export default PlayerResponses;
+
+

@@ -33,17 +33,17 @@
 //         width: '100ch',
 //     },
 //   }));
-  
+
 //     const classes = useStyles();
-  
+
 //     return (
-      
+
 //       <div> 
 //          <Nav/>
 //          <form className={classes.root} noValidate autoComplete="off">
 //          <h1>  Open Response Question </h1>
 //          {/* <b1>  Scenario Title:</b1> */}
-         
+
 //              <TextField 
 //               multiline
 //               fullWidth
@@ -60,8 +60,8 @@
 //                   InputLabelProps={{
 //                     shrink: true }}
 //               />
-           
-           
+
+
 //            <Button
 //             variant="outlined"
 //             style={{ 
@@ -69,7 +69,7 @@
 //             color: 'white'
 //             //margin: 100
 //             }}
-            
+
 //             onClick={e => this.onSubmit(e)}>
 //             Add Question
 //           </Button>
@@ -88,19 +88,19 @@
 //             >
 //             Submit
 //           </Button>
-          
+
 //             </div>
 //             </form>
 //        </div>
-      
+
 //     );
 //   };
 //   export default OpenResponse;
 
 import React, { Component } from "react";
-import Form from "./ORform";
+import Form from "../../Components/ORform";
 import Nav from '../../Components/Nav'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -109,20 +109,20 @@ import Button from '@material-ui/core/Button';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
 // injectTapEventPlugin();
-import Table from "./ORtable";
+import Table from "../../Components/ORtable";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      margin: theme.spacing(4),
-      marginTop: theme.spacing(4),
-      marginLeft: theme.spacing(4),
-      width: '100ch',
+  root: {
+    margin: theme.spacing(4),
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    width: '100ch',
   },
-    header: {
-      marginTop: theme.spacing(1),
-      textAlign: 'center',
-    }
-  }));
+  header: {
+    marginTop: theme.spacing(1),
+    textAlign: 'center',
+  }
+}));
 class OpenResponse extends Component {
   state = {
     // fields: {}
@@ -147,11 +147,10 @@ class OpenResponse extends Component {
   };
 
   startEditing = (i) => {
-      this.setState({editIdx: i})
+    this.setState({ editIdx: i })
   }
-  stopEditing = () =>
-  {
-      this.setState({editIdx: -1})
+  stopEditing = () => {
+    this.setState({ editIdx: -1 })
   }
   handleChange = (e, name, i) => {
     const { value } = e.target;
@@ -163,44 +162,44 @@ class OpenResponse extends Component {
   };
   render() {
     return (
-        <MuiThemeProvider>
+      <MuiThemeProvider>
+        <div className="OpenResponse">
+          <Nav />
+          <center>
+            {/* <form className={classes.root} noValidate autoComplete="off"> */}
+            <h1>  Open Response </h1>
             <div className="OpenResponse">
-        <Nav />
-        <center>
-                {/* <form className={classes.root} noValidate autoComplete="off"> */}
-                <h1>  Open Response </h1>
-                        <div className="OpenResponse">
-                    </div>
-                    <div className="OpenResponse">
-                    <Form 
-                    // onChange={fields => this.onChange(fields)} 
-                    onSubmit={submission => this.setState({
-                        data: [...this.state.data, submission]
-                    })}
-                    color='primary'                
-                    />
-                    < Table
-                        handleRemove={this.handleRemove}
-                        startEditing={this.startEditing}
-                        editIdx={this.state.editIdx}
-                        handleChange={this.handleChange}
-                        stopEditing={this.stopEditing}
-                        data={this.state.data}
-                        header= {[
-                            {
-                                name: "Open Response Question",
-                                prop: "ORquestion",
-                            },
-                        ]}
-                    />
-                    {/* <p>
+            </div>
+            <div className="OpenResponse">
+              <Form
+                // onChange={fields => this.onChange(fields)} 
+                onSubmit={submission => this.setState({
+                  data: [...this.state.data, submission]
+                })}
+                color='primary'
+              />
+              < Table
+                handleRemove={this.handleRemove}
+                startEditing={this.startEditing}
+                editIdx={this.state.editIdx}
+                handleChange={this.handleChange}
+                stopEditing={this.stopEditing}
+                data={this.state.data}
+                header={[
+                  {
+                    name: "Open Response Question",
+                    prop: "ORquestion",
+                  },
+                ]}
+              />
+              {/* <p>
                     {JSON.stringify(this.state.fields, null, 2)}
                     </p> */}
-                    
+
+            </div>
+          </center>
         </div>
-        </center>
-        </div>
-        </MuiThemeProvider>
+      </MuiThemeProvider>
     );
   }
 }

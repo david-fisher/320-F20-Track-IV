@@ -1,107 +1,148 @@
-// ********************************************
-// NOT UPDATED.
-// You can follow Dashboard.js if you want to make this page though :)
-// Recommend looking into
-// ********************************************
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import './NewScenario.css';
 import Nav from '../../Components/Nav'
 import { Link, useHistory } from 'react-router-dom';
-//import Button from 'react-bootstrap/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import { baseURL } from '../../Components/Calls';
+import axios from 'axios';
 
-const useStateWithLocalStorage = localStorageKey => {
-  const [value2, setValue2] = React.useState(
-    localStorage.getItem(localStorageKey) || ''
-  );
 
-  React.useEffect(() => {
-    localStorage.setItem(localStorageKey, value2);
-  }, [value2]);
+function NewScenario(props) {
+  function addScenario(history) {
+    const createdScenario = {
+      "name": name,
+      "due_date": selectedDate,
+      "description": description,
+      "additional_data": additionalData,
+      "status": status,
+    }
+    axios.post(`${baseURL}/api/v1/simulation/create`, createdScenario, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${props.token}`
+      }
+    }).then(res => {
+      // console.log(res.data.simulation_id);
+      props.dispatch({
+        type: 'UPDATE_SCENARIO_ID',
+        payload: res.data.simulation_id
+      });
+      history.push({
+        pathname: "/introduction-hub",
+      });
+    }).catch(err => {
+      err.response && err.response.data && err.response.data.explanation && alert(`Error: ${err.response.data.explanation}`);
+    })
+  }
 
-  return [value2, setValue2];
-};
-const useStateWithLocalStorage3 = localStorageKey => {
-  const [value3, setValue3] = React.useState(
-    localStorage.getItem(localStorageKey) || ''
-  );
+  const newScenario = {
+    "id": 1,
+    "name": '',
+    "due_date": new Date(),
+    "description": '',
+    "additional_data": '',
+    "status": 'DRAFT',
+    // "intro": '',
+    // "task": '',
+    // 'init_reflection:': '',
+    // 'init_action': ''
+  }
 
-  React.useEffect(() => {
-    localStorage.setItem(localStorageKey, value3);
-  }, [value3]);
+  // Might be useful later when editing scenarios, passing the ID and other stuff along as props, etc.
+  // const [scenarioID, setScenarioID] = useState();
 
-  return [value3, setValue3];
-};
+  const [name, setName] = useState(newScenario.name);
+  const [description, setDescription] = useState(newScenario.description);
+  const [additionalData, setAdditionalData] = useState(newScenario.additional_data);
+  const [status, setStatus] = useState(newScenario.status);
+  const [selectedDate, setSelectedDate] = useState(newScenario.due_date);
 
-const NewScenario = () => {
-  // const history = useHistory();
-
-  const [value2, setValue2] = useStateWithLocalStorage('RS_SCENARIO__title');
-  const [value3, setValue3] = useStateWithLocalStorage('RS_SCENARIO__description');
-
-  const onChange2 = event => setValue2(event.target.value);
-  const onChange3 = event => setValue3(event.target.value);
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const useStyles = makeStyles((theme) => ({
     root: {
-        margin: theme.spacing(1),
-        marginTop: theme.spacing(4),
-        marginLeft: theme.spacing(4),
-        width: '100ch',
+      margin: theme.spacing(1),
+      marginTop: theme.spacing(4),
+      marginLeft: theme.spacing(4),
+      width: '100ch',
     },
   }));
 
-    const classes = useStyles();
+  const history = useHistory();
+
+  const classes = useStyles();
 
   return (
     <div>
-       <Nav/>
-       <form className={classes.root} noValidate autoComplete="off">
-       <h1>  Create New Scenario</h1>
-       {/* <b1>  Scenario Title:</b1> */}
-       <TextField
-       id="title"
-       label="Scenario Title"
-       variant="outlined"
-       placeholder='Enter scenario title here'
-       style={{
-         width: '50ch'}}
-       value={value2}
-       onChange={onChange2}
-       margin="dense"
+      <Nav />
+      <form className={classes.root} noValidate autoComplete="off">
+        <h1>  Create New Scenario</h1>
+        {/* <b1>  Scenario Title:</b1> */}
+        <TextField
+          id="title"
+          label="Scenario Title"
+          variant="outlined"
+          placeholder='Enter scenario title here'
+          style={{
+            width: '50ch'
+          }}
+          onChange={e => setName(e.target.value)}
+          margin="dense"
           InputLabelProps={{
-            shrink: true }}
-       />
-           <TextField
-            multiline
-            fullWidth
-            id="description"
-            label="Scenario Description"
-            variant="outlined"
-            placeholder='Enter scenario description here'
-            value={value3}
-            onChange={onChange3}
-            style={{
-              marginTop: 75}}
-            rows={10}
-            margin="normal"
-                InputLabelProps={{
-                  shrink: true }}
+            shrink: true
+          }}
+        />
+        <TextField
+          multiline
+          fullWidth
+          id="description"
+          label="Scenario Description"
+          variant="outlined"
+          placeholder='Enter scenario description here'
+          onChange={e => setDescription(e.target.value)}
+          style={{
+            marginTop: 75
+          }}
+          rows={10}
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="space-around">
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Due Date: "
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
             />
-           {/* <input
-           type='text'
-           id='title'
-           size="element.value.length + 1"
-           value={value}
+          </Grid>
+        </MuiPickersUtilsProvider>
+      </form>
+      <div className={classes.root}>
+        <div>
+          <Button
 
-           onChange={onChange} /> */}
-         </form>
-         <div className={classes.root}>
-            <div>
-            <Button
-            component={ Link } to="/user-agreement"
             variant="contained"
             color="primary"
             href="#contained-buttons"
@@ -113,83 +154,26 @@ const NewScenario = () => {
               marginLeft: 1100,
               //marginBottom: 100
             }}
-
-            >
+            onClick={() => addScenario(history)}
+          >
             Submit
           </Button>
-          </div>
+        </div>
 
-          {/* <div class="Introduction-submit-button">
-          {/* <div> */}
-            {/* <Link to = "/user-agreement">
-              <Button
-              size = "custom-submit-button"
-              variant="outline-secondary"
-              value = "Submit"
-              >
-                Submit
-              </Button>{' '}
-            </Link> */}
-          </div>
-
-
-       {/* <input
-       className="TRY-type"
-       value={value}
-       type="text"
-       onChange={onChange}
-       size = "element.value.length + 1"
-      //  size="TRY-custom-size" */}
-       {/* /> */}
-       {/* <input value={value} type="text" onChange={onChange}/> */}
-     </div>
+      </div>
+    </div>
 
   );
 };
-export default NewScenario;
 
+const mapStateToProps = state => {
+  return { scenarios: state.scenarios, token: state.token }
+}
 
-//Essentially the NewScenario page from the Wireframe.
-//The textboxes need to be fixed, and might have to be recoded in order to hold state properly
-// class NewScenario extends Component {
-//   render() {
-//     return (
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
 
-//       <div>
-//         <Nav />
-//         <form>
-//           <h1>Scenario Title:</h1>
-//           <input type='text' id='title' size="element.value.length + 1" />
-//         </form>
-//         <div id='Description'>
-
-//           <form>
-//             <h1>Scenario Description:</h1>
-//             <textarea rows='15' cols='75' />
-//             <div class="Introduction-submit-button">
-//               {}
-//               <Link to="/introduction">
-//                 <Button
-//                   size="custom-submit-button"
-//                   variant="outline-secondary"
-//                   value="Submit"
-//                 >
-//                   Submit
-//                     </Button>{' '}
-//               </Link>
-//             </div>
-//           </form>
-
-//         </div>
-//       </div>
-
-//     )
-//   }
-
-
-
-// }
-
-
-
-// export default NewScenario;
+export default connect(mapStateToProps, mapDispatchToProps)(NewScenario);

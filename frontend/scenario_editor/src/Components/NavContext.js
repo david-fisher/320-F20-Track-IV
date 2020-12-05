@@ -7,7 +7,7 @@ import {NavDataEditor} from "./NavDataEditor"
 
 export const NavContext = createContext()
 
-const reducer = (state, pair) => ({ ...state, ...paisr })
+const reducer = (state, pair) => ({ ...state, ...pair })
 
 export function NavProvider(props) {
 	const [state, update] = useReducer(reducer, NavDataEditor)
