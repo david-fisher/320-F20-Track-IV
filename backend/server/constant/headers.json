@@ -1,0 +1,10 @@
+{
+  "DEFAULT_HEADERS": {
+    "accept": "application/json"
+  },
+
+  "DEFAULT_HEADERS_FORM": {
+    "accept": "application/json",
+    "accept-encoding": "gzip, deflate, br"
+  }
+}

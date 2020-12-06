@@ -1,0 +1,17 @@
+.title{
+    width:50%;
+}
+
+.Description{
+    margin:auto;
+}
+
+.btn-custom-submit-button{
+    padding: 10px 10px;
+    color: inherit;
+    margin-bottom: 600px;
+    margin-right: 200px;
+    float: right;
+    background-color: #881c1c;
+    color: white;
+}
